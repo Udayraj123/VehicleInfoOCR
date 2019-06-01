@@ -44,8 +44,10 @@
             android:gravity="center_vertical"
             android:orientation="vertical" >
             <!--android:inputType="textCapCharacters"-->
-            <com.edittextpicker.aliazaz.EditTextPicker
-                android:id="@+id/vehicle_number"
+            <!-- <com.edittextpicker.aliazaz.EditTextPicker -->
+                
+                <EditText
+                android:id="@+id/vehicle_plate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_edittext"
@@ -55,11 +57,11 @@
                 android:layout_marginEnd="10dp"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
                 android:inputType="textFilter"
-                android:text="MH12CD8039"
-                app:defaultValue="null"
+                />
+                <!-- app:defaultValue="null"
                 app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
                 app:required="true"
-                app:type="equal" />
+                app:type="equal"  -->
         </LinearLayout>
 
         <LinearLayout
@@ -393,27 +395,28 @@
         android:layout_marginEnd="10dp"
         android:gravity="center_vertical"
         >
+
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.6"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
             <com.jackandphantom.androidlikebutton.AndroidLikeButton
                 android:id="@+id/flash_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:like_icon="@drawable/flash_on"
-                app:unlike_icon="@drawable/flash_off"
-                app:circle_startColor="@android:color/holo_orange_light"
-                app:circle_endColor="@android:color/holo_orange_dark"
-                app:dot_color_1="@android:color/white"
-                app:dot_color_2="@android:color/black"
-                android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                />
+                app:circle_endColor="@android:color/holo_orange_dark"
+                app:circle_startColor="@android:color/holo_orange_light"
+                app:dot_color_1="@android:color/white"
+                app:dot_color_2="@android:color/black"
+                app:like_icon="@drawable/flash_on"
+                app:unlike_icon="@drawable/flash_off" />
         </LinearLayout>
         <LinearLayout
             android:layout_height="wrap_content"

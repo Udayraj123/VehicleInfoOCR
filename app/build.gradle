@@ -45,7 +45,7 @@ dependencies {
 
 
     implementation 'com.jackandphantom.android:androidlikebutton:1.2.0'
-    implementation 'com.github.AliAzaz:Edittext-Library:1.0.2'
+    // implementation 'com.github.AliAzaz:Edittext-Library:1.0.2'
     implementation project(path: ':openCVLibrary340')
 //    implementation project(path: ':opencvjava', configuration: 'default')
 }

@@ -35,8 +35,7 @@ public class CameraSource {
     @SuppressLint("InlinedApi")
     public static final int CAMERA_FACING_FRONT = CameraInfo.CAMERA_FACING_FRONT;
 
-    private static final String TAG = "MIDemoApp:CameraSource";
-
+    private static final String TAG = "CameraSource";
     /**
      * The dummy surface texture must be assigned a chosen name. Since we never use an OpenGL context,
      * we can choose any ID we want here. The dummy surface texture is not a crazy hack - it is
@@ -107,7 +106,9 @@ public class CameraSource {
      */
     private final Map<byte[], ByteBuffer> bytesToByteBuffer = new IdentityHashMap<>();
 
+    // public CameraSource(Activity activity, EditText vehicleNumber, GraphicOverlay overlay) {
     public CameraSource(Activity activity, GraphicOverlay overlay) {
+        // this.editTextBox = vehicleNumber;
         this.activity = activity;
         graphicOverlay = overlay;
         graphicOverlay.clear();
@@ -692,6 +693,7 @@ public class CameraSource {
                 try {
                     synchronized (processorLock) {
 //                        Log.d(TAG, "Process an image");
+                        // need to save overlay data as attribute here
                         frameProcessor.process(
                                 data,
                                 new FrameMetadata.Builder()
@@ -701,6 +703,8 @@ public class CameraSource {
                                         .setCameraFacing(facing)
                                         .build(),
                                 graphicOverlay);
+                        // editTextBox.setText(frameProcessor.majorText);
+
                     }
                 } catch (Throwable t) {
                     Log.e(TAG, "Exception thrown from receiver.", t);

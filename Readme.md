@@ -9,7 +9,7 @@ Useful for general purpose OCR as well.
 	[X] Add OpenCv morph
 	[X] now fix jsoup to download captcha and show in image preview 
 	[ ] Find CV parameters on sample from pc
-	[ ] getting majorText from the bounding boxes
+	[X] getting majorText from the bounding boxes
 	[ ] Putting numberplate data into text on preview btn click
 	[X] Flash btn from OMR
 	[ ] Add Bottom Drawer 

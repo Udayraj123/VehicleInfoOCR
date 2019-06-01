@@ -1,8 +1,7 @@
 package com.example.ocr;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.nfc.Tag;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.edittextpicker.aliazaz.EditTextPicker;
 import com.example.ocr.Jsoup.AsyncCaptchaResponse;
 import com.example.ocr.Jsoup.AsyncResponse;
 import com.example.ocr.Jsoup.FetchVehicleDetails;
@@ -33,8 +31,6 @@ import com.example.ocr.others.*;
 import com.example.ocr.utils.Utils;
 import com.jackandphantom.androidlikebutton.AndroidLikeButton;
 
-import org.opencv.imgproc.Imgproc;
-
 public class MainActivity extends AppCompatActivity {
     static {
         System.loadLibrary("opencv_java3");
@@ -44,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private final int CAPTCHA_LOAD_FAILED = 999;
     private final int TECHNICAL_DIFFICULTY = 888;
     public final int ACTION_NULL = -1;
+    public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+";
 
     //  ----- Instance Variables -----
-    private EditTextPicker edittext;
+    // private EditTextPicker vehicleNumber;
+    private EditText vehicleNumber;
     private ImageView imageView;
     private Button searchBtn;
     private View vehicleDetails;
@@ -83,20 +81,18 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        setSearchButtonListner();
+        setSearchButtonListener();
         //Auto cap input
-        edittext = findViewById(R.id.vehicle_number);
-        edittext.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-        edittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                searchBtn.setEnabled(edittext.isTextEqualToPattern());
-            }
-
+        vehicleNumber = findViewById(R.id.vehicle_plate);
+        // vehicleNumber.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        vehicleNumber.addTextChangedListener(new TextWatcher() {
+            @Override public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             @Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-            @Override public void afterTextChanged(Editable et) {}
+            @Override public void afterTextChanged(Editable et) {
+                searchBtn.setEnabled(et.toString().matches(NUMPLATE_PATTERN));
+            }
         });
-        searchBtn.setEnabled(edittext.isTextEqualToPattern());
+        searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
 
         //Done: add permission handler from omr here
         Toast.makeText(MainActivity.this, "Checking permissions...", Toast.LENGTH_SHORT).show();
@@ -122,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            confirmVehicleNumber();
                             stopCameraSource();
                         }
                     });
@@ -182,6 +179,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void confirmVehicleNumber() {
+        if (cameraSource != null) {
+        // show overlay display here
+        }
+    }
     private void startLoadingCaptcha() {
         captchaInput.setText("");
         vehicleDetails.setVisibility(View.GONE);
@@ -203,10 +205,9 @@ public class MainActivity extends AppCompatActivity {
                     captchaImage = Utils.preProcessBitmap(captchaImage);
                     Toast.makeText(MainActivity.this, "Captcha image processed", Toast.LENGTH_SHORT).show();
                     imageView.setImageBitmap(captchaImage);
-                    String detectedCaptcha = cameraSource.frameProcessor.processBitmap(captchaImage,
-                        cameraSource.rotation, cameraSource.facing,graphicOverlay);
-                    if(captchaInput.getText().toString()=="")
-                        captchaInput.setText(detectedCaptcha);
+                    String detectedCaptcha = cameraSource.frameProcessor.processBitmap(captchaImage, cameraSource.rotation, cameraSource.facing,graphicOverlay);
+                    // if(captchaInput.getText().toString()=="")
+                    captchaInput.setText(detectedCaptcha);
 
                     //TODO:  add Cancel button to drawer
 
@@ -231,13 +232,24 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.vehicle_expiry)).setText(vehicle.getExpiry());
     }
     private void createCameraSource() {
-
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
             cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
         }
-
         cameraSource.setMachineLearningFrameProcessor(new TextRecognitionProcessor());
+
+        // THIS CAUSES INPUTS TO DESTROY AND CAUSE POSSIBLE CRASH
+        // final Handler handler = new Handler();
+        // Runnable runnable = new Runnable(){
+        //     @Override
+        //     public void run(){
+        //         if (cameraSource != null) {
+        //             vehicleNumber.setText(cameraSource.frameProcessor.majorText);
+        //             handler.postDelayed(this,1000);
+        //         }
+        //     }
+        // };
+        // handler.post(runnable);
     }
 
     private void startCameraSource() {
@@ -256,12 +268,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    private void setSearchButtonListner() {
+    private void setSearchButtonListener() {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
-                String result = edittext.getText().toString();
+                String result = vehicleNumber.getText().toString();
                 // drawer.dismiss();
                 new FetchVehicleDetails(new AsyncResponse(){
                     //uses most recent cookies and formnumber
@@ -276,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                                 String msg = "Vehicle details not found";
                                 Log.d(TAG,msg);
                                 Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                                
+
                             }
                         }
                         else if (statusCode == CAPTCHA_LOAD_FAILED){

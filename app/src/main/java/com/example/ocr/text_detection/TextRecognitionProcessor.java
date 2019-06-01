@@ -15,12 +15,18 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.example.ocr.others.*;
+
+import android.widget.EditText;
+
+
 public class TextRecognitionProcessor {
 
     private static final String TAG = "TextRecProc";
+    public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{4}";
 
     private final FirebaseVisionTextRecognizer detector;
     public String majorText="";
@@ -31,8 +37,6 @@ public class TextRecognitionProcessor {
     public TextRecognitionProcessor() {
         detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
     }
-
-
 
     //region ----- Exposed Methods -----
 
@@ -45,7 +49,7 @@ public class TextRecognitionProcessor {
         }
     }
 
-
+    private final AtomicBoolean isProcessing = new AtomicBoolean(false);
     public String processBitmap(final Bitmap bitmap, int rotation, int facing, GraphicOverlay graphicOverlay){
         // FrameMetadata frameMetadata)
         int width = bitmap.getWidth();
@@ -53,28 +57,34 @@ public class TextRecognitionProcessor {
         int size = bitmap.getRowBytes() * bitmap.getHeight();
         ByteBuffer byteBuffer = ByteBuffer.allocate(size);
         bitmap.copyPixelsToBuffer(byteBuffer);
+        // starts a thread!
+        isProcessing.set(true);
+        Log.d(TAG,"sending image to mlkit process");
         process(byteBuffer,new FrameMetadata.Builder()
-                .setWidth(width)
-                .setHeight(height)
-                .setRotation(rotation)
-                .setCameraFacing(facing)
-                .build(), graphicOverlay);
+            .setWidth(width)
+            .setHeight(height)
+            .setRotation(rotation)
+            .setCameraFacing(facing)
+            .build(), graphicOverlay);
+        Log.d(TAG,"Waiting for mlkit read to finish");
+        while(isProcessing.get());
+        Log.d(TAG,"Finished waiting, read: "+majorText);
         return majorText;
     }
 
     public void process(ByteBuffer data, FrameMetadata frameMetadata, GraphicOverlay graphicOverlay){
-
-        if (shouldThrottle.get()) {
+        if (shouldThrottle.get()) { // nice atomic approach to skip frames!
+            isProcessing.set(false);
             return;
         }
 
         FirebaseVisionImageMetadata metadata =
-                new FirebaseVisionImageMetadata.Builder()
-                        .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
-                        .setWidth(frameMetadata.getWidth())
-                        .setHeight(frameMetadata.getHeight())
-                        .setRotation(frameMetadata.getRotation())
-                        .build();
+        new FirebaseVisionImageMetadata.Builder()
+        .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
+        .setWidth(frameMetadata.getWidth())
+        .setHeight(frameMetadata.getHeight())
+        .setRotation(frameMetadata.getRotation())
+        .build();
 
         detectInVisionImage(FirebaseVisionImage.fromByteBuffer(data, metadata), frameMetadata, graphicOverlay);
     }
@@ -86,62 +96,72 @@ public class TextRecognitionProcessor {
     private Task<FirebaseVisionText> detectInImage(FirebaseVisionImage image) {
         return detector.processImage(image);
     }
-
-
-    private void onSuccess( @NonNull FirebaseVisionText results, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
-
-        //TODO: set a public variable from here containing the "main" text. ( for captcha)
-         majorText = "?";
-
-        graphicOverlay.clear();
-
-        List<FirebaseVisionText.TextBlock> blocks = results.getTextBlocks();
-
-        for (int i = 0; i < blocks.size(); i++) {
-            List<FirebaseVisionText.Line> lines = blocks.get(i).getLines();
-            for (int j = 0; j < lines.size(); j++) {
-                List<FirebaseVisionText.Element> elements = lines.get(j).getElements();
-                String line="";
-                for (int k = 0; k < elements.size(); k++) {
-                    line = line + elements.get(k).getText();
-                    GraphicOverlay.Graphic textGraphic = new TextGraphic(graphicOverlay, elements.get(k));
-                    graphicOverlay.add(textGraphic);
-                }
-                majorText = line;
-                Log.d(TAG,"Read: "+majorText);
-            }
+    private boolean validNumPlate(String s){
+        // matches ALL input
+        return s.matches(NUMPLATE_PATTERN);
+    }
+    private String numPlateFilter(String s){
+        return s.toUpperCase().replaceAll("[^A-Z0-9]","");
+    }
+    private void autoUpdateMajorText(String line){
+        Log.d(TAG,"Read: "+line);
+        line = numPlateFilter(line);
+        Log.d(TAG,"Filtered: "+line+" Valid: "+validNumPlate(line) );
+        if(validNumPlate(line)){
+            majorText = line;
         }
     }
 
-    private void onFailure(@NonNull Exception e) {
-        Log.w(TAG, "Text detection failed." + e);
+    private void onSuccess( @NonNull FirebaseVisionText results, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
+
+        //TODO: set a public variable from here containing the "main" text. ( for captcha)    
+       graphicOverlay.clear();
+
+       List<FirebaseVisionText.TextBlock> blocks = results.getTextBlocks();
+
+       for (int i = 0; i < blocks.size(); i++) {
+        List<FirebaseVisionText.Line> lines = blocks.get(i).getLines();
+        for (int j = 0; j < lines.size(); j++) {
+            List<FirebaseVisionText.Element> elements = lines.get(j).getElements();
+            for (int k = 0; k < elements.size(); k++) {
+                GraphicOverlay.Graphic textGraphic = new TextGraphic(graphicOverlay, elements.get(k));
+                graphicOverlay.add(textGraphic);
+            }
+            autoUpdateMajorText(lines.get(j).getText());
+        }
+        //preference to block than line VERIFY?!
+        autoUpdateMajorText(blocks.get(i).getText());
     }
+    isProcessing.set(false);
+}
 
-    private void detectInVisionImage( FirebaseVisionImage image, final FrameMetadata metadata, final GraphicOverlay graphicOverlay) {
+private void onFailure(@NonNull Exception e) {
+    Log.w(TAG, "Text detection failed." + e);
+    isProcessing.set(false);
+}
 
-        detectInImage(image)
-                .addOnSuccessListener(
-                        new OnSuccessListener<FirebaseVisionText>() {
-                            @Override
-                            public void onSuccess(FirebaseVisionText results) {
-                                shouldThrottle.set(false);
-                                TextRecognitionProcessor.this.onSuccess(results, metadata, graphicOverlay);
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                shouldThrottle.set(false);
-                                TextRecognitionProcessor.this.onFailure(e);
-                            }
-                        });
-        // Begin throttling until this frame of input has been processed, either in onSuccess or
-        // onFailure.
-        shouldThrottle.set(true);
-    }
+private void detectInVisionImage( FirebaseVisionImage image, final FrameMetadata metadata, final GraphicOverlay graphicOverlay) {
 
-    //endregion
-
+    detectInImage(image)
+    .addOnSuccessListener(
+        new OnSuccessListener<FirebaseVisionText>() {
+            @Override
+            public void onSuccess(FirebaseVisionText results) {
+                shouldThrottle.set(false);
+                TextRecognitionProcessor.this.onSuccess(results, metadata, graphicOverlay);
+            }
+        })
+    .addOnFailureListener(
+        new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                shouldThrottle.set(false);
+                TextRecognitionProcessor.this.onFailure(e);
+            }
+        });
+    // Begin throttling until this frame of input has been processed, either in onSuccess or
+    // onFailure.
+    shouldThrottle.set(true);
+}
 
 }
