@@ -101,13 +101,14 @@ public class TextRecognitionProcessor {
             List<FirebaseVisionText.Line> lines = blocks.get(i).getLines();
             for (int j = 0; j < lines.size(); j++) {
                 List<FirebaseVisionText.Element> elements = lines.get(j).getElements();
+                String line="";
                 for (int k = 0; k < elements.size(); k++) {
-                    majorText = elements.get(k).toString();
-                    Log.d(TAG,"Read: "+majorText);
+                    line = line + elements.get(k).getText();
                     GraphicOverlay.Graphic textGraphic = new TextGraphic(graphicOverlay, elements.get(k));
                     graphicOverlay.add(textGraphic);
-
                 }
+                majorText = line;
+                Log.d(TAG,"Read: "+majorText);
             }
         }
     }

@@ -14,9 +14,10 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketTimeoutException;
- 
+
 public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
 {
+    private final String TAG = "FetchVehicleDetails: ";
     private final String BASE_URL = "https://parivahan.gov.in";
     private final String VEHICLE_URL="/rcdlstatus/vahan/rcDlHome.xhtml";
 
@@ -35,31 +36,46 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
     {
         this.response = response;
     }
-
+    public void bigLog(String s){
+        final int chunkSize = 500;
+        for (int i = 0; i < s.length(); i += chunkSize) {
+            Log.d(TAG, s.substring(i, Math.min(s.length(), i + chunkSize)));
+        }
+    }
     @Override
     protected Vehicle doInBackground(String... params)
     {
         try
         {
-            Log.d("FetchVehicleDetails: ","Sending Post request using cookies: "+GetCaptcha.cookies);
             Connection connection = Jsoup.connect(getAbsoluteURL(VEHICLE_URL))
-                    .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
-                    .data("javax.faces.partial.ajax", "true")
-                    .data("javax.faces.source", GetCaptcha.formNumber)
-                    .data("javax.faces.partial.execute", "@all")
-                    .data("javax.faces.partial.render", "rc_Form:rcPanel")
-                    .data(GetCaptcha.formNumber, GetCaptcha.formNumber)
-                    .data("rc_Form", "rc_Form")
-                    .data("rc_Form:tf_reg_no1", params[0])
-                    .data("rc_Form:tf_reg_no2", params[1])
-                    .data("rc_Form:j_idt24:CaptchaID", params[2])
-                    .data("javax.faces.ViewState", GetCaptcha.viewState)
-                    .timeout(10000)
-                    .cookies(GetCaptcha.cookies);
-
+            // .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
+            .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
+            // .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
+            // .header("Faces-Request","partial/ajax")
+            // .header("Accept","application/xml, text/xml, */*; q=0.01")
+            // .header("Accept-Encoding","gzip, deflate, br")
+            .data("javax.faces.partial.ajax", "true")
+            .data("javax.faces.source", GetCaptcha.formNumber)
+            .data("javax.faces.partial.execute", "@all")
+            // .data("javax.faces.partial.render", "rc_Form:rcPanel") <-- changed
+            .data("javax.faces.partial.render", "form_rcdl:pnl_show+form_rcdl:pg_show+form_rcdl:rcdl_pnl")
+            .data(GetCaptcha.formNumber, GetCaptcha.formNumber) //<- currently t42
+            // .data("rc_Form", "rc_Form") <-- changed now
+            .data("form_rcdl", "form_rcdl")
+            .data("form_rcdl:tf_reg_no1", params[0])
+            .data("form_rcdl:tf_reg_no2", params[1])
+            // .data("form_rcdl:j_idt24:CaptchaID", params[2]) <-- param changes!
+            .data("form_rcdl:j_idt32:CaptchaID", params[2])
+            .data("javax.faces.ViewState", GetCaptcha.viewState)
+            .timeout(10000)
+            .cookies(GetCaptcha.cookies);
+            Log.d(TAG,"Sending Post request :" + connection.request().data());
+            // ^better use a .submit method!
             Document document = connection.post();
             statusCode = connection.response().statusCode();
-            Log.d("FetchVehicleDetails: ","Response Status code:"+statusCode+document.getElementsByTag("table"));
+            Log.d(TAG,"Response Status code:"+statusCode);
+            bigLog(document.toString());
+            Log.d(TAG,"tables: "+document.getElementsByTag("table"));
 
             if (document.getElementsByTag("table").size() != 0)
             {
