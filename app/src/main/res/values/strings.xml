@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">OCR</string>
+    <string name="ok">OK</string>
+    <string name="search">Search</string>
+    <string name="captcha_img">Captcha here</string>
+
+
+    <!-- Tabs -->
+    <string name="vehicle_tab">search vehicle</string>
+    <string name="recent_search_header">RECENT SEARCHES</string>
+
+    <!-- Vehicle card -->
+    <string name="card_header_fuel">Fuel Type</string>
+    <string name="card_header_cc">Displacement</string>
+    <string name="card_header_engine">Engine No.</string>
+    <string name="card_header_chassis">Chassis No.</string>
+    <string name="card_header_owner">Owner</string>
+    <string name="card_header_location">Location</string>
+
+    <string name="office_tab">search office</string>
+    <string name="default_state">STATE</string>
+    <string name="default_code">RTO CODE</string>
+    <string name="default_district">District</string>
+    <string name="first_state">ANDAMAN AND NICOBAR ISLANDS</string>
+    <string name="first_state_code">AN</string>
+    <string name="website">Visit the official website</string>
+    <string name="clipboard_acknowledge">Copied to clipboard</string>
+
+    <!-- Action -->
+    <string name="action_about">About</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Dialog -->
+    <string name="okay">OKAY</string>
+    <string name="dismiss">DISMISS</string>
+    <string name="yes">YES</string>
+    <string name="cancel">CANCEL</string>
+    <string name="choose">CHOOSE</string>
+    <string name="agree">AGREE</string>
+    <string name="disagree">DISAGREE</string>
+    <string name="more">LEARN MORE</string>
+    <string name="continue_button">CONTINUE</string>
+    <string name="retry">RETRY</string>
+    <string name="check">CHECK</string>
+
+    <!-- Captcha -->
+    <string name="captcha_header">Verify</string>
+    <string name="captcha_message">Enter captcha code</string>
+</resources>

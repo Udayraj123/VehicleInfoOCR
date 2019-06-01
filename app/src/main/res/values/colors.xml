@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="action_bar">#2196F3</color>
+    <color name="accent">#1976D2</color>
+    <color name="expiry">#D32F2F</color>
+    <color name="tab_indicator">#86bae4</color>
+    <color name="background">#eeeeee</color>
+    <color name="card_backgroundExpand">#fafafa</color>
+    <color name="card_text_primary">#000</color>
+    <color name="fab_normal">#F44336</color>
+    <color name="fab_ripple">#f17269</color>
+    <color name="fab_pressed">#f25a4f</color>
+    <color name="divider">#dddddd</color>
+    <color name="terms_and_conditions">#b1b1b1</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+</resources>
