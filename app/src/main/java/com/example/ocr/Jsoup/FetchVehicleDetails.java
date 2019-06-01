@@ -3,6 +3,8 @@ package com.example.ocr.Jsoup;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import com.example.ocr.Jsoup.*;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -16,7 +18,7 @@ import java.net.SocketTimeoutException;
 public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
 {
     private final String BASE_URL = "https://parivahan.gov.in";
-    private final String VEHICLE_URL="/rcdlstatus/vahan/rcstatus.xhtml";
+    private final String VEHICLE_URL="/rcdlstatus/vahan/rcDlHome.xhtml";
 
     private Vehicle vehicle;
     private int statusCode;
@@ -39,6 +41,7 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
     {
         try
         {
+            Log.d("FetchVehicleDetails: ","Sending Post request using cookies: "+GetCaptcha.cookies);
             Connection connection = Jsoup.connect(getAbsoluteURL(VEHICLE_URL))
                     .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
                     .data("javax.faces.partial.ajax", "true")
@@ -56,15 +59,17 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
 
             Document document = connection.post();
             statusCode = connection.response().statusCode();
+            Log.d("FetchVehicleDetails: ","Response Status code:"+statusCode+document.getElementsByTag("table"));
 
-            if (Jsoup.parse(document.text()).body().getElementsByTag("table").size() != 0)
+            if (document.getElementsByTag("table").size() != 0)
             {
-                String location_raw = Jsoup.parse(document.text()).body().getElementsByTag("div").get(4).text();
+                String location_raw = document.getElementsByTag("div").get(4).text();
+                Log.d("FetchVehicleDetails", "Raw location: "+location_raw);
                 String location = "";
                 for (int i = 1; i < location_raw.split(",").length; i++)
                     location += location_raw.split(",")[i] + (i==1 ? "," : "");
 
-                Elements rows = Jsoup.parse(document.text()).body().getElementsByTag("table").get(0).getElementsByTag("tr");
+                Elements rows = document.getElementsByTag("table").get(0).getElementsByTag("tr");
                 String[] attributes = new String[8];
                 int j = 0;
                 for (Element r : rows)
@@ -75,22 +80,21 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
                         attributes[j++] = cols.get(i).text();
                 }
 
-                vehicle = new Vehicle(params[0]+params[1], attributes[7], attributes[6], attributes[5], attributes[3], attributes[2], attributes[4], location, attributes[1], true);
+                vehicle = new Vehicle(params[0]+params[1], attributes[7], attributes[6], attributes[5], attributes[3], attributes[2], attributes[4], location, attributes[1]);
             }
             else
             {
-                if(Jsoup.parse(document.text()).body().getElementsByClass("ui-messages-error-detail").size() != 0)
+                if(document.getElementsByClass("ui-messages-error-detail").size() != 0)
                     statusCode = CAPTCHA_FAILED;
-
                 vehicle = null;
             }
         }
-        catch (SocketTimeoutException e)
-        {
+        catch (SocketTimeoutException e){
             statusCode = SOCKET_TIMEOUT;
+            e.printStackTrace();
         }
         catch (IOException e) {e.printStackTrace();}
-        catch (ArrayIndexOutOfBoundsException e){ statusCode = TECHNICAL_DIFFICULTY; }
+        catch (ArrayIndexOutOfBoundsException e){ statusCode = TECHNICAL_DIFFICULTY;e.printStackTrace(); }
 
         return vehicle;
     }

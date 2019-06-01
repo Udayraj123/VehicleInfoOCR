@@ -2,6 +2,7 @@ package com.example.ocr;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,26 +46,21 @@ public class MainActivity extends AppCompatActivity {
     public final int ACTION_NULL = -1;
 
     //  ----- Instance Variables -----
+    private EditTextPicker edittext;
     private ImageView imageView;
     private Button searchBtn;
     private View vehicleDetails;
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
+    private EditText captchaInput;
     private com.example.ocr.util.SimplePermissions permHandler;
     private static String TAG = "MainActivity";
-
-    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = findViewById(R.id.captcha_img);
-        searchBtn = findViewById(R.id.search_btn);
-        vehicleDetails = findViewById(R.id.vehicle_details);
-        //FirebaseApp.initializeApp(this);
-
         preview = findViewById(R.id.camera_source_preview);
         if (preview == null) {
             Log.d(TAG, "Preview is null");
@@ -71,8 +69,24 @@ public class MainActivity extends AppCompatActivity {
         if (graphicOverlay == null) {
             Log.d(TAG, "graphicOverlay is null");
         }
+        imageView = findViewById(R.id.captcha_img);
+        vehicleDetails = findViewById(R.id.vehicle_details);
+        searchBtn = findViewById(R.id.search_btn);
+        searchBtn.setEnabled(false);
+        //FirebaseApp.initializeApp(this);
+        captchaInput = findViewById(R.id.captcha_input);
+        captchaInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if((event!=null&&(event.getKeyCode()==KeyEvent.KEYCODE_ENTER))||(actionId== EditorInfo.IME_ACTION_DONE)){
+                    searchBtn.performClick();
+                }
+                return false;
+            }
+        });
+        setSearchButtonListner();
         //Auto cap input
-        final EditTextPicker edittext = findViewById(R.id.vehicle_number);
+        edittext = findViewById(R.id.vehicle_number);
         edittext.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         edittext.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Checking permissions...", Toast.LENGTH_SHORT).show();
         permHandler = new com.example.ocr.util.SimplePermissions(this, new String[]{
                 // android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.CAMERA,
-                android.Manifest.permission.INTERNET,
-                android.Manifest.permission.ACCESS_NETWORK_STATE
+            android.Manifest.permission.CAMERA,
+            android.Manifest.permission.INTERNET,
+            android.Manifest.permission.ACCESS_NETWORK_STATE
         });
         // should usually be the last line in init
         permHandler.grantPermissions();
@@ -169,8 +183,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLoadingCaptcha() {
-        final EditText captchaInput = findViewById(R.id.captcha_input);
         captchaInput.setText("");
+        vehicleDetails.setVisibility(View.GONE);
+
         Log.d(TAG,"Started Loading Captcha");
         new GetCaptcha(new AsyncCaptchaResponse(){
             @Override
@@ -184,58 +199,17 @@ public class MainActivity extends AppCompatActivity {
                     // show drawer edge-
                     // drawer.setVisible(true)
 
-                    vehicleDetails.setVisibility(View.GONE);
-
                     //Done: preprocess the bitmap and pass to mlkit
                     captchaImage = Utils.preProcessBitmap(captchaImage);
                     Toast.makeText(MainActivity.this, "Captcha image processed", Toast.LENGTH_SHORT).show();
                     imageView.setImageBitmap(captchaImage);
                     String detectedCaptcha = cameraSource.frameProcessor.processBitmap(captchaImage,
-                            cameraSource.rotation, cameraSource.facing,graphicOverlay);
+                        cameraSource.rotation, cameraSource.facing,graphicOverlay);
                     if(captchaInput.getText().toString()=="")
                         captchaInput.setText(detectedCaptcha);
 
                     //TODO:  add Cancel button to drawer
-                    searchBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // drawer.dismiss();
-                            new FetchVehicleDetails(new AsyncResponse(){
-                                //uses most recent cookies and formnumber
-                                @Override
-                                public void processFinish(Vehicle vehicle, int statusCode) {
-                                    Toast.makeText(MainActivity.this, "Status code:"+statusCode, Toast.LENGTH_SHORT).show();
-                                    if (statusCode == OK) {
-                                        if (vehicle != null){
-                                            showVehicleDetails(vehicle);
-                                        }
-                                        else {
-                                            Log.d(TAG,"Vehicle details not found");
-                                            Toast.makeText(MainActivity.this, "Vehicle details not found.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                    //         else if (statusCode == CAPTCHA_LOAD_FAILED){
-                                    // // reload button?!
 
-                                    //         }
-                                    //         else if (statusCode == TECHNICAL_DIFFICULTY){
-                                    //                         // .title(R.string.error_technical_difficulty)
-
-                                    //         }
-                                    //         else if (statusCode == SOCKET_TIMEOUT){
-                                    //                 // slow internet
-                                    //         }
-                                    else
-                                    {
-                                        Log.d(TAG,"Internet Unavailable");
-                                        Toast.makeText(MainActivity.this, "Internet Unavailable", Toast.LENGTH_SHORT).show();
-                                        //no internet
-                                        // verify using isNetworkAvailable()
-                                    }
-                                }
-                            }).execute();
-                        }
-                    });
                 }
                 else{
                     Log.d(TAG,"Captcha Could not be loaded");
@@ -281,6 +255,58 @@ public class MainActivity extends AppCompatActivity {
                 stopCameraSource();
             }
         }
+    }
+    private void setSearchButtonListner() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
+                String result = edittext.getText().toString();
+                // drawer.dismiss();
+                new FetchVehicleDetails(new AsyncResponse(){
+                    //uses most recent cookies and formnumber
+                    @Override
+                    public void processFinish(Vehicle vehicle, int statusCode) {
+                        Log.d(TAG,"Finished Status code:"+statusCode);
+                        if (statusCode == OK) {
+                            if (vehicle != null){
+                                showVehicleDetails(vehicle);
+                            }
+                            else {
+                                String msg = "Vehicle details not found";
+                                Log.d(TAG,msg);
+                                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                
+                            }
+                        }
+                        else if (statusCode == CAPTCHA_LOAD_FAILED){
+                            // Done: reload button?!
+                            String msg = "Captcha Load Failed!";
+                            Log.d(TAG,msg);
+                            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                        else if (statusCode == TECHNICAL_DIFFICULTY){
+                            String msg = "Technical Difficulty. Failed to fetch from table!";
+                            Log.d(TAG,msg);
+                            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            // .title(R.string.error_technical_difficulty)
+
+                        }
+                        else if (statusCode == SOCKET_TIMEOUT){
+                            String msg = "Internet Timeout.. Slow internet?";
+                            Log.d(TAG,msg);
+                            Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            //no internet
+                            // verify using isNetworkAvailable()
+                            Log.d(TAG,"Internet Unavailable");
+                            Toast.makeText(MainActivity.this, "Internet Unavailable", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).execute(result.substring(0, result.length() - 4), result.substring(result.length() - 4), captchaInput.getText().toString());
+            }
+        });
     }
     private void stopCameraSource() {
         if (cameraSource != null) {

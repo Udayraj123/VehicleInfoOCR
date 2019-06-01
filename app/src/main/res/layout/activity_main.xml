@@ -39,6 +39,27 @@
         android:orientation="vertical"
         >
         <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+            <com.edittextpicker.aliazaz.EditTextPicker
+                android:id="@+id/vehicle_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:background="@drawable/rounded_edittext"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                app:defaultValue="null"
+                app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
+                app:required="true"
+                app:type="equal" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -53,7 +74,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:contentDescription="@string/captcha_img"
-                    android:src="@drawable/sample_captcha"
+                    android:src="@drawable/loading_captcha"
                     android:scaleType="fitXY"
                     />
             </LinearLayout>
@@ -69,12 +90,16 @@
                     android:id="@+id/captcha_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_edittext"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginEnd="10dp"
-                    />
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:imeOptions="actionDone"
+                    android:hint="Captcha code"
+                    android:maxLines="1"
+                    android:maxLength="5"
+                    android:textSize="20sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -409,26 +434,13 @@
                 android:layout_marginBottom="10dp"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:layout_weight="2"
+            android:layout_weight="0.6"
             android:gravity="center_vertical"
             android:orientation="vertical" >
-            <com.edittextpicker.aliazaz.EditTextPicker
-                android:id="@+id/vehicle_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapCharacters"
-                android:background="@drawable/rounded_edittext"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                app:defaultValue="null"
-                app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
-                app:required="true"
-                app:type="equal" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
