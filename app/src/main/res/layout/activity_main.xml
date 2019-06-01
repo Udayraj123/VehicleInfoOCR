@@ -65,7 +65,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="vertical" >
 
-                <com.edittextpicker.aliazaz.EditTextPicker
+                <EditText
                     android:id="@+id/captcha_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,9 +74,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp"
-                    app:defaultValue="abc12"
-                    app:required="true"
-                    app:type="equal" />
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -370,6 +368,28 @@
         <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+            <com.jackandphantom.androidlikebutton.AndroidLikeButton
+                android:id="@+id/flash_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:like_icon="@drawable/flash_on"
+                app:unlike_icon="@drawable/flash_off"
+                app:circle_startColor="@android:color/holo_orange_light"
+                app:circle_endColor="@android:color/holo_orange_dark"
+                app:dot_color_1="@android:color/white"
+                app:dot_color_2="@android:color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical" >
@@ -406,7 +426,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 app:defaultValue="null"
-                app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]+"
+                app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
                 app:required="true"
                 app:type="equal" />
         </LinearLayout>

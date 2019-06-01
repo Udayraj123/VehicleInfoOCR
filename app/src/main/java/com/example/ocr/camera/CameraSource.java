@@ -715,4 +715,16 @@ public class CameraSource {
     private void cleanScreen() {
         graphicOverlay.clear();
     }
+    //https://stackoverflow.com/questions/9723960/using-camera-led-flash-with-opencv-on-android
+    public void turnOffTheFlash() {
+        Camera.Parameters params = camera.getParameters();
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        camera.setParameters(params);
+    }
+
+    public void turnOnTheFlash() {
+        Camera.Parameters params = camera.getParameters();
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(params);
+    }
 }

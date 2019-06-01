@@ -17,7 +17,7 @@ import java.util.Map;
 public class GetCaptcha extends AsyncTask<String, Void, Bitmap>
 {
     private final String BASE_URL = "https://parivahan.gov.in";
-    private final String VEHICLE_URL="/rcdlstatus/vahan/rcstatus.xhtml";
+    private final String VEHICLE_URL="/rcdlstatus";
 
     private int statusCode;
     private AsyncCaptchaResponse response = null;
@@ -40,14 +40,14 @@ public class GetCaptcha extends AsyncTask<String, Void, Bitmap>
     @Override
     protected Bitmap doInBackground(String... params)
     {
-        try
-        {
+        try{
+            Log.d("GetCaptcha","Loading url: "+getAbsoluteURL(VEHICLE_URL));
             Connection.Response form = Jsoup.connect(getAbsoluteURL(VEHICLE_URL))
                     .method(Connection.Method.GET)
                     .timeout(10000)
                     .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
                     .execute();
-
+            Log.d("GetCaptcha","request Done");
             cookies = form.cookies();
 
             if((statusCode = form.statusCode()) == 200)

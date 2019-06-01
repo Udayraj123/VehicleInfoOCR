@@ -91,7 +91,7 @@ public class TextRecognitionProcessor {
     private void onSuccess( @NonNull FirebaseVisionText results, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
 
         //TODO: set a public variable from here containing the "main" text. ( for captcha)
-        // majorText = "?"
+         majorText = "?";
 
         graphicOverlay.clear();
 
@@ -102,6 +102,8 @@ public class TextRecognitionProcessor {
             for (int j = 0; j < lines.size(); j++) {
                 List<FirebaseVisionText.Element> elements = lines.get(j).getElements();
                 for (int k = 0; k < elements.size(); k++) {
+                    majorText = elements.get(k).toString();
+                    Log.d(TAG,"Read: "+majorText);
                     GraphicOverlay.Graphic textGraphic = new TextGraphic(graphicOverlay, elements.get(k));
                     graphicOverlay.add(textGraphic);
 

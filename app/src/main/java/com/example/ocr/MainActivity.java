@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,16 +81,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-            @Override public void afterTextChanged(Editable et) {} 
+            @Override public void afterTextChanged(Editable et) {}
         });
 
         //Done: add permission handler from omr here
         Toast.makeText(MainActivity.this, "Checking permissions...", Toast.LENGTH_SHORT).show();
         permHandler = new com.example.ocr.util.SimplePermissions(this, new String[]{
                 // android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.CAMERA,
-            android.Manifest.permission.INTERNET,
-            android.Manifest.permission.ACCESS_NETWORK_STATE
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.INTERNET,
+                android.Manifest.permission.ACCESS_NETWORK_STATE
         });
         // should usually be the last line in init
         permHandler.grantPermissions();
@@ -121,6 +122,19 @@ public class MainActivity extends AppCompatActivity {
                             startCameraSource();
                         }
                     });
+                }
+            });
+
+            AndroidLikeButton flashBtn = findViewById(R.id.flash_btn);
+            flashBtn.setOnLikeEventListener(new AndroidLikeButton.OnLikeEventListener() {
+                @Override
+                public void onLikeClicked(AndroidLikeButton androidLikeButton) {
+                    if(cameraSource!=null)
+                        cameraSource.turnOnTheFlash();
+                }
+                public void onUnlikeClicked(AndroidLikeButton androidLikeButton){
+                    if(cameraSource!=null)
+                        cameraSource.turnOffTheFlash();
                 }
             });
             startLoadingCaptcha();
@@ -155,13 +169,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLoadingCaptcha() {
+        final EditText captchaInput = findViewById(R.id.captcha_input);
+        captchaInput.setText("");
         Log.d(TAG,"Started Loading Captcha");
         new GetCaptcha(new AsyncCaptchaResponse(){
             @Override
             public void processFinish(Bitmap captchaImage, int statuscode) {
                 Toast.makeText(MainActivity.this, "Sent Request", Toast.LENGTH_SHORT).show();
-                //TEMP TEST LINE
-                captchaImage = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                 if (captchaImage != null){
                     Log.d(TAG,"Received Captcha");
                     Toast.makeText(MainActivity.this, "Captcha image loaded", Toast.LENGTH_SHORT).show();
@@ -178,18 +192,19 @@ public class MainActivity extends AppCompatActivity {
                     imageView.setImageBitmap(captchaImage);
                     String detectedCaptcha = cameraSource.frameProcessor.processBitmap(captchaImage,
                             cameraSource.rotation, cameraSource.facing,graphicOverlay);
-                    final EditTextPicker captchaInput = findViewById(R.id.captcha_input);
-                    captchaInput.setText(detectedCaptcha);
+                    if(captchaInput.getText().toString()=="")
+                        captchaInput.setText(detectedCaptcha);
 
                     //TODO:  add Cancel button to drawer
                     searchBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                                // drawer.dismiss();
+                            // drawer.dismiss();
                             new FetchVehicleDetails(new AsyncResponse(){
-                                    //uses most recent cookies and formnumber
+                                //uses most recent cookies and formnumber
                                 @Override
                                 public void processFinish(Vehicle vehicle, int statusCode) {
+                                    Toast.makeText(MainActivity.this, "Status code:"+statusCode, Toast.LENGTH_SHORT).show();
                                     if (statusCode == OK) {
                                         if (vehicle != null){
                                             showVehicleDetails(vehicle);
@@ -199,23 +214,23 @@ public class MainActivity extends AppCompatActivity {
                                             Toast.makeText(MainActivity.this, "Vehicle details not found.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
-                                            //         else if (statusCode == CAPTCHA_LOAD_FAILED){
-                                            // // reload button?!
+                                    //         else if (statusCode == CAPTCHA_LOAD_FAILED){
+                                    // // reload button?!
 
-                                            //         }
-                                            //         else if (statusCode == TECHNICAL_DIFFICULTY){
-                                            //                         // .title(R.string.error_technical_difficulty)
+                                    //         }
+                                    //         else if (statusCode == TECHNICAL_DIFFICULTY){
+                                    //                         // .title(R.string.error_technical_difficulty)
 
-                                            //         }
-                                            //         else if (statusCode == SOCKET_TIMEOUT){
-                                            //                 // slow internet
-                                            //         }
+                                    //         }
+                                    //         else if (statusCode == SOCKET_TIMEOUT){
+                                    //                 // slow internet
+                                    //         }
                                     else
                                     {
                                         Log.d(TAG,"Internet Unavailable");
                                         Toast.makeText(MainActivity.this, "Internet Unavailable", Toast.LENGTH_SHORT).show();
-                                            //no internet
-                                                // verify using isNetworkAvailable()
+                                        //no internet
+                                        // verify using isNetworkAvailable()
                                     }
                                 }
                             }).execute();

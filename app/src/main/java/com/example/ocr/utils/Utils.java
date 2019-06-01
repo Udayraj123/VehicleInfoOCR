@@ -51,13 +51,14 @@ public class Utils {
     }
 
     private static void preProcessMat(Mat processedMat ){
+        normalize(processedMat);
+        Imgproc.threshold(processedMat,processedMat,TRUNC_THRESH,255,Imgproc.THRESH_TRUNC);
+
         if(KSIZE_BLUR > 0) {
             Imgproc.blur(processedMat, processedMat, new Size(KSIZE_BLUR, KSIZE_BLUR));
         }
-        normalize(processedMat);
-        Imgproc.threshold(processedMat,processedMat,TRUNC_THRESH,255,Imgproc.THRESH_TRUNC);
-        normalize(processedMat);
-        morph(processedMat);
+        //        normalize(processedMat);
+//        morph(processedMat);
 //        return processedMat;
     }
 
