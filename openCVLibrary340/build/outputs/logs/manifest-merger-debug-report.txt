@@ -1,5 +1,6 @@
 -- Merging decision tree log ---
 manifest
+<<<<<<< HEAD
 ADDED from /home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/main/AndroidManifest.xml:2:1-7:12
 INJECTED from /home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/main/AndroidManifest.xml:2:1-7:12
 INJECTED from /home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/main/AndroidManifest.xml:2:1-7:12
@@ -35,3 +36,40 @@ INJECTED from /home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/m
 		INJECTED from /home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/main/AndroidManifest.xml
 		ADDED from /home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/main/AndroidManifest.xml
 		INJECTED from /home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/main/AndroidManifest.xml
+=======
+ADDED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:1-7:12
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:1-7:12
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:1-7:12
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:1-7:12
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:1-7:12
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:1-7:12
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:1-7:12
+	package
+		ADDED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:3:7-27
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:5:7-34
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml:4:7-33
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+uses-sdk
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+		ADDED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+		ADDED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\AndroidManifest.xml
+>>>>>>> e772450e3e0a831ba456388a8cfc7029d4306138
