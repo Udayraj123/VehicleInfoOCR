@@ -3,6 +3,6 @@
 //Nope, seems to crash coz of high rate?!-  First display the candidate text immediately
 // show concatenated filtered text into vehicle number
 
-TUNE OPENCV PARAMS
+// TUNE OPENCV PARAMS
 add gui to swipe over them to toggle selection
 search button hides the swiping gui

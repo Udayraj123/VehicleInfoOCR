@@ -6,10 +6,14 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import java.io.File;
+
+import static org.opencv.core.Core.BORDER_CONSTANT;
+import static org.opencv.core.Core.copyMakeBorder;
 
 /**
  * This class provides utilities for camera.
@@ -17,71 +21,57 @@ import java.io.File;
 
 public class Utils {
     private static final String TAG = Utils.class.getSimpleName();
-    private static int KSIZE_BLUR = 3;
-    private static int KSIZE_CLOSE = 10;
-    private static int GAMMA_HIGH = 125 ;
-    private static int CANNY_THRESHOLD_L = 85;
-    private static int CANNY_THRESHOLD_U = 185;
-    private static int TRUNC_THRESH = 100;
-    private static int ZERO_THRESH = 155;
+    private static int U_WIDTH = 300;
+    private static int KSIZE_CLOSE = 5;
+    private static int KSIZE_BLUR = 5;
+    private static int TRUNC_THRESH = 60;
+    private static int ZERO_THRESH = 30;
 
     public static Bitmap preProcessBitmap(Bitmap image){
         Mat inputMat = new Mat();//image.getHeight(),image.getWidth(),CvType.CV_8UC1);
         org.opencv.android.Utils.bitmapToMat(image, inputMat);
-        Utils.preProcessMat(inputMat);
-        Bitmap outImage = Bitmap.createBitmap(image.getWidth(),image.getHeight(), Bitmap.Config.ARGB_8888);
+        inputMat = Utils.preProcessMat(inputMat);
+        Bitmap outImage = Bitmap.createBitmap(inputMat.width(),inputMat.height(), Bitmap.Config.ARGB_8888);
         org.opencv.android.Utils.matToBitmap(inputMat, outImage);
         inputMat.release();
         return outImage;
     }
-    private static byte saturate(double val) {
-        int iVal = (int) Math.round(val);
-        iVal = iVal > 255 ? 255 : (iVal < 0 ? 0 : iVal);
-        return (byte) iVal;
-    }
-
-    private static void gamma(Mat mat, double gammaValue){
-        Mat lookUpTable = new Mat(1, 256, CvType.CV_8U);
-        byte[] lookUpTableData = new byte[(int) (lookUpTable.total()*lookUpTable.channels())];
-        for (int i = 0; i < lookUpTable.cols(); i++) {
-            lookUpTableData[i] = saturate(Math.pow(i / 255f, 1f/gammaValue) * 255f);
-        }
-        lookUpTable.put(0, 0, lookUpTableData);
-        Core.LUT(mat, lookUpTable, mat);
-    }
-
-    private static void preProcessMat(Mat processedMat ){
-        normalize(processedMat);
-        Imgproc.threshold(processedMat,processedMat,TRUNC_THRESH,255,Imgproc.THRESH_TRUNC);
-
+    private static Mat morph_kernel = new Mat(new Size(1, KSIZE_CLOSE), CvType.CV_8UC1, new Scalar(255));
+    
+    private static Mat preProcessMat(Mat processedMat ){
+        resize_util_inplace(processedMat, U_WIDTH);
         if(KSIZE_BLUR > 0) {
             Imgproc.blur(processedMat, processedMat, new Size(KSIZE_BLUR, KSIZE_BLUR));
         }
-        //        normalize(processedMat);
-//        morph(processedMat);
-//        return processedMat;
-    }
-
-    private static void normalize(Mat processedMat){
+        Imgproc.threshold(processedMat,processedMat,TRUNC_THRESH,255,Imgproc.THRESH_TRUNC);
         Core.normalize(processedMat, processedMat, 0, 255, Core.NORM_MINMAX);
-    }
-
-    // private static void threshBinary(Mat processedMat) {
-    //     Imgproc.threshold(processedMat, processedMat, CANNY_THRESH, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
-    // }
-    private static void canny(Mat processedMat) {
-        Imgproc.Canny(processedMat, processedMat, CANNY_THRESHOLD_U, CANNY_THRESHOLD_L);
-        // threshBinary(processedMat);
-    }
-    private static Mat morph_kernel = new Mat(new Size(KSIZE_CLOSE, KSIZE_CLOSE), CvType.CV_8UC1, new Scalar(255));
-
-    private static void thresh(Mat processedMat) {
         Imgproc.threshold(processedMat,processedMat,ZERO_THRESH,255,Imgproc.THRESH_TOZERO);
+        Imgproc.morphologyEx(processedMat, processedMat, Imgproc.MORPH_CLOSE, morph_kernel, new Point(-1,-1),1);
+        Imgproc.dilate(processedMat,processedMat,Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(5,5)));
+        Imgproc.erode(processedMat,processedMat,Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3,3)));
+        //pad at last
+        Mat padded = new Mat();
+        int padding = 10;//U_WIDTH/3;
+        copyMakeBorder(processedMat,padded,padding,padding,padding,padding,BORDER_CONSTANT,new Scalar(255,255,255));
+        processedMat.release();
+        return padded;
     }
-    private static void morph(Mat processedMat) {
-        // reduce noisy lines
-        Imgproc.morphologyEx(processedMat, processedMat, Imgproc.MORPH_OPEN, morph_kernel, new Point(-1,-1),1);
+    public static void resize_util_inplace(Mat image, int u_width, int u_height) {
+        Size sz = new Size(u_width,u_height);
+        if(image.cols() > u_width)
+                // for downscaling
+            Imgproc.resize(image,image ,sz, 0,0 ,Imgproc.INTER_AREA);
+        else
+                // for upscaling
+            Imgproc.resize(image,image ,sz, 0,0 ,Imgproc.INTER_CUBIC);
     }
+
+    public static void resize_util_inplace(Mat image, int u_width) {
+        if(image.cols() == 0)return;
+        int u_height = (image.rows() * u_width)/image.cols();
+        resize_util_inplace(image,u_width,u_height);
+    }
+
     private static void logShape(String name, Mat m) {
         Log.d("custom"+TAG, "matrix: "+name+" shape: "+m.rows()+"x"+m.cols());
     }
@@ -92,7 +82,7 @@ public class Utils {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
         return BitmapFactory.decodeFile(new File(path, imageName).getAbsolutePath(),
-                options);
+            options);
     }
 
 }

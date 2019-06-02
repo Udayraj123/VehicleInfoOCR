@@ -201,11 +201,18 @@ public class MainActivity extends AppCompatActivity {
                     // show drawer edge-
                     // drawer.setVisible(true)
 
-                    //Done: preprocess the bitmap and pass to mlkit
-                    captchaImage = Utils.preProcessBitmap(captchaImage);
-                    Toast.makeText(MainActivity.this, "Captcha image processed", Toast.LENGTH_SHORT).show();
                     imageView.setImageBitmap(captchaImage);
-                    String detectedCaptcha = cameraSource.frameProcessor.processBitmap(captchaImage, cameraSource.rotation, cameraSource.facing,graphicOverlay);
+                    //Done: preprocess the bitmap and pass to mlkit
+                    final Bitmap processedCaptchaImage = Utils.preProcessBitmap(captchaImage);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "Captcha image processed", Toast.LENGTH_SHORT).show();
+                            imageView.setImageBitmap(processedCaptchaImage);
+                        }
+                    },1000);
+                    String detectedCaptcha = cameraSource.frameProcessor.processBitmap(processedCaptchaImage, cameraSource.rotation, cameraSource.facing,graphicOverlay);
+
                     // if(captchaInput.getText().toString()=="")
                     captchaInput.setText(detectedCaptcha);
 
