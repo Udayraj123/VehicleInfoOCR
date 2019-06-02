@@ -39,7 +39,7 @@
         android:orientation="vertical"
         >
         <LinearLayout
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_width="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical" >
@@ -49,17 +49,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_edittext"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginEnd="40dp"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
                 android:inputType="textFilter"
-                android:text="MH12CD8039"
+                android:hint="MH12CD8039"
                 app:defaultValue="null"
                 app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
                 app:required="true"
-                app:type="equal" />
+                app:type="equal"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -94,9 +97,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/rounded_edittext"
                     android:imeOptions="actionDone"
                     android:hint="Captcha code"
@@ -123,7 +126,7 @@
 
         <LinearLayout
             android:id="@+id/vehicle_details"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/margin_normal"
@@ -151,6 +154,44 @@
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_normal"
+                android:paddingBottom="@dimen/margin_medium"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/margin_medium"
+                        android:text="@string/card_header_owner"
+                        android:textSize="@dimen/font_normal" />
+
+                    <TextView
+                        android:id="@+id/vehicle_owner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/divider" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -300,37 +341,6 @@
                 android:paddingTop="@dimen/margin_medium"
                 android:paddingBottom="@dimen/margin_normal"
                 android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:paddingBottom="@dimen/margin_medium"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:text="@string/card_header_owner"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:textColor="@android:color/black"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:id="@+id/vehicle_owner"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/divider"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
