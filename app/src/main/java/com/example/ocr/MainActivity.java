@@ -1,5 +1,8 @@
 package com.example.ocr;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.nfc.Tag;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -313,5 +317,32 @@ public class MainActivity extends AppCompatActivity {
             cameraSource.release();
             cameraSource = null;
         }
+    }
+
+    public void cpno(View view) {
+        ImageButton b = (ImageButton) findViewById(R.id.vhecp);
+        if (edittext.getText().toString() != null) {
+            b.setVisibility(View.VISIBLE);
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Vehicle Number", edittext.getText().toString());
+        }
+        else{
+            b.setVisibility(View.GONE);
+        }
+    }
+
+    public void detailscp(View view) {
+        TextView t1,t2,t3,t4,t5,t6,t7,t8;
+        t1=(TextView)findViewById(R.id.vehicle_name);
+        t2=(TextView)findViewById(R.id.vehicle_owner);
+        t3=(TextView)findViewById(R.id.vehicle_fuel);
+        t4=(TextView)findViewById(R.id.vehicle_cc);
+        t5=(TextView)findViewById(R.id.vehicle_engine);
+        t6=(TextView)findViewById(R.id.vehicle_chasis);
+        t7=(TextView)findViewById(R.id.vehicle_location);
+        t8=(TextView)findViewById(R.id.vehicle_expiry);
+        String s="Vehicle Number : "+edittext.getText().toString()+"\n Vehicle Name : "+t1.getText().toString()+"\n Owner Name : "+t2.getText().toString()+"\n Fuel Type : "+t3.getText().toString()+"\n Displacement : "+t4.getText().toString()+"\n Engine Number : "+t5.getText().toString()+"\n Chasis Number : "+t6.getText().toString()+"\n Location : "+t7.getText().toString()+"\n Expiry On : "+t8.getText().toString();
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Vehicle details", s);
     }
 }

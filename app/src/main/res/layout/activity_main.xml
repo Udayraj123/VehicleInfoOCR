@@ -44,25 +44,38 @@
             android:gravity="center_vertical"
             android:orientation="vertical" >
             <!--android:inputType="textCapCharacters"-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
             <com.edittextpicker.aliazaz.EditTextPicker
                 android:id="@+id/vehicle_number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_edittext"
-                android:layout_marginLeft="40dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/rounded_edittext"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-                android:inputType="textFilter"
                 android:hint="MH12CD8039"
+                android:textAlignment="center"
+                android:inputType="textFilter"
+                android:singleLine="true"
+                android:textSize="20sp"
                 app:defaultValue="null"
                 app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
                 app:required="true"
-                app:type="equal"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                />
+                app:type="equal" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_content_copy_black_24dp"
+                android:layout_alignRight="@id/vehicle_number"
+                android:onClick="cpno"
+                android:layout_marginTop="2dp"
+                android:id="@+id/vhecp"
+                android:visibility="gone"/>
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -97,9 +110,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/rounded_edittext"
                     android:imeOptions="actionDone"
                     android:hint="Captcha code"
@@ -126,12 +139,11 @@
 
         <LinearLayout
             android:id="@+id/vehicle_details"
-            android:visibility="gone"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin_normal"
             android:layout_height="wrap_content"
-            >
+            android:layout_marginTop="@dimen/margin_normal"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -157,9 +169,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/margin_normal"
-                android:paddingBottom="@dimen/margin_medium"
-                android:orientation="horizontal">
+                android:paddingBottom="@dimen/margin_medium">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -187,17 +199,19 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
-                android:background="@color/divider"/>
+                android:background="@color/divider" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/margin_normal"
-                android:paddingBottom="@dimen/margin_medium"
-                android:orientation="horizontal">
+                android:paddingBottom="@dimen/margin_medium">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -224,33 +238,35 @@
                         android:textSize="@dimen/font_normal" />
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/divider"/>
+                    android:background="@color/divider" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingBottom="@dimen/margin_medium"
-                        android:textSize="@dimen/font_normal"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:text="@string/card_header_cc"/>
+                        android:text="@string/card_header_cc"
+                        android:textSize="@dimen/font_normal" />
 
                     <TextView
+                        android:id="@+id/vehicle_cc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:textColor="@android:color/black"
-                        android:gravity="center"
                         android:layout_weight="1"
-                        android:id="@+id/vehicle_cc"/>
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_normal" />
 
                 </LinearLayout>
 
@@ -260,7 +276,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
-                android:background="@color/divider"/>
+                android:background="@color/divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -295,17 +311,20 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/divider"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:background="@color/divider" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/margin_medium"
                 android:paddingBottom="@dimen/margin_medium">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -337,14 +356,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/divider"/>
+                android:background="@color/divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/margin_medium"
-                android:paddingBottom="@dimen/margin_normal"
-                android:orientation="horizontal">
+                android:paddingBottom="@dimen/margin_normal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -355,20 +374,20 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:paddingBottom="@dimen/margin_medium"
-                        android:gravity="center"
                         android:layout_weight="1"
-                        android:text="@string/card_header_location"/>
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/margin_medium"
+                        android:text="@string/card_header_location"
+                        android:textSize="@dimen/font_normal" />
 
                     <TextView
+                        android:id="@+id/vehicle_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:textColor="@android:color/black"
-                        android:gravity="center"
                         android:layout_weight="1"
-                        android:id="@+id/vehicle_location"/>
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_normal" />
 
                 </LinearLayout>
 
@@ -380,15 +399,23 @@
                 android:background="@color/expiry">
 
                 <TextView
+                    android:id="@+id/vehicle_expiry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_horizontal"
                     android:paddingTop="@dimen/margin_normal"
                     android:paddingBottom="@dimen/margin_normal"
-                    android:gravity="center_horizontal"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/background"
-                    android:textSize="@dimen/font_normal"
-                    android:id="@+id/vehicle_expiry"/>
+                    android:textSize="@dimen/font_normal" />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_content_copy_black_24dp"
+                    android:onClick="detailscp"
+                    android:layout_alignRight="@id/vehicle_expiry"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp" />
 
             </RelativeLayout>
 
