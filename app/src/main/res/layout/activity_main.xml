@@ -43,16 +43,19 @@
             android:layout_width="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical" >
+            <!--android:inputType="textCapCharacters"-->
             <com.edittextpicker.aliazaz.EditTextPicker
                 android:id="@+id/vehicle_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapCharacters"
                 android:background="@drawable/rounded_edittext"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+                android:inputType="textFilter"
+                android:text="MH12CD8039"
                 app:defaultValue="null"
                 app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
                 app:required="true"

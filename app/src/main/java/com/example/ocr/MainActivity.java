@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.captcha_img);
         vehicleDetails = findViewById(R.id.vehicle_details);
         searchBtn = findViewById(R.id.search_btn);
-        searchBtn.setEnabled(false);
         //FirebaseApp.initializeApp(this);
         captchaInput = findViewById(R.id.captcha_input);
         captchaInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -97,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             @Override public void afterTextChanged(Editable et) {}
         });
+        searchBtn.setEnabled(edittext.isTextEqualToPattern());
 
         //Done: add permission handler from omr here
         Toast.makeText(MainActivity.this, "Checking permissions...", Toast.LENGTH_SHORT).show();
