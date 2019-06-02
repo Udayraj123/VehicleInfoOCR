@@ -3,6 +3,7 @@ package com.example.ocr;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,11 +26,16 @@ import com.example.ocr.Jsoup.GetCaptcha;
 import com.example.ocr.Jsoup.Vehicle;
 
 import java.io.IOException;
+import java.util.List;
+
 import com.example.ocr.text_detection.*;
 import com.example.ocr.camera.*;
 import com.example.ocr.others.*;
 import com.example.ocr.utils.Utils;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.jackandphantom.androidlikebutton.AndroidLikeButton;
+
+import br.vince.owlbottomsheet.OwlBottomSheet;
 
 public class MainActivity extends AppCompatActivity {
     static {
@@ -44,9 +50,13 @@ public class MainActivity extends AppCompatActivity {
 
     //  ----- Instance Variables -----
     // private EditTextPicker vehicleNumber;
+
+    // the bottom sheet
+    private OwlBottomSheet mBottomSheet;
     private EditText vehicleNumber;
     private ImageView imageView;
     private Button searchBtn;
+    private View bottomSheetView;
     private View vehicleDetails;
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
@@ -67,11 +77,15 @@ public class MainActivity extends AppCompatActivity {
         if (graphicOverlay == null) {
             Log.d(TAG, "graphicOverlay is null");
         }
-        imageView = findViewById(R.id.captcha_img);
-        vehicleDetails = findViewById(R.id.vehicle_details);
-        searchBtn = findViewById(R.id.search_btn);
+        mBottomSheet = findViewById(R.id.owl_bottom_sheet);
+        setupView();
+        imageView = bottomSheetView.findViewById(R.id.captcha_img);
+        vehicleDetails = bottomSheetView.findViewById(R.id.vehicle_details);
+        searchBtn = bottomSheetView.findViewById(R.id.search_btn);
+
         //FirebaseApp.initializeApp(this);
-        captchaInput = findViewById(R.id.captcha_input);
+
+        captchaInput = bottomSheetView.findViewById(R.id.captcha_input);
         captchaInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -83,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         });
         setSearchButtonListener();
         //Auto cap input
-        vehicleNumber = findViewById(R.id.vehicle_plate);
-        // vehicleNumber.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        vehicleNumber = bottomSheetView.findViewById(R.id.vehicle_plate);
+        vehicleNumber.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         vehicleNumber.addTextChangedListener(new TextWatcher() {
             @Override public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             @Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
@@ -179,9 +193,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // collapse bottom sheet when back button pressed
+    @Override
+    public void onBackPressed() {
+        if (!mBottomSheet.isExpanded()){
+            // warningBack = true, set timer
+            super.onBackPressed();
+        }
+        else
+            mBottomSheet.collapse();
+    }
+
+    // basic usage
+    private void setupView() {
+    
+        //used to calculate some animations. it's required
+        mBottomSheet.setActivityView(this);
+        
+        //icon to show in collapsed sheet
+        mBottomSheet.setIcon(R.drawable.bubble2);
+
+        //bottom sheet color
+        mBottomSheet.setBottomSheetColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+
+        //view shown in bottom sheet
+        mBottomSheet.attachContentView(R.layout.main_content);
+        bottomSheetView = mBottomSheet.getContentView();
+        //getting close button from view shown
+        bottomSheetView.findViewById(R.id.vehicle_details_close_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mBottomSheet.collapse();
+                }});
+    }
+
     private void confirmVehicleNumber() {
         if (cameraSource != null) {
         // show overlay display here
+            List<FirebaseVisionText.TextBlock> textBlocks = cameraSource.frameProcessor.textBlocks;
+            for (int i = 0; i < textBlocks.size(); i++) {
+
+            }
         }
     }
     private void startLoadingCaptcha() {

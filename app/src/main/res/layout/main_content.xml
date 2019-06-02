@@ -1,0 +1,141 @@
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
+    android:orientation="vertical"
+    android:layout_gravity="bottom|center_horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/vehicle_details"
+        android:id="@+id/vehicle_details"
+        android:layout_above="@+id/layout_vehicle_plate"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        />
+    <LinearLayout
+        android:id="@+id/layout_vehicle_plate"
+        android:layout_above="@+id/layout_captcha"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_vertical"
+        >
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            >
+        </LinearLayout>
+        <!-- <com.edittextpicker.aliazaz.EditTextPicker -->
+        <EditText
+            android:id="@+id/vehicle_plate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edittext"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:inputType="textCapCharacters"
+            />
+        <!-- app:defaultValue="null"
+        app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
+        app:required="true"
+        app:type="equal"  -->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_captcha"
+        android:layout_above="@+id/layout_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical" >
+            <ImageView
+                android:id="@+id/captcha_img"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:contentDescription="@string/captcha_img"
+                android:src="@drawable/loading_captcha"
+                android:scaleType="fitXY"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/captcha_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_edittext"
+                android:imeOptions="actionDone"
+                android:hint="Captcha code"
+                android:maxLines="1"
+                android:maxLength="5"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_close"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="end"
+        android:orientation="horizontal"
+        >
+            <Button
+                android:id="@+id/search_btn"
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+android:layout_marginEnd="15dp"
+android:layout_marginRight="15dp"
+                android:text="@string/search"
+                />
+    <Button
+        android:id="@+id/vehicle_details_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:background="@drawable/circle"
+        />
+    </LinearLayout>
+</RelativeLayout>
+

@@ -47,30 +47,30 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
     {
         try
         {
-            Connection connection = Jsoup.connect(getAbsoluteURL(VEHICLE_URL))
-            // .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
-            .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
-            // .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
-            // .header("Faces-Request","partial/ajax")
-            // .header("Accept","application/xml, text/xml, */*; q=0.01")
-            // .header("Accept-Encoding","gzip, deflate, br")
+            // .data("javax.faces.partial.render", "rc_Form:rcPanel") <-- changed
+            // .data("form_rcdl:j_idt24:CaptchaID", params[2]) <-- param changes!
+            Connection connection = Jsoup.connect("https://parivahan.gov.in/rcdlstatus/vahan/rcDlHome.xhtml")
+            .userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0")
+            .header("Accept","application/xml, text/xml, */*; q=0.01")
+            .header("Accept-Language","en-US,en;q=0.5")
+            .header("Accept-Encoding","gzip, deflate, br")
+            .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
+            .header("Faces-Request","partial/ajax")
+            .header("X-Requested-With","XMLHttpRequest")
+            .cookies(GetCaptcha.cookies) // cookies verified
             .data("javax.faces.partial.ajax", "true")
             .data("javax.faces.source", GetCaptcha.formNumber)
             .data("javax.faces.partial.execute", "@all")
-            // .data("javax.faces.partial.render", "rc_Form:rcPanel") <-- changed
             .data("javax.faces.partial.render", "form_rcdl:pnl_show+form_rcdl:pg_show+form_rcdl:rcdl_pnl")
-            .data(GetCaptcha.formNumber, GetCaptcha.formNumber) //<- currently t42
-            // .data("rc_Form", "rc_Form") <-- changed now
+            .data(GetCaptcha.formNumber, GetCaptcha.formNumber)
             .data("form_rcdl", "form_rcdl")
             .data("form_rcdl:tf_reg_no1", params[0])
             .data("form_rcdl:tf_reg_no2", params[1])
-            // .data("form_rcdl:j_idt24:CaptchaID", params[2]) <-- param changes!
             .data("form_rcdl:j_idt32:CaptchaID", params[2])
             .data("javax.faces.ViewState", GetCaptcha.viewState)
-            .timeout(10000)
-            .cookies(GetCaptcha.cookies);
+            .timeout(10000);
+
             Log.d(TAG,"Sending Post request :" + connection.request().data());
-            // ^better use a .submit method!
             Document document = connection.post();
             statusCode = connection.response().statusCode();
             Log.d(TAG,"Response Status code:"+statusCode);

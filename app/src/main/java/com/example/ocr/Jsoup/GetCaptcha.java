@@ -17,7 +17,7 @@ import java.util.Map;
 public class GetCaptcha extends AsyncTask<String, Void, Bitmap>
 {
     private final String BASE_URL = "https://parivahan.gov.in";
-    private final String VEHICLE_URL="/rcdlstatus";
+    private final String VEHICLE_URL="/rcdlstatus/vahan/rcDlHome.xhtml";
 
     private int statusCode;
     private AsyncCaptchaResponse response = null;

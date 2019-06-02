@@ -2,6 +2,7 @@
     <string name="app_name">Vehicle Info Camera</string>
     <string name="ok">OK</string>
     <string name="search">Search</string>
+    <string name="close">Close</string>
     <string name="captcha_img">Captcha here</string>
 
 

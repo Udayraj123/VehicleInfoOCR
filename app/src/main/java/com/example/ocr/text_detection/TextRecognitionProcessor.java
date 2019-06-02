@@ -31,6 +31,7 @@ public class TextRecognitionProcessor {
     private final FirebaseVisionTextRecognizer detector;
     public String allText="";
     public String majorText="";
+    public List<FirebaseVisionText.TextBlock> textBlocks;
     // Whether we should ignore process(). This is usually caused by feeding input data faster than
     // the model can handle.
     private final AtomicBoolean shouldThrottle = new AtomicBoolean(false);
@@ -118,10 +119,10 @@ public class TextRecognitionProcessor {
         //Done: set a public variable from here containing the "main" text. ( for captcha)
      graphicOverlay.clear();
      allText = "";
-     List<FirebaseVisionText.TextBlock> blocks = results.getTextBlocks();
+     textBlocks = results.getTextBlocks();
 
-     for (int i = 0; i < blocks.size(); i++) {
-        List<FirebaseVisionText.Line> lines = blocks.get(i).getLines();
+     for (int i = 0; i < textBlocks.size(); i++) {
+        List<FirebaseVisionText.Line> lines = textBlocks.get(i).getLines();
         for (int j = 0; j < lines.size(); j++) {
             List<FirebaseVisionText.Element> elements = lines.get(j).getElements();
             for (int k = 0; k < elements.size(); k++) {
@@ -131,8 +132,8 @@ public class TextRecognitionProcessor {
             autoUpdateMajorText(lines.get(j).getText());
         }
         //preference to block than line VERIFY?!
-        autoUpdateMajorText(blocks.get(i).getText());
-        allText += blocks.get(i).getText();
+        autoUpdateMajorText(textBlocks.get(i).getText());
+        allText += textBlocks.get(i).getText();
     }
     Log.d(TAG,"Success read: "+allText);
     allText = numPlateFilter(allText);
