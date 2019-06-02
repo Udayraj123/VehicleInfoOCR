@@ -187,11 +187,11 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <view
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
-                android:background="@color/background"/>
+                android:background="@color/divider"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -202,28 +202,32 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:paddingBottom="@dimen/margin_medium"
-                        android:textSize="@dimen/font_normal"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:text="@string/card_header_fuel"/>
+                        android:text="@string/card_header_fuel"
+                        android:textSize="@dimen/font_normal" />
 
                     <TextView
+                        android:id="@+id/vehicle_fuel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:textColor="@android:color/black"
-                        android:gravity="center"
                         android:layout_weight="1"
-                        android:id="@+id/vehicle_fuel"/>
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_normal" />
 
                 </LinearLayout>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/divider"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -261,40 +265,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingTop="@dimen/margin_medium"
-                android:paddingBottom="@dimen/margin_medium"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/margin_medium"
-                        android:textSize="@dimen/font_normal"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:text="@string/card_header_engine"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:textColor="@android:color/black"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:id="@+id/vehicle_engine"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/divider"/>
+                android:paddingBottom="@dimen/margin_medium">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -305,20 +278,57 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/margin_medium"
-                        android:textSize="@dimen/font_normal"
-                        android:gravity="center"
                         android:layout_weight="1"
-                        android:text="@string/card_header_chassis"/>
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/margin_medium"
+                        android:text="@string/card_header_engine"
+                        android:textSize="@dimen/font_normal" />
+
+                    <TextView
+                        android:id="@+id/vehicle_engine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_normal" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_normal"
-                        android:textColor="@android:color/black"
-                        android:gravity="center"
                         android:layout_weight="1"
-                        android:id="@+id/vehicle_chasis"/>
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/margin_medium"
+                        android:text="@string/card_header_chassis"
+                        android:textSize="@dimen/font_normal" />
+
+                    <TextView
+                        android:id="@+id/vehicle_chasis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_normal" />
 
                 </LinearLayout>
 
