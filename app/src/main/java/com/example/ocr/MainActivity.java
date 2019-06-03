@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = bottomSheetView.findViewById(R.id.captcha_img);
         vehicleDetails = bottomSheetView.findViewById(R.id.vehicle_details);
         searchBtn = bottomSheetView.findViewById(R.id.search_btn);
+        camBtn = findViewById(R.id.cam_btn);
         setCaptchaInputListeners();
         setSearchButtonListeners();
         setVehicleNumListeners();
@@ -110,13 +111,13 @@ public class MainActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/34342816/android-6-0-multiple-PermissionsList
         if (permHandler.hasAllPermissions()) {
             Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
-            camBtn = findViewById(R.id.cam_btn);
             camBtn.setOnLikeEventListener(new AndroidLikeButton.OnLikeEventListener() {
                 @Override
                 public void onLikeClicked(AndroidLikeButton androidLikeButton) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            camBtn.animate().setDuration(1000).rotation(camBtn.getRotation() + 180).start();
                             startLoadingCaptcha();
                             createCameraSource();
                             startCameraSource();
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            camBtn.animate().setDuration(1000).rotation(camBtn.getRotation() - 180).start();
                             confirmVehicleNumber();
                             stopCameraSource();
                         }
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         mBottomSheet = findViewById(R.id.owl_bottom_sheet);
         //used to calculate some animations. it's required
         mBottomSheet.setActivityView(this);
-        
+
         //icon to show in collapsed sheet
         mBottomSheet.setIcon(R.drawable.bubble2);
 
@@ -172,9 +174,14 @@ public class MainActivity extends AppCompatActivity {
         return s.toUpperCase().replaceAll("[^A-Z0-9]","");
     }
 
-    private void confirmVehicleNumber() {
-
+    private void bottomSheetOn() {
         mBottomSheet.setIcon(R.drawable.bubble2);
+    }
+    private void bottomSheetOff() {
+        mBottomSheet.setIcon(R.drawable.bubble_pop2);
+    }
+    private void confirmVehicleNumber() {
+        bottomSheetOn();
         if (cameraSource != null && cameraSource.frameProcessor.textBlocks != null) {
             vehicleNumber.setText(numPlateFilter(cameraSource.frameProcessor.majorText));
             List<FirebaseVisionText.TextBlock> textBlocks = cameraSource.frameProcessor.textBlocks;
@@ -185,8 +192,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLoadingCaptcha() {
+        bottomSheetOn();
 
-        mBottomSheet.setIcon(R.drawable.bubble2);
         captchaInput.setText("");
         vehicleDetails.setVisibility(View.GONE);
         Log.d(TAG,"Started Loading Captcha");
@@ -221,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                             captchaInput.setText(detectedCaptcha);
                         }
                     }).start();
-                    mBottomSheet.setIcon(R.drawable.bubble_pop2);
+                    bottomSheetOff();
                 }
                 else{
                     Log.d(TAG,"Captcha Could not be loaded");

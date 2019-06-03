@@ -35,11 +35,11 @@ public class TrailGraphic extends GraphicOverlay.Graphic {
                 trailPath.lineTo(p.x, p.y);
             }
         }
-        PathMeasure path = new PathMeasure(trailPath, false);
-        float step = path.getLength() / TRAIL_DRAW_POINT;
-        for(int i=0; i<TRAIL_DRAW_POINT; i++) {
-            path.getPosTan(step * i, trailPoss[i], trailTans[i]);
-        }
+        // PathMeasure path = new PathMeasure(trailPath, false);
+        // float step = path.getLength() / TRAIL_DRAW_POINT;
+        // for(int i=0; i<TRAIL_DRAW_POINT; i++) {
+        //     path.getPosTan(step * i, trailPoss[i], trailTans[i]);
+        // }
     }
 
     private static final int TEXT_COLOR = Color.WHITE;
