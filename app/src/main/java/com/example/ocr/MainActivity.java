@@ -33,7 +33,7 @@ import java.util.List;
 
 import com.example.ocr.text_detection.*;
 import com.example.ocr.camera.*;
-import com.example.ocr.others.*;
+import com.example.ocr.graphics.*;
 import com.example.ocr.utils.Utils;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.jackandphantom.androidlikebutton.AndroidLikeButton;
@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void confirmVehicleNumber() {
+        mBottomSheet.setIcon(R.drawable.bubble2);
         if (cameraSource != null && cameraSource.frameProcessor.textBlocks != null) {
             List<FirebaseVisionText.TextBlock> textBlocks = cameraSource.frameProcessor.textBlocks;
             for (int i = 0; i < textBlocks.size(); i++) {
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                             bitmapProcessor.processBitmap(processedCaptchaImage);
                             Log.d(TAG,"Setting captcha text: "+bitmapProcessor.allText);
                             String detectedCaptcha = bitmapProcessor.allText;
-                            // if(captchaInput.getText().toString()=="")
+                            // if(captchaInput.getText().toString().equals(""))
                             captchaInput.setText(detectedCaptcha);
                         }
                     }).start();
@@ -251,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         //             vehicleNumber.setText(cameraSource.frameProcessor.majorText);
         //             handler.postDelayed(this,1000);
         // show drawer edge-
-        // if(captchaInput.getText().toString()!="")
+        // if(!captchaInput.getText().toString().equals(""))
         // drawerEdge.setVisible(true)
 
         //         }
@@ -375,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
     public void copyNumber(View view) {
         String vehicleNum = numPlateFilter(vehicleNumber.getText().toString());
         Log.d(TAG,"Copying : "+vehicleNum);
-        if(vehicleNum != "") {
+        if(!vehicleNum.equals("")) {
             ClipData clip = ClipData.newPlainText("Vehicle Number", vehicleNum);
             clipboard.setPrimaryClip(clip);
             logToast("Text Copied \ud83d\ude00 :  "+vehicleNum);

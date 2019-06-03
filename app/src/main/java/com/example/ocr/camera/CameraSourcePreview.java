@@ -9,7 +9,7 @@ import android.view.SurfaceView;
 import android.view.ViewGroup;
 import com.google.android.gms.common.images.Size;
 import java.io.IOException;
-import com.example.ocr.others.*;
+import com.example.ocr.graphics.*;
 public class CameraSourcePreview extends ViewGroup {
     private static final String TAG = "MIDemoApp:Preview";
 

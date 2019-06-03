@@ -1,4 +1,4 @@
-package com.example.ocr.others;
+package com.example.ocr.graphics;
 
 import android.content.Context;
 import android.graphics.Canvas;

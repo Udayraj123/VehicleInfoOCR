@@ -18,7 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.example.ocr.others.*;
+import com.example.ocr.graphics.*;
 
 import android.widget.EditText;
 
@@ -70,7 +70,7 @@ public class TextRecognitionProcessor {
         }
         Log.d(TAG,"Waiting for mlkit read to finish");
         while(isProcessing.get()){}
-        Log.d(TAG,"Finished waiting, read: "+allText);
+            Log.d(TAG,"Finished waiting, read: "+allText);
         return allText;
     }
 
@@ -117,11 +117,11 @@ public class TextRecognitionProcessor {
     private void onSuccess( @NonNull FirebaseVisionText results, @NonNull GraphicOverlay graphicOverlay) {
 
         //Done: set a public variable from here containing the "main" text. ( for captcha)
-     graphicOverlay.clear();
-     allText = "";
-     textBlocks = results.getTextBlocks();
+       graphicOverlay.clear();
+       allText = "";
+       textBlocks = results.getTextBlocks();
 
-     for (int i = 0; i < textBlocks.size(); i++) {
+       for (int i = 0; i < textBlocks.size(); i++) {
         List<FirebaseVisionText.Line> lines = textBlocks.get(i).getLines();
         for (int j = 0; j < lines.size(); j++) {
             List<FirebaseVisionText.Element> elements = lines.get(j).getElements();

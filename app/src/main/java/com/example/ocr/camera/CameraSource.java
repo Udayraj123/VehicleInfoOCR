@@ -14,8 +14,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 
-import com.example.ocr.others.FrameMetadata;
-import com.example.ocr.others.GraphicOverlay;
+import com.example.ocr.graphics.FrameMetadata;
+import com.example.ocr.graphics.GraphicOverlay;
 import com.example.ocr.text_detection.*;
 import com.google.android.gms.common.images.Size;
 

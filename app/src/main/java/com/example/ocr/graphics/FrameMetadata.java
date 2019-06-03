@@ -1,4 +1,4 @@
-package com.example.ocr.others;
+package com.example.ocr.graphics;
 
 public class FrameMetadata {
 
