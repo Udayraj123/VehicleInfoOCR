@@ -44,6 +44,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="gone"
                 android:background="@drawable/flash_off"
                 />
         </LinearLayout>
@@ -88,6 +89,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical"
+        android:visibility="gone"
         >
 
         <LinearLayout

@@ -49,13 +49,10 @@ dependencies {
     implementation files('libs/jsoup-1.12.1.jar')
     implementation files('libs/commons-lang3-3.0.1.jar')
 
-
-    implementation 'com.jackandphantom.android:androidlikebutton:1.2.0'
-//    implementation 'com.etebarian:meow-bottom-navigation:1.0.1'
+    // implementation 'com.github.AliAzaz:Edittext-Library:1.0.2'
+//    implementation 'com.jackandphantom.android:androidlikebutton:1.2.0'
 
     implementation 'com.github.Guilherme-HRamos:OwlBottomSheet:1.01'
-    // implementation 'com.github.AliAzaz:Edittext-Library:1.0.2'
     implementation project(path: ':openCVLibrary340')
     implementation 'com.android.support:recyclerview-v7:28.0.0'
-//    implementation project(path: ':opencvjava', configuration: 'default')
 }

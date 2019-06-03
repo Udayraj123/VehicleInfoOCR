@@ -19,7 +19,3 @@ search button hides the swiping gui
 Improve captcha image processing
 
 Turbo mode - like QR scanner
-
-
-
-			MH12CD8099

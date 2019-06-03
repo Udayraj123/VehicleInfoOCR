@@ -37,7 +37,6 @@ import com.example.ocr.camera.*;
 import com.example.ocr.graphics.*;
 import com.example.ocr.utils.*;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
-import com.jackandphantom.androidlikebutton.AndroidLikeButton;
 
 import br.vince.owlbottomsheet.OwlBottomSheet;
 
@@ -121,14 +120,12 @@ public class MainActivity extends AppCompatActivity {
                         startLoadingCaptcha();
                         createCameraSource();
                         startCameraSource();
-                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble3));
                     }
                     else {
                         confirmVehicleNumber();
                         stopCameraSource();
-                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop3));
                     }
-                    camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
+                    // camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
                 }
             });
 
