@@ -173,8 +173,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void confirmVehicleNumber() {
+
         mBottomSheet.setIcon(R.drawable.bubble2);
         if (cameraSource != null && cameraSource.frameProcessor.textBlocks != null) {
+            vehicleNumber.setText(numPlateFilter(cameraSource.frameProcessor.majorText));
             List<FirebaseVisionText.TextBlock> textBlocks = cameraSource.frameProcessor.textBlocks;
             for (int i = 0; i < textBlocks.size(); i++) {
                 // set vehicleNum here
@@ -382,10 +384,10 @@ public class MainActivity extends AppCompatActivity {
         if(!vehicleNum.equals("")) {
             ClipData clip = ClipData.newPlainText("Vehicle Number", vehicleNum);
             clipboard.setPrimaryClip(clip);
-            logToast("Text Copied \ud83d\ude00 :  "+vehicleNum);
+            logToast("\ud83d\ude00 Text Copied:  "+vehicleNum);
         }
         else{
-            logToast("Cannot copy empty text");
+            logToast("\ud83d\ude36 Empty text");
         }
     }
 

@@ -4,7 +4,7 @@
 // show concatenated filtered text into vehicle number
 POST ISSUES ONLINE-
 //jsoup
-firebase
+X(solved) firebase
 
 // TUNE OPENCV PARAMS
 //Add drawer and clean the top boxes
@@ -15,3 +15,5 @@ firebase
 
 Make gui(use draw trail demo) to swipe over them to toggle selection
 search button hides the swiping gui
+
+Improve captcha image processing
