@@ -26,6 +26,39 @@
             android:textSize="@dimen/font_large" />
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_medium"
+            android:text="@string/card_header_owner"
+            android:textSize="@dimen/font_normal" />
+
+        <TextView
+            android:id="@+id/vehicle_owner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_normal" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@color/divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +66,6 @@
         android:paddingTop="@dimen/margin_normal"
         android:paddingBottom="@dimen/margin_medium"
         android:orientation="horizontal">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +93,7 @@
         </LinearLayout>
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="3dp"
             android:layout_height="match_parent"
             android:background="@color/divider"/>
 
@@ -95,7 +127,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="3dp"
         android:layout_gravity="center"
         android:background="@color/divider"/>
 
@@ -104,7 +136,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/margin_medium"
         android:paddingBottom="@dimen/margin_medium"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,12 +163,10 @@
                 android:id="@+id/vehicle_engine"/>
 
         </LinearLayout>
-
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
             android:background="@color/divider"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -167,7 +197,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="3dp"
         android:background="@color/divider"/>
 
     <LinearLayout
@@ -176,37 +206,6 @@
         android:paddingTop="@dimen/margin_medium"
         android:paddingBottom="@dimen/margin_normal"
         android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_normal"
-                android:paddingBottom="@dimen/margin_medium"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:text="@string/card_header_owner"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_normal"
-                android:textColor="@android:color/black"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:id="@+id/vehicle_owner"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/divider"/>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private AndroidLikeButton camBtn;
     private EditText captchaInput;
     private ClipboardManager clipboard;
+    private ImageButton imgbt;
 
     public BitmapTextRecognizer bitmapProcessor;
     private SimplePermissions permHandler;
