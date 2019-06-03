@@ -34,7 +34,7 @@ import java.util.List;
 import com.example.ocr.text_detection.*;
 import com.example.ocr.camera.*;
 import com.example.ocr.graphics.*;
-import com.example.ocr.utils.Utils;
+import com.example.ocr.utils.*;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.jackandphantom.androidlikebutton.AndroidLikeButton;
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private ClipboardManager clipboard;
 
     public BitmapTextRecognizer bitmapProcessor;
-    private com.example.ocr.util.SimplePermissions permHandler;
+    private SimplePermissions permHandler;
 
     private static String TAG = "MainActivity";
 
@@ -89,8 +89,12 @@ public class MainActivity extends AppCompatActivity {
         setCaptchaInputListeners();
         setSearchButtonListeners();
         setVehicleNumListeners();
-
-        permHandler = new com.example.ocr.util.SimplePermissions(this, new String[]{
+        
+        // should usually be the last line in init
+        getPermissionsAfterInit();
+    }
+    private void getPermissionsAfterInit(){
+        permHandler = new SimplePermissions(this, new String[]{
                 // android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.INTERNET,
@@ -98,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         });
         if(!permHandler.hasAllPermissions())
             Toast.makeText(MainActivity.this, "Checking permissions...", Toast.LENGTH_SHORT).show();
-        // should usually be the last line in init
         permHandler.grantPermissions();
     }
     //    callback from ActivityCompat.requestPermissions

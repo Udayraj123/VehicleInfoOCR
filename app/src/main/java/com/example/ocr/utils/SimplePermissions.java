@@ -1,4 +1,4 @@
-package com.example.ocr.util;
+package com.example.ocr.utils;
 
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
