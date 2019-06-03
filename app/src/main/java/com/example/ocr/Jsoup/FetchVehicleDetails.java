@@ -57,6 +57,8 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
             .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
             .header("Faces-Request","partial/ajax")
             .header("X-Requested-With","XMLHttpRequest")
+            .header("Host", "parivahan.gov.in")
+            .header("Origin", "https://parivahan.gov.in")
             .cookies(GetCaptcha.cookies) // cookies verified
             .data("javax.faces.partial.ajax", "true")
             .data("javax.faces.source", GetCaptcha.formNumber)

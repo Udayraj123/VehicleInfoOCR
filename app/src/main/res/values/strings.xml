@@ -3,6 +3,8 @@
     <string name="ok">OK</string>
     <string name="search">Search</string>
     <string name="close">Close</string>
+    <string name="plate_hint">    AB01CD1234</string>
+    <string name="captcha_hint">    Captcha code</string>
     <string name="captcha_img">Captcha here</string>
 
 

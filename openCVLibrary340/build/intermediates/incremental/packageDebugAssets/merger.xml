@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/main/assets"/><source path="/home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/uday/AndroidStudioProjects/AndroidOCR/openCVLibrary340/src/debug/assets"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\main\assets"/><source path="C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\build\intermediates\shader_assets\debug\compileDebugShaders\out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\user\AndroidStudioProjects\AndroidOCR\openCVLibrary340\src\debug\assets"/></dataSet></merger>
->>>>>>> e772450e3e0a831ba456388a8cfc7029d4306138

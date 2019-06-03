@@ -250,8 +250,17 @@
             android:layout_centerVertical="true"
             android:textColor="@color/background"
             android:textSize="@dimen/font_normal"
-            android:id="@+id/vehicle_expiry"/>
-
+            android:id="@+id/vehicle_expiry"
+            />
+            <ImageButton
+                android:id="@+id/vehicle_copy_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_content_copy_black_24dp"
+                android:onClick="copyDetails"
+                android:layout_alignRight="@id/vehicle_expiry"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp" />
     </RelativeLayout>
 
 </LinearLayout>

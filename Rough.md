@@ -8,8 +8,10 @@ firebase
 
 // TUNE OPENCV PARAMS
 //Add drawer and clean the top boxes
+//back button confirm 
+	-> **make it into boilerplate along with simple permissions handler**
 
-add gui to swipe over them to toggle selection
+//>Debug bitmap reading on firebase	=> It was synchronization issue, isProcessing isn't good as it waits on main thread. But why'd it not run the task ever?!
+
+Make gui(use draw trail demo) to swipe over them to toggle selection
 search button hides the swiping gui
-
-//back button confirm -> make it into boilerplate along with simple permissions handler

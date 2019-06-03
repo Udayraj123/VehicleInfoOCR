@@ -51,7 +51,7 @@ public class Utils {
         Imgproc.erode(processedMat,processedMat,Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3,3)));
         //pad at last
         Mat padded = new Mat();
-        int padding = 10;//U_WIDTH/3;
+        int padding = U_WIDTH/2;
         copyMakeBorder(processedMat,padded,padding,padding,padding,padding,BORDER_CONSTANT,new Scalar(255,255,255));
         processedMat.release();
         return padded;

@@ -13,10 +13,6 @@
         android:id="@+id/camera_source_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,22 +25,20 @@
             android:layout_height="match_parent" />
     </com.example.ocr.camera.CameraSourcePreview>
     <LinearLayout
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
-        android:gravity="center_vertical"
         >
-
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="0.6"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -64,7 +58,7 @@
                 app:unlike_icon="@drawable/flash_off" />
         </LinearLayout>
         <LinearLayout
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
@@ -73,8 +67,8 @@
                 android:id="@+id/cam_btn"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                app:like_icon="@drawable/bubble3"
-                app:unlike_icon="@drawable/bubble_pop3"
+                app:like_icon="@drawable/bubble_pop3"
+                app:unlike_icon="@drawable/bubble3"
                 app:circle_startColor="@android:color/holo_green_light"
                 app:circle_endColor="@android:color/holo_green_dark"
                 app:dot_color_1="@android:color/white"
@@ -87,7 +81,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="0.6"
             android:gravity="center_vertical"

@@ -45,7 +45,7 @@ public class GetCaptcha extends AsyncTask<String, Void, Bitmap>
             Connection.Response form = Jsoup.connect(getAbsoluteURL(VEHICLE_URL))
                     .method(Connection.Method.GET)
                     .timeout(10000)
-                    .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.101 Safari/537.36")
+                    .userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0")
                     .execute();
             Log.d("GetCaptcha","request Done");
             cookies = form.cookies();
