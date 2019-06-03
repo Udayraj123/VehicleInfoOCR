@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private CameraSource cameraSource = null;
     private CameraSourcePreview preview;
     private GraphicOverlay graphicOverlay;
-    private AndroidLikeButton camBtn;
+    private Button camBtn;
     private EditText captchaInput;
     private ClipboardManager clipboard;
     private ImageButton imgbt;
@@ -113,29 +113,22 @@ public class MainActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/34342816/android-6-0-multiple-PermissionsList
         if (permHandler.hasAllPermissions()) {
             Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
-            camBtn.setOnLikeEventListener(new AndroidLikeButton.OnLikeEventListener() {
+
+            camBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onLikeClicked(AndroidLikeButton androidLikeButton) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            camBtn.animate().setDuration(1000).rotation(camBtn.getRotation() + 180).start();
-                            startLoadingCaptcha();
-                            createCameraSource();
-                            startCameraSource();
-                        }
-                    });
-                }
-                @Override
-                public void onUnlikeClicked(AndroidLikeButton androidLikeButton){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            camBtn.animate().setDuration(1000).rotation(camBtn.getRotation() - 180).start();
-                            confirmVehicleNumber();
-                            stopCameraSource();
-                        }
-                    });
+                public void onClick(View v) {
+                    if(cameraSource==null) {
+                        startLoadingCaptcha();
+                        createCameraSource();
+                        startCameraSource();
+                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble3));
+                    }
+                    else {
+                        confirmVehicleNumber();
+                        stopCameraSource();
+                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop3));
+                    }
+                    camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
                 }
             });
 
@@ -291,19 +284,39 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    private void setFlashListeners() {
-        AndroidLikeButton flashBtn = findViewById(R.id.flash_btn);
-        flashBtn.setOnLikeEventListener(new AndroidLikeButton.OnLikeEventListener() {
+    private boolean flashOn=false;
+    private void setFlashListeners(
+
+    ) {
+        Button flashBtn = findViewById(R.id.flash_btn);
+        flashBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onLikeClicked(AndroidLikeButton androidLikeButton) {
-                if(cameraSource!=null)
-                    cameraSource.turnOnTheFlash();
-            }
-            public void onUnlikeClicked(AndroidLikeButton androidLikeButton){
-                if(cameraSource!=null)
+            public void onClick(View v) {
+                if(flashOn) {
+                    flashBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
                     cameraSource.turnOffTheFlash();
+                    flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_off));
+                }
+                else {
+                    flashBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
+                    cameraSource.turnOnTheFlash();
+                    flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_on));
+                }
+                flashOn = !flashOn;
             }
         });
+        // AndroidLikeButton flashBtn = findViewById(R.id.flash_btn);
+        // flashBtn.setOnLikeEventListener(new AndroidLikeButton.OnLikeEventListener() {
+        //     @Override
+        //     public void onLikeClicked(AndroidLikeButton androidLikeButton) {
+        //         if(cameraSource!=null)
+        //             cameraSource.turnOnTheFlash();
+        //     }
+        //     public void onUnlikeClicked(AndroidLikeButton androidLikeButton){
+        //         if(cameraSource!=null)
+        //             cameraSource.turnOffTheFlash();
+        //     }
+        // });
     }
     private void setCaptchaInputListeners() {
         captchaInput = bottomSheetView.findViewById(R.id.captcha_input);

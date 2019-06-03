@@ -8,11 +8,14 @@ Useful for general purpose OCR as well.
 	[X] Add Permission handler
 	[X] Add OpenCv morph
 	[X] now fix jsoup to download captcha and show in image preview 
-	[ ] Find CV parameters on sample from pc
+	[X] Find CV parameters on sample from pc
 	[X] getting majorText from the bounding boxes
-	[ ] Putting numberplate data into text on preview btn click
+	[X] Putting numberplate data into text on preview btn click
 	[X] Flash btn from OMR
-	[ ] Add Bottom Drawer 
+	[X] Add Bottom Drawer 
+	[ ] Debug jsoup for vehicle details retrieve 
+	[ ] Swipe GUI 
+	[ ] Turbo mode
 
 #### Excess
 
@@ -28,4 +31,8 @@ Recent searches into cards! - make use of miniRTO here too
 
 ## Credits
 miniRTO
-This blog : https://medium.com/digital-curry/firebase-mlkit-textdetection-in-android-using-firebase-ml-vision-apis-with-live-camera-72ef47ad4ebd
+
+This blog : https://medium.com/digital-curry/
+firebase-mlkit-textdetection-in-android-using-firebase-ml-vision-apis-with-live-camera-72ef47ad4ebd
+
+

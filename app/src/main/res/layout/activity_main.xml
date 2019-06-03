@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <!-- content -->
-
     <com.example.ocr.camera.CameraSourcePreview
         android:id="@+id/camera_source_preview"
         android:layout_width="match_parent"
@@ -18,22 +15,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-
         <com.example.ocr.graphics.GraphicOverlay
             android:id="@+id/graphics_overlay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
     </com.example.ocr.camera.CameraSourcePreview>
+
     <LinearLayout
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
         >
         <LinearLayout
             android:layout_width="0dp"
@@ -42,20 +36,16 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <com.jackandphantom.androidlikebutton.AndroidLikeButton
+            <Button
                 android:id="@+id/flash_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                app:circle_endColor="@android:color/holo_orange_dark"
-                app:circle_startColor="@android:color/holo_orange_light"
-                app:dot_color_1="@android:color/white"
-                app:dot_color_2="@android:color/black"
-                app:like_icon="@drawable/flash_on"
-                app:unlike_icon="@drawable/flash_off" />
+                android:background="@drawable/flash_off"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_height="match_parent"
@@ -63,21 +53,24 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical" >
-            <com.jackandphantom.androidlikebutton.AndroidLikeButton
+            <Button
                 android:id="@+id/cam_btn"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                app:like_icon="@drawable/bubble_pop3"
-                app:unlike_icon="@drawable/bubble3"
-                app:circle_startColor="@android:color/holo_green_light"
-                app:circle_endColor="@android:color/holo_green_dark"
-                app:dot_color_1="@android:color/white"
-                app:dot_color_2="@android:color/black"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:background="@drawable/bubble3"
+                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="25dp"
                 />
+            <!--app:like_icon="@drawable/bubble_pop3"-->
+            <!--app:unlike_icon="@drawable/bubble3"-->
+            <!--app:circle_startColor="@android:color/holo_green_light"-->
+            <!--app:circle_endColor="@android:color/holo_green_dark"-->
+            <!--app:dot_color_1="@android:color/white"-->
+            <!--app:dot_color_2="@android:color/black"-->
         </LinearLayout>
 
         <LinearLayout
@@ -89,12 +82,31 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- bottom sheet -->
-    <br.vince.owlbottomsheet.OwlBottomSheet
+    <LinearLayout
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/owl_bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        >
+
+        <LinearLayout
+            android:layout_weight="1.5"
+            android:layout_height="0dp"
+            android:layout_width="match_parent">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_width="match_parent">
+            <!-- bottom sheet -->
+            <br.vince.owlbottomsheet.OwlBottomSheet
+                android:id="@+id/owl_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
