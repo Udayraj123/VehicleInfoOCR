@@ -8,9 +8,9 @@
     <dimen name="card_base_empty_height">80dp</dimen>
 
     <!-- Font Sizes -->
-    <dimen name="font_normal">12sp</dimen>
-    <dimen name="font_large">14sp</dimen>
-    <dimen name="font_extra_large">20sp</dimen>
+    <dimen name="font_normal">16sp</dimen>
+    <dimen name="font_large">20sp</dimen>
+    <dimen name="font_extra_large">24sp</dimen>
 
     <dimen name="margin_normal">10dp</dimen>
     <dimen name="margin_medium">5dp</dimen>
