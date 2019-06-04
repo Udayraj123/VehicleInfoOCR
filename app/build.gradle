@@ -1,18 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    splits {
-        abi {
-            enable true
-            reset()
-            include "x86", "armeabi-v7a", "mips"
-            universalApk false
-        }
-    }
+//    splits {
+//        abi {
+//            enable true
+//            reset()
+//            include "x86", "armeabi-v7a", "mips"
+//            universalApk false
+//        }
+//    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.ocr"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -52,7 +52,8 @@ dependencies {
     // implementation 'com.github.AliAzaz:Edittext-Library:1.0.2'
 //    implementation 'com.jackandphantom.android:androidlikebutton:1.2.0'
 
+
+//    implementation 'com.daandtu:android-web-scraper:1.0.1'
     implementation 'com.github.Guilherme-HRamos:OwlBottomSheet:1.01'
-    implementation project(path: ':openCVLibrary340')
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 }

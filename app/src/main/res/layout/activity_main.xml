@@ -6,14 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- content -->
+
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
     <com.example.ocr.camera.CameraSourcePreview
         android:id="@+id/camera_source_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         >
         <com.example.ocr.graphics.GraphicOverlay
             android:id="@+id/graphics_overlay"
@@ -44,7 +45,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="gone"
                 android:background="@drawable/flash_off"
                 />
         </LinearLayout>
@@ -89,16 +89,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:visibility="gone"
         >
 
+        <!--<LinearLayout-->
+            <!--android:layout_weight="4"-->
+            <!--android:id="@+id/dummy"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_width="match_parent">-->
+        <!--</LinearLayout>-->
         <LinearLayout
-            android:layout_weight="1.5"
-            android:layout_height="0dp"
-            android:layout_width="match_parent">
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="0dp"
             android:layout_width="match_parent">
             <!-- bottom sheet -->

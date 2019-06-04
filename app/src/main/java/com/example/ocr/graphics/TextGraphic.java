@@ -10,7 +10,8 @@ import com.google.firebase.ml.vision.text.FirebaseVisionText;
 public class TextGraphic extends GraphicOverlay.Graphic {
 
     private static final int TEXT_COLOR = Color.WHITE;
-    private static final float TEXT_SIZE = 54.0f;
+    private static final int OFFSET = 20;
+    private static final float TEXT_SIZE = 34.0f;
     private static final float STROKE_WIDTH = 5.0f;
 
     private final Paint rectPaint;
@@ -23,13 +24,14 @@ public class TextGraphic extends GraphicOverlay.Graphic {
         this.text = text;
 
         rectPaint = new Paint();
-        rectPaint.setColor(TEXT_COLOR);
+        rectPaint.setColor(Color.GREEN);
         rectPaint.setStyle(Paint.Style.STROKE);
         rectPaint.setStrokeWidth(STROKE_WIDTH);
 
         textPaint = new Paint();
         textPaint.setColor(TEXT_COLOR);
         textPaint.setTextSize(TEXT_SIZE);
+        textPaint.setStrokeWidth(9f);
         // Redraw the overlay, as this graphic has been added.
         postInvalidate();
     }
@@ -50,6 +52,6 @@ public class TextGraphic extends GraphicOverlay.Graphic {
         canvas.drawRect(rect, rectPaint);
 
         // Renders the text at the bottom of the box.
-        canvas.drawText(text.getText(), rect.left, rect.bottom, textPaint);
+        canvas.drawText(" " +text.getText(), rect.left, rect.bottom-10, textPaint);
     }
 }

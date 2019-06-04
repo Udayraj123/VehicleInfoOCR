@@ -4,7 +4,7 @@
 // show concatenated filtered text into vehicle number
 POST ISSUES ONLINE-
 //jsoup
-X(solved) firebase
+//(solved) firebase
 
 // TUNE OPENCV PARAMS
 //Add drawer and clean the top boxes
@@ -13,9 +13,29 @@ X(solved) firebase
 
 //>Debug bitmap reading on firebase	=> It was synchronization issue, isProcessing isn't good as it waits on main thread. But why'd it not run the task ever?!
 
+// Nope, now can actually remove it for new url! - Improve captcha image processing
+
 Make gui(use draw trail demo) to swipe over them to toggle selection
 search button hides the swiping gui
 
-Improve captcha image processing
+// Fix Fetching 
+	// >> Get the ultimate tool : background Webview automated using simple js.
+		https://github.com/daandtu/android-web-scraper/
+	//	>Show layout webview in drawer until captcha is downloaded/ form is submitted
+	 	> Maybe add some css into it instead of scraping?! <- more versatile
 
+** The new url doesn't need IP! opencv no more needed :)
 Turbo mode - like QR scanner
+	> Instant try to get vehicle info whenever valid number plate found
+	> Open confirmation drawer immediately if details found.
+	> otherwise wait for better input
+
+In fruit ninja menu :
+	Swipe to select area
+	Use long press/double tap to copy block
+
+FOUND THIS : 
+//recycle the source bitmap, this will be no longer used.
+bitmap.recycle();
+
+

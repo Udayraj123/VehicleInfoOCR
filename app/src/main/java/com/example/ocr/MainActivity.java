@@ -4,6 +4,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -20,12 +22,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ocr.Jsoup.AsyncCaptchaResponse;
-import com.example.ocr.Jsoup.AsyncResponse;
-import com.example.ocr.Jsoup.FetchVehicleDetails;
 import com.example.ocr.Jsoup.GetCaptcha;
 import com.example.ocr.Jsoup.Vehicle;
 
@@ -36,14 +36,12 @@ import com.example.ocr.text_detection.*;
 import com.example.ocr.camera.*;
 import com.example.ocr.graphics.*;
 import com.example.ocr.utils.*;
+import com.example.ocr.webscraper.*;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 
 import br.vince.owlbottomsheet.OwlBottomSheet;
 
 public class MainActivity extends AppCompatActivity {
-    static {
-        System.loadLibrary("opencv_java3");
-    }
     private final int OK = 200;
     private final int SOCKET_TIMEOUT = 408;
     private final int CAPTCHA_LOAD_FAILED = 999;
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     // the bottom sheet
     private OwlBottomSheet mBottomSheet;
     private EditText vehicleNumber;
-    private ImageView imageView;
+    private ImageView captchaImageView;
     private Button searchBtn;
     private View bottomSheetView;
     private View vehicleDetails;
@@ -67,12 +65,19 @@ public class MainActivity extends AppCompatActivity {
     private EditText captchaInput;
     private ClipboardManager clipboard;
     private ImageButton imgbt;
-
+    private WebScraper webScraper;
+    private ImageBitmapGetter captchaBitmapGetter;
     public BitmapTextRecognizer bitmapProcessor;
     private SimplePermissions permHandler;
 
+    private Element eltCaptchaImage;
+    private Element eltVehicleNumber;
+    private Element eltCaptchaInput;
+    private Element eltSubmitBtn;
     private static String TAG = "MainActivity";
-
+    private final String BASE_URL = "https://vahan.nic.in";
+    private final String VEHICLE_URL="/nrservices/faces/user/searchstatus.xhtml";
+    private final String FULL_URL=BASE_URL+VEHICLE_URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,14 +89,21 @@ public class MainActivity extends AppCompatActivity {
 
         preview = findViewById(R.id.camera_source_preview);
         graphicOverlay = findViewById(R.id.graphics_overlay);
-        imageView = bottomSheetView.findViewById(R.id.captcha_img);
+        captchaImageView = bottomSheetView.findViewById(R.id.captcha_img);
         vehicleDetails = bottomSheetView.findViewById(R.id.vehicle_details);
         searchBtn = bottomSheetView.findViewById(R.id.search_btn);
         camBtn = findViewById(R.id.cam_btn);
         setCaptchaInputListeners();
         setSearchButtonListeners();
         setVehicleNumListeners();
-        
+
+        webScraper = new WebScraper(this);
+        captchaBitmapGetter = new ImageBitmapGetter();
+        webScraper.setUserAgentToDesktop(true); //default: false
+        webScraper.setLoadImages(true); //default: false
+        LinearLayout layout = (LinearLayout)mBottomSheet.findViewById(R.id.webview);
+        layout.addView(webScraper.getView());
+
         // should usually be the last line in init
         getPermissionsAfterInit();
     }
@@ -120,10 +132,12 @@ public class MainActivity extends AppCompatActivity {
                         startLoadingCaptcha();
                         createCameraSource();
                         startCameraSource();
+                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble2));
                     }
                     else {
                         confirmVehicleNumber();
                         stopCameraSource();
+                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop2));
                     }
                     // camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
                 }
@@ -165,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
     private String numPlateFilter(String s){
         return s.toUpperCase().replaceAll("[^A-Z0-9]","");
     }
+    private String captchaFilter(String s){
+        return s.replaceAll("[^a-zA-Z0-9]","");
+    }
 
     private void bottomSheetOn() {
         mBottomSheet.setIcon(R.drawable.bubble2);
@@ -183,51 +200,129 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private int colorVal(int pixel){
+        return (int)Math.sqrt(Math.pow(Color.red(pixel),2) +Math.pow(Color.green(pixel),2) +Math.pow(Color.blue(pixel),2));
+    }
+    private void thresholdBitmap(Bitmap bitmap,int THR ){
+        for(int i=0;i<bitmap.getWidth();i++){
+            for(int j=0;j<bitmap.getHeight();j++){
+                if(colorVal(bitmap.getPixel(i,j)) < THR)
+                    bitmap.setPixel(i,j, Color.BLACK);
+                else
+                    bitmap.setPixel(i,j, Color.WHITE);
+            }
+        }
+    }
+    private void openBinaryBitmap(Bitmap binaryBitmap,int KSIZE) {
+        dilateBinaryBitmap(binaryBitmap,KSIZE);
+        // erodeBinaryBitmap(binaryBitmap,KSIZE);
+    }
+    private void erodeBinaryBitmap(Bitmap binaryBitmap,int KSIZE) {
+        int currp, minp,w = binaryBitmap.getWidth(), h = binaryBitmap.getHeight(), mini,minj;
+        for(int i=0;i<w;i++){
+            for(int j=0;j<h;j++){
+                // revolve kernel
+                minp = colorVal(binaryBitmap.getPixel(i,j));
+                mini = i;
+                minj = j;
+                for(int ki=-KSIZE/2;ki<KSIZE/2;ki++){
+                    for(int kj=KSIZE/2;kj<KSIZE/2;kj++){
+                        if(ki > -1 && kj < -1 && ki < w && kj < h){
+                            currp = colorVal(binaryBitmap.getPixel(i+ki,j+kj));
+                            if(minp > currp){
+                                minp = currp;
+                                mini = i+ki;
+                                minj = j+kj;
+                            }
+                        }
+                    }
+                }
+                binaryBitmap.setPixel(i,j, binaryBitmap.getPixel(mini,minj));
+            }
+        }
+    }
+    private void dilateBinaryBitmap(Bitmap binaryBitmap,int KSIZE) {
+        int currp, maxp,w = binaryBitmap.getWidth(), h = binaryBitmap.getHeight(), maxi,maxj;
+        for(int i=0;i<w;i++){
+            for(int j=0;j<h;j++){
+                // revolve kernel
+                maxp = colorVal(binaryBitmap.getPixel(i,j));
+                maxi = i;
+                maxj = j;
+                for(int ki=-KSIZE/2;ki<KSIZE/2;ki++){
+                    for(int kj=KSIZE/2;kj<KSIZE/2;kj++){
+                        if(ki > -1 && kj < -1 && ki < w && kj < h){
+                            currp = colorVal(binaryBitmap.getPixel(i+ki,j+kj));
+                            if(maxp < currp){
+                                maxp = currp;
+                                maxi = i+ki;
+                                maxj = j+kj;
+                            }
+                        }
+                    }
+                }
+                binaryBitmap.setPixel(i,j, binaryBitmap.getPixel(maxi,maxj));
+            }
+        }
+    }
+
+    public class ImageBitmapGetter implements Img2Bitmap
+    {
+        @Override
+        public void onConvertComplete(final byte[] mDecodedImage)
+        {
+            Log.d(TAG,"Captcha Handle completed : "+mDecodedImage);
+            if (mDecodedImage == null || mDecodedImage.length == 0)
+                return;
+            Bitmap bitmap = BitmapFactory.decodeByteArray(mDecodedImage, 0, mDecodedImage.length);
+            Bitmap captchaImage  = bitmap.copy(Bitmap.Config.ARGB_8888,true);
+            bitmap.recycle();
+            thresholdBitmap(captchaImage,300);
+            openBinaryBitmap(captchaImage,20);
+            final Bitmap processedCaptchaImage = captchaImage.copy(Bitmap.Config.ARGB_8888, false);
+            // captchaImageView.setImageBitmap(captchaImage);
+
+            //TEMP
+            captchaImageView.setImageBitmap(processedCaptchaImage);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    bitmapProcessor.processBitmap(processedCaptchaImage);
+                    Log.d(TAG,"Setting captcha text: "+bitmapProcessor.allText);
+                    String detectedCaptcha = captchaFilter(bitmapProcessor.allText);
+                    // if(captchaInput.getText().toString().equals(""))
+                    captchaInput.setText(detectedCaptcha);
+                    // processedCaptchaImage.recycle();
+                }
+            }).start();
+            bottomSheetOff();
+            Toast.makeText(MainActivity.this, "Captcha Handle completed...", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     private void startLoadingCaptcha() {
         bottomSheetOn();
 
         captchaInput.setText("");
         vehicleDetails.setVisibility(View.GONE);
+
         Log.d(TAG,"Started Loading Captcha");
-        new GetCaptcha(new AsyncCaptchaResponse(){
+        webScraper.loadURL(FULL_URL);
+        webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener() {
             @Override
-            public void processFinish(Bitmap captchaImage, int statuscode) {
-                if (captchaImage != null){
-                    Log.d(TAG,"Received Captcha");
-                    // Toast.makeText(MainActivity.this, "Captcha image loaded", Toast.LENGTH_SHORT).show();
-                    imageView.setImageBitmap(captchaImage);
-                    //Done: preprocess the bitmap and pass to mlkit
-                    final Bitmap processedCaptchaImage = Utils.preProcessBitmap(captchaImage);
-
-                    // TEMPORARY delay code
-                    // new Handler().postDelayed(new Runnable() {
-                    //     @Override
-                    //     public void run() {
-                    //         // Toast.makeText(MainActivity.this, "Captcha image processed", Toast.LENGTH_SHORT).show();
-                    //         imageView.setImageBitmap(processedCaptchaImage);
-                    //     }
-                    // },1000);
-                    // ^TEMPORARY delay code
-
-                    // start thread here.
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            bitmapProcessor.processBitmap(processedCaptchaImage);
-                            Log.d(TAG,"Setting captcha text: "+bitmapProcessor.allText);
-                            String detectedCaptcha = bitmapProcessor.allText;
-                            // if(captchaInput.getText().toString().equals(""))
-                            captchaInput.setText(detectedCaptcha);
-                        }
-                    }).start();
-                    bottomSheetOff();
-                }
-                else{
-                    Log.d(TAG,"Captcha Could not be loaded");
-                    Toast.makeText(MainActivity.this, "Captcha Could not be loaded! Check internet.", Toast.LENGTH_SHORT).show();
-                }
+            public void loaded(String URL) {
+                Log.d(TAG,"Done loading : "+URL);
+                // GetCaptcha.bigLog( TAG, webScraper.getHtml());
+                eltCaptchaImage = webScraper.findElementByClassName("captcha-image",0);
+                eltVehicleNumber = webScraper.findElementById("regn_no1_exact");
+                eltCaptchaInput = webScraper.findElementById("txt_ALPHA_NUMERIC");
+                eltSubmitBtn = webScraper.findElementByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only",0);
+                // webScraper.web.evaluateJavascript();
+                eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);
             }
-        }).execute();
+        });
     }
     private void showVehicleDetails(Vehicle vehicle) {
 
@@ -302,18 +397,6 @@ public class MainActivity extends AppCompatActivity {
                 flashOn = !flashOn;
             }
         });
-        // AndroidLikeButton flashBtn = findViewById(R.id.flash_btn);
-        // flashBtn.setOnLikeEventListener(new AndroidLikeButton.OnLikeEventListener() {
-        //     @Override
-        //     public void onLikeClicked(AndroidLikeButton androidLikeButton) {
-        //         if(cameraSource!=null)
-        //             cameraSource.turnOnTheFlash();
-        //     }
-        //     public void onUnlikeClicked(AndroidLikeButton androidLikeButton){
-        //         if(cameraSource!=null)
-        //             cameraSource.turnOffTheFlash();
-        //     }
-        // });
     }
     private void setCaptchaInputListeners() {
         captchaInput = bottomSheetView.findViewById(R.id.captcha_input);
@@ -338,40 +421,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
                 String result = vehicleNumber.getText().toString();
-                // drawer.dismiss();
-                new FetchVehicleDetails(new AsyncResponse(){
-                    //uses most recent cookies and formnumber
+                eltVehicleNumber.setText(vehicleNumber.getText().toString());
+                eltCaptchaInput.setText(captchaInput.getText().toString());
+                // executes some js : and submits form
+                eltSubmitBtn.click();
+                // this listener is called on onPageFinished listener
+                webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener() {
                     @Override
-                    public void processFinish(Vehicle vehicle, int statusCode) {
-                        Log.d(TAG,"Finished Status code:"+statusCode);
-                        if (statusCode == OK) {
-                            if (vehicle != null){
-                                showVehicleDetails(vehicle);
-                            }
-                            else {
-                                logToast("Vehicle details not found");
-
-                            }
-                        }
-                        else if (statusCode == CAPTCHA_LOAD_FAILED){
-                            // Done: reload button?!
-                            logToast("Captcha Load Failed!");
-                        }
-                        else if (statusCode == TECHNICAL_DIFFICULTY){
-                            logToast("Technical Difficulty. Failed to fetch from table!");
-                            // .title(R.string.error_technical_difficulty)
-
-                        }
-                        else if (statusCode == SOCKET_TIMEOUT){
-                            logToast("Internet Timeout.. Slow internet?");
-                        }
-                        else{
-                            //no internet
-                            // verify using isNetworkAvailable()
-                            logToast("Internet Unavailable");
-                        }
+                    public void loaded(String URL) {
+                        Log.d(TAG,"Done loading2 : \n\n\t"+URL);
+                        Toast.makeText(MainActivity.this, "Search completed...", Toast.LENGTH_SHORT).show();
+                        GetCaptcha.bigLog( TAG, webScraper.getHtml());
                     }
-                }).execute(result.substring(0, result.length() - 4), result.substring(result.length() - 4), captchaInput.getText().toString());
+                });
             }
         });
     }

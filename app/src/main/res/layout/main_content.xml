@@ -11,6 +11,16 @@
     android:layout_gravity="bottom|center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:id="@+id/webview"
+        android:layout_above="@+id/vehicle_details"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical"
+        >
+    </LinearLayout>
     <include layout="@layout/vehicle_details"
         android:id="@+id/vehicle_details"
         android:layout_above="@+id/layout_vehicle_plate"
@@ -43,9 +53,10 @@
         <EditText
             android:id="@+id/vehicle_plate"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/textbox_size"
             android:background="@drawable/rounded_edittext"
             android:hint="@string/plate_hint"
+            android:text="MH12CD8039"
             android:textAlignment="center"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
@@ -107,7 +118,7 @@
             <EditText
                 android:id="@+id/captcha_input"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/textbox_size"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
@@ -117,7 +128,6 @@
                 android:textAlignment="center"
                 android:hint="@string/captcha_hint"
                 android:maxLines="1"
-                android:maxLength="5"
                 android:textSize="20sp"/>
         </LinearLayout>
 
@@ -139,8 +149,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/circle"
-android:layout_marginEnd="15dp"
-android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
                 android:text="@string/search"
                 />
     <Button
@@ -152,4 +162,3 @@ android:layout_marginRight="15dp"
         />
     </LinearLayout>
 </RelativeLayout>
-

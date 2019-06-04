@@ -12,6 +12,8 @@
     <dimen name="font_large">20sp</dimen>
     <dimen name="font_extra_large">24sp</dimen>
 
+    <dimen name="textbox_size">50dp</dimen>
+
     <dimen name="margin_normal">10dp</dimen>
     <dimen name="margin_medium">5dp</dimen>
     <dimen name="margin_large">15dp</dimen>

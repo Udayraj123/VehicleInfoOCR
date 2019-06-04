@@ -18,8 +18,13 @@ import java.net.SocketTimeoutException;
 public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
 {
     private final String TAG = "FetchVehicleDetails: ";
-    private final String BASE_URL = "https://parivahan.gov.in";
-    private final String VEHICLE_URL="/rcdlstatus/vahan/rcDlHome.xhtml";
+    private final String userAgent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0";
+
+    private final String BASE_URL = "https://vahan.nic.in";
+    private final String VEHICLE_URL="/nrservices/faces/user/searchstatus.xhtml";
+    // private final String BASE_URL = "https://parivahan.gov.in";
+    // private final String VEHICLE_URL="/rcdlstatus/vahan/rcDlHome.xhtml";
+    private final String FULL_URL=BASE_URL+VEHICLE_URL;
 
     private Vehicle vehicle;
     private int statusCode;
@@ -42,6 +47,44 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
             Log.d(TAG, s.substring(i, Math.min(s.length(), i + chunkSize)));
         }
     }
+
+
+
+    // drawer.dismiss();
+    // new FetchVehicleDetails(new AsyncResponse(){
+    //     //uses most recent cookies and formnumber
+    //     @Override
+    //     public void processFinish(Vehicle vehicle, int statusCode) {
+    //         Log.d(TAG,"Finished Status code:"+statusCode);
+    //         if (statusCode == OK) {
+    //             if (vehicle != null){
+    //                 showVehicleDetails(vehicle);
+    //             }
+    //             else {
+    //                 logToast("Vehicle details not found");
+    //
+    //             }
+    //         }
+    //         else if (statusCode == CAPTCHA_LOAD_FAILED){
+    //             // Done: reload button?!
+    //             logToast("Captcha Load Failed!");
+    //         }
+    //         else if (statusCode == TECHNICAL_DIFFICULTY){
+    //             logToast("Technical Difficulty. Failed to fetch from table!");
+    //             // .title(R.string.error_technical_difficulty)
+    //
+    //         }
+    //         else if (statusCode == SOCKET_TIMEOUT){
+    //             logToast("Internet Timeout.. Slow internet?");
+    //         }
+    //         else{
+    //             //no internet
+    //             // verify using isNetworkAvailable()
+    //             logToast("Internet Unavailable");
+    //         }
+    //     }
+    // }).execute(result.substring(0, result.length() - 4), result.substring(result.length() - 4), captchaInput.getText().toString());
+
     @Override
     protected Vehicle doInBackground(String... params)
     {
@@ -49,26 +92,32 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
         {
             // .data("javax.faces.partial.render", "rc_Form:rcPanel") <-- changed
             // .data("form_rcdl:j_idt24:CaptchaID", params[2]) <-- param changes!
-            Connection connection = Jsoup.connect("https://parivahan.gov.in/rcdlstatus/vahan/rcDlHome.xhtml")
-            .userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0")
+            Connection connection = Jsoup.connect(FULL_URL)
+            .header("Host", BASE_URL.substring(8))
+            .userAgent(userAgent)
             .header("Accept","application/xml, text/xml, */*; q=0.01")
             .header("Accept-Language","en-US,en;q=0.5")
             .header("Accept-Encoding","gzip, deflate, br")
+            .header("Referer", FULL_URL)
             .header("Content-Type","application/x-www-form-urlencoded; charset=UTF-8")
             .header("Faces-Request","partial/ajax")
             .header("X-Requested-With","XMLHttpRequest")
-            .header("Host", "parivahan.gov.in")
-            .header("Origin", "https://parivahan.gov.in")
+            // .header("Origin", BASE_URL)
             .cookies(GetCaptcha.cookies) // cookies verified
             .data("javax.faces.partial.ajax", "true")
             .data("javax.faces.source", GetCaptcha.formNumber)
             .data("javax.faces.partial.execute", "@all")
-            .data("javax.faces.partial.render", "form_rcdl:pnl_show+form_rcdl:pg_show+form_rcdl:rcdl_pnl")
+            // .data("javax.faces.partial.render", "form_rcdl:pnl_show+form_rcdl:pg_show+form_rcdl:rcdl_pnl")
+            .data("javax.faces.partial.render", "rcDetailsPanel+resultPanel+userMessages+capatcha")
             .data(GetCaptcha.formNumber, GetCaptcha.formNumber)
-            .data("form_rcdl", "form_rcdl")
-            .data("form_rcdl:tf_reg_no1", params[0])
-            .data("form_rcdl:tf_reg_no2", params[1])
-            .data("form_rcdl:j_idt32:CaptchaID", params[2])
+            // .data("form_rcdl", "form_rcdl")
+            .data("masterLayout", "masterLayout")
+            .data("j_idt33", "")
+            .data("regn_no1_exact", (params[0]+params[1]).toLowerCase())
+            // .data("form_rcdl:tf_reg_no1", params[0])
+            // .data("form_rcdl:tf_reg_no2", params[1])
+            // .data("form_rcdl:j_idt32:CaptchaID", params[2])
+            .data("txt_ALPHA_NUMERIC", params[2])
             .data("javax.faces.ViewState", GetCaptcha.viewState)
             .timeout(10000);
 
@@ -76,7 +125,7 @@ public class FetchVehicleDetails extends AsyncTask<String, Void, Vehicle>
             Document document = connection.post();
             statusCode = connection.response().statusCode();
             Log.d(TAG,"Response Status code:"+statusCode);
-            bigLog(document.toString());
+            bigLog(document.html());
             Log.d(TAG,"tables: "+document.getElementsByTag("table"));
 
             if (document.getElementsByTag("table").size() != 0)
