@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +17,7 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private View bottomSheetView;
     private View vehicleDetails;
     private CameraSource cameraSource = null;
-    private CameraSourcePreview preview;
+    private CameraSourcePreview cameraPreview;
     private GraphicOverlay graphicOverlay;
     private Button camBtn;
     private EditText captchaInput;
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         bitmapProcessor = new BitmapTextRecognizer();
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
-        preview = findViewById(R.id.camera_source_preview);
+        cameraPreview = findViewById(R.id.camera_source_preview);
         graphicOverlay = findViewById(R.id.graphics_overlay);
         captchaImageView = bottomSheetView.findViewById(R.id.captcha_img);
         vehicleDetails = bottomSheetView.findViewById(R.id.vehicle_details);
@@ -132,11 +134,13 @@ public class MainActivity extends AppCompatActivity {
                         createCameraSource();
                         startCameraSource();
                         camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble2));
+                        drawingArea.setVisibility(View.GONE);
                     }
                     else {
                         confirmVehicleNumber();
                         stopCameraSource();
                         camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop2));
+                        drawingArea.setVisibility(View.VISIBLE);
                     }
                     // camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
                 }
@@ -332,7 +336,6 @@ public class MainActivity extends AppCompatActivity {
             cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
         }
         cameraSource.setMachineLearningFrameProcessor(new TextRecognitionProcessor());
-
         // THIS CAUSES INPUTS TO DESTROY AND CAUSE POSSIBLE CRASH
         // final Handler handler = new Handler();
         // Runnable runnable = new Runnable(){
@@ -354,13 +357,13 @@ public class MainActivity extends AppCompatActivity {
     private void startCameraSource() {
         if (cameraSource != null) {
             try {
-                if (preview == null) {
+                if (cameraPreview == null) {
                     Log.d(TAG, "resume: Preview is null");
                 }
                 if (graphicOverlay == null) {
                     Log.d(TAG, "resume: graphOverlay is null");
                 }
-                preview.start(cameraSource, graphicOverlay);
+                cameraPreview.start(cameraSource, graphicOverlay);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
                 stopCameraSource();
@@ -508,11 +511,20 @@ public class MainActivity extends AppCompatActivity {
         else
             mBottomSheet.collapse();
     }
+    private DrawingArea drawingArea;
+
+    private void initDrawingArea() {
+        if (drawingArea == null) {
+            drawingArea = (DrawingArea) findViewById(R.id.drawing_area);
+            drawingArea.initTrailDrawer();
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+        initDrawingArea();
         startCameraSource();
     }
 
@@ -520,7 +532,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        preview.stop();
+        drawingArea.trimMemory();
+        cameraPreview.stop();
     }
 
     @Override

@@ -2,7 +2,12 @@ package com.example.ocr.graphics;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.google.android.gms.vision.CameraSource;
@@ -20,6 +25,7 @@ public class GraphicOverlay extends View {
     private Set<Graphic> graphics = new HashSet<>();
     public abstract static class Graphic {
         private GraphicOverlay overlay;
+        protected String type="";
 
         public Graphic(GraphicOverlay overlay) {
             this.overlay = overlay;
@@ -94,4 +100,32 @@ public class GraphicOverlay extends View {
             }
         }
     }
+
+    // @Override
+    // public boolean onTouchEvent(MotionEvent event) {
+    //
+    //     PointF touch = new PointF(event.getX(),event.getY());
+    //     // switch (event.getAction()){
+    //     //     case MotionEvent.ACTION_DOWN:
+    //     //         break;
+    //     //
+    //     //     case MotionEvent.ACTION_MOVE:
+    //     //         break;
+    //     //
+    //     //     case MotionEvent.ACTION_UP:
+    //     //         break;
+    //     // }
+    //     Log.d("Graphicoverlay: ","touched : "+touch);
+    //     for (Graphic graphic : graphics) {
+    //         if(graphic.type.equals("text")){
+    //             TextGraphic t = (TextGraphic)graphic;
+    //             if(t.rect.contains(touch.x,touch.y)){
+    //                 t.rectPaint.setColor(Color.YELLOW);
+    //                 t.textPaint.setColor(Color.GREEN);
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
+
 }

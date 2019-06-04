@@ -20,30 +20,38 @@ POST ISSUES ONLINE-
 		https://github.com/daandtu/android-web-scraper/
 	//	>Show layout webview in drawer until captcha is downloaded/ form is submitted
 
+//** The new url doesn't need much IP! opencv no more needed :)
 // EVEN BETTER IP -
 	//> use only thresholding and a kernel to patch gray or white acc to surrounding
 
 > Add some js to crop view instead of scraping vehicle details?! <- more versatile
  	^^> This is actually better for demo - should look like google assistant
 
-Optimizations
-	> Proper threaded listeners for captcha handling
-	> Disable drawableCache in the webscraper.
-
-** The new url doesn't need IP! opencv no more needed :)
-Turbo mode - like QR scanner
-	> Instant try to get vehicle info whenever valid number plate found
-	> Open confirmation drawer immediately if details found.
-	> otherwise wait for better input
-
-
 In fruit ninja menu :
 	Swipe to select area
 	Use long press/double tap to copy block
 	search button hides the swiping gui
 
-FOUND THIS : 
-//recycle the source bitmap, this will be no longer used.
-bitmap.recycle();
+**No need to reload captcha on pause preview now.**
+	> Also update captcha image on form submit too (call startCap..).
 
-Load vehicle image from Vehicle model
+Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
+	> Min Area constraint, more constraints?!
+	> Keep or remove drawer?!
+	> Instant try to get vehicle info whenever valid number plate found
+	> Open confirmation drawer immediately if details found.
+	> otherwise wait for better input
+
+Optimizations
+	> Modularize the MainActivity
+	> Proper threaded listeners for captcha handling
+	> Disable drawableCache in the webscraper.
+	FOUND THIS (Add'em): 
+	//recycle the source bitmap, this will be no longer used.
+	bitmap.recycle();
+
+Excess:
+	Load vehicle image from Vehicle model
+
+Later:
+	Run Apk analyzer on OMR apk

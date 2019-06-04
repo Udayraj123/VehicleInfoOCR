@@ -30,9 +30,18 @@ Remove opencv, process only bitmap
 Recent searches into cards! - make use of miniRTO here too
 
 ## Credits
-miniRTO
+Vahan portals
+
+https://parivahan.gov.in/rcdlstatus/
+
+https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml
+
+App workflow inspired from miniRTO app: 
+https://github.com/chandruscm/miniRTO 
 
 This blog : https://medium.com/digital-curry/
 firebase-mlkit-textdetection-in-android-using-firebase-ml-vision-apis-with-live-camera-72ef47ad4ebd
 
+Trail : https://github.com/Orange-OpenSource/android-trail-drawing
 
+<!-- Owl sheet : link?! -->
