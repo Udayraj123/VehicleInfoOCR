@@ -242,14 +242,14 @@ public class WebScraper {
         String script2 = "javascript:{"+ Img2Bitmap.buildScript1 +"}";
         String script3 = "javascript:{"+ Img2Bitmap.buildScript2 +"}";
         String script4 = "javascript:{"+ Img2Bitmap.buildScript3 +"}";
-        Log.d("webscraper: ","Running Script: \n" + script1);
+        // Log.d("webscraper: ","Running Script: \n" + script1);
         run(script1);
-        Log.d("webscraper: ","Running Script: \n" + script2);
+        // Log.d("webscraper: ","Running Script: \n" + script2);
         run(script2);
-        Log.d("webscraper: ","Running Script: \n" + script3);
+        // Log.d("webscraper: ","Running Script: \n" + script3);
         run(script3);
         // this one calls the interface
-        Log.d("webscraper: ","Running Script: \n" + script4);
+        // Log.d("webscraper: ","Running Script: \n" + script4);
         run(script4);
         // run("javascript:{alert(1);}");
     }

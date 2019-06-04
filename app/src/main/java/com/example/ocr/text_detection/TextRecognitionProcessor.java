@@ -135,7 +135,8 @@ public class TextRecognitionProcessor {
         autoUpdateMajorText(textBlocks.get(i).getText());
         allText += textBlocks.get(i).getText();
     }
-    Log.d(TAG,"Success read: "+allText);
+    if(!allText.equals(""))
+        Log.d(TAG,"Success read: "+allText);
     allText = numPlateFilter(allText);
     isProcessing.set(false);
 }

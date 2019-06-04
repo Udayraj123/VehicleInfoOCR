@@ -19,12 +19,12 @@ POST ISSUES ONLINE-
 	// >> Get the ultimate tool : background Webview automated using simple js.
 		https://github.com/daandtu/android-web-scraper/
 	//	>Show layout webview in drawer until captcha is downloaded/ form is submitted
-	 	> Maybe add some js into it instead of scraping?! <- more versatile
-	 	^^> This is actually better for demo - should look like google assistant
-
 
 // EVEN BETTER IP -
 	//> use only thresholding and a kernel to patch gray or white acc to surrounding
+
+> Add some js to crop view instead of scraping vehicle details?! <- more versatile
+ 	^^> This is actually better for demo - should look like google assistant
 
 Optimizations
 	> Proper threaded listeners for captcha handling

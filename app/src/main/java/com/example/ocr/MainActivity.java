@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         webScraper.setUserAgentToDesktop(true); //default: false
         webScraper.setLoadImages(true); //default: false
 
-        // LinearLayout layout = (LinearLayout)mBottomSheet.findViewById(R.id.webview);
-        // layout.addView(webScraper.getView());
+        LinearLayout layout = (LinearLayout)mBottomSheet.findViewById(R.id.webview);
+        layout.addView(webScraper.getView());
 
         // should usually be the last line in init
         getPermissionsAfterInit();
@@ -232,20 +232,13 @@ public class MainActivity extends AppCompatActivity {
             if (mDecodedImage == null || mDecodedImage.length == 0)
                 return;
             final Bitmap bitmap = BitmapFactory.decodeByteArray(mDecodedImage, 0, mDecodedImage.length);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    captchaImageView.setImageBitmap(bitmap);
-                }
-            });
+            logToast("Processing Captcha");
             // The image is about 120x40
-            Bitmap captchaImage  =  resizeBitmap(bitmap, 84, 28);
+            Bitmap captchaImage  =  resizeBitmap(bitmap, 90, 30);
             // Blur it out by resizing
-            captchaImage = resizeBitmap(captchaImage, 400, 130);
-            captchaImage = dilateBinaryBitmap(captchaImage,3,7); //ksize be odd
-            // captchaImage = thresholdBitmap(captchaImage  ,300);
-            final Bitmap processedCaptchaImage = resizeBitmap(captchaImage, 120, 40);
-                // make listener for this.
+            captchaImage = resizeBitmap(captchaImage, 195, 65);
+            final Bitmap processedCaptchaImage = dilateBinaryBitmap(captchaImage,1,5); //ksize be odd
+            // make listener for this.
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -254,9 +247,15 @@ public class MainActivity extends AppCompatActivity {
                     String detectedCaptcha = captchaFilter(bitmapProcessor.allText);
                     // if(captchaInput.getText().toString().equals(""))
                     captchaInput.setText(detectedCaptcha);
-                    // processedCaptchaImage.recycle();
                 }
             }).start();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    captchaImageView.setImageBitmap(processedCaptchaImage);
+                }
+            });
             bottomSheetOff();
             logToast("Captcha Handle completed...");
         }
@@ -264,52 +263,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int colorVal(int pixel){
         return (int)Math.sqrt(Math.pow(Color.red(pixel),2) +Math.pow(Color.green(pixel),2) +Math.pow(Color.blue(pixel),2));
-    }
-    private Bitmap thresholdBitmap(Bitmap orig, int THR ){
-        Bitmap bitmap = orig.copy(Bitmap.Config.ARGB_8888,true);
-        for(int i=0;i<bitmap.getWidth();i++){
-            for(int j=0;j<bitmap.getHeight();j++){
-                if(colorVal(bitmap.getPixel(i,j)) < THR)
-                    bitmap.setPixel(i,j, Color.BLACK);
-                else
-                    bitmap.setPixel(i,j, Color.WHITE);
-            }
-        }
-        return bitmap;
-    }
-    private Bitmap openBinaryBitmap(Bitmap binaryBitmap,int KX,int KY) {
-        Bitmap copyBitmap1  = dilateBinaryBitmap(binaryBitmap,KX,KY);
-        // binaryBitmap.recycle();
-        Bitmap copyBitmap2 = erodeBinaryBitmap(copyBitmap1,KX,KY);
-        copyBitmap1.recycle();
-        return copyBitmap2;
-    }
-    private Bitmap erodeBinaryBitmap(Bitmap binaryBitmap,int KX,int KY) {
-        Bitmap copyBitmap = binaryBitmap.copy(Bitmap.Config.ARGB_8888,true);
-        int currp, minp,w = binaryBitmap.getWidth(), h = binaryBitmap.getHeight(), mini,minj;
-        // revolve kernel
-        for(int i=0;i<w;i++){
-            for(int j=0;j<h;j++){
-                minp = colorVal(binaryBitmap.getPixel(i,j));
-                mini = i;
-                minj = j;
-                for(int ki=i-KX/2;ki<=i+KX/2;ki++){
-                    for(int kj=j-KY/2;kj<=j+KY/2;kj++){
-                        if(ki > -1 && kj > -1 && ki < w && kj < h){
-                            currp = colorVal(binaryBitmap.getPixel(ki,kj));
-                            if(minp > currp){
-                                minp = currp;
-                                mini = ki;
-                                minj = kj;
-                            }
-                        }
-                    }
-                }
-                copyBitmap.setPixel(i,j, binaryBitmap.getPixel(mini,minj));
-            }
-        }
-        Log.d(TAG,"Eroded: "+copyBitmap.getWidth());
-        return copyBitmap;
     }
     private Bitmap dilateBinaryBitmap(Bitmap binaryBitmap,int KX,int KY) {
         Bitmap copyBitmap = binaryBitmap.copy(Bitmap.Config.ARGB_8888,true);
@@ -358,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
                 eltCaptchaInput = webScraper.findElementById("txt_ALPHA_NUMERIC");
                 eltSubmitBtn = webScraper.findElementByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only",0);
                 Log.d(TAG,"Loaded image from: "+eltCaptchaImage.getAttribute("src"));
+                logToast("Captcha loaded");
                 // webScraper.web.evaluateJavascript();
                 eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);
             }
@@ -587,3 +541,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+/*
+* private Bitmap thresholdBitmap(Bitmap orig, int THR ){
+        Bitmap bitmap = orig.copy(Bitmap.Config.ARGB_8888,true);
+        for(int i=0;i<bitmap.getWidth();i++){
+            for(int j=0;j<bitmap.getHeight();j++){
+                if(colorVal(bitmap.getPixel(i,j)) < THR)
+                    bitmap.setPixel(i,j, Color.BLACK);
+                else
+                    bitmap.setPixel(i,j, Color.WHITE);
+            }
+        }
+        return bitmap;
+    }
+    private Bitmap openBinaryBitmap(Bitmap binaryBitmap,int KX,int KY) {
+        Bitmap copyBitmap1  = dilateBinaryBitmap(binaryBitmap,KX,KY);
+        // binaryBitmap.recycle();
+        Bitmap copyBitmap2 = erodeBinaryBitmap(copyBitmap1,KX,KY);
+        copyBitmap1.recycle();
+        return copyBitmap2;
+    }
+    private Bitmap erodeBinaryBitmap(Bitmap binaryBitmap,int KX,int KY) {
+        Bitmap copyBitmap = binaryBitmap.copy(Bitmap.Config.ARGB_8888,true);
+        int currp, minp,w = binaryBitmap.getWidth(), h = binaryBitmap.getHeight(), mini,minj;
+        // revolve kernel
+        for(int i=0;i<w;i++){
+            for(int j=0;j<h;j++){
+                minp = colorVal(binaryBitmap.getPixel(i,j));
+                mini = i;
+                minj = j;
+                for(int ki=i-KX/2;ki<=i+KX/2;ki++){
+                    for(int kj=j-KY/2;kj<=j+KY/2;kj++){
+                        if(ki > -1 && kj > -1 && ki < w && kj < h){
+                            currp = colorVal(binaryBitmap.getPixel(ki,kj));
+                            if(minp > currp){
+                                minp = currp;
+                                mini = ki;
+                                minj = kj;
+                            }
+                        }
+                    }
+                }
+                copyBitmap.setPixel(i,j, binaryBitmap.getPixel(mini,minj));
+            }
+        }
+        Log.d(TAG,"Eroded: "+copyBitmap.getWidth());
+        return copyBitmap;
+    }
+
+    */
