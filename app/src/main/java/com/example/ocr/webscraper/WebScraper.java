@@ -51,7 +51,7 @@ public class WebScraper {
         userAgent = web.getSettings().getUserAgentString();
         web.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String url) {
-
+                // forward the page loaded event-
                 if (onpageloadedlistener != null) {
                     onpageloadedlistener.loaded(url);
                 }
@@ -248,6 +248,7 @@ public class WebScraper {
         run(script2);
         Log.d("webscraper: ","Running Script: \n" + script3);
         run(script3);
+        // this one calls the interface
         Log.d("webscraper: ","Running Script: \n" + script4);
         run(script4);
         // run("javascript:{alert(1);}");

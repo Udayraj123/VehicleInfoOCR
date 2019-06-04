@@ -15,14 +15,20 @@ POST ISSUES ONLINE-
 
 // Nope, now can actually remove it for new url! - Improve captcha image processing
 
-Make gui(use draw trail demo) to swipe over them to toggle selection
-search button hides the swiping gui
-
 // Fix Fetching 
 	// >> Get the ultimate tool : background Webview automated using simple js.
 		https://github.com/daandtu/android-web-scraper/
 	//	>Show layout webview in drawer until captcha is downloaded/ form is submitted
-	 	> Maybe add some css into it instead of scraping?! <- more versatile
+	 	> Maybe add some js into it instead of scraping?! <- more versatile
+	 	^^> This is actually better for demo - should look like google assistant
+
+
+// EVEN BETTER IP -
+	//> use only thresholding and a kernel to patch gray or white acc to surrounding
+
+Optimizations
+	> Proper threaded listeners for captcha handling
+	> Disable drawableCache in the webscraper.
 
 ** The new url doesn't need IP! opencv no more needed :)
 Turbo mode - like QR scanner
@@ -30,9 +36,11 @@ Turbo mode - like QR scanner
 	> Open confirmation drawer immediately if details found.
 	> otherwise wait for better input
 
+
 In fruit ninja menu :
 	Swipe to select area
 	Use long press/double tap to copy block
+	search button hides the swiping gui
 
 FOUND THIS : 
 //recycle the source bitmap, this will be no longer used.
