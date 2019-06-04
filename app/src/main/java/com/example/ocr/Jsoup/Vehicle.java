@@ -1,7 +1,4 @@
 package com.example.ocr.Jsoup;
-
-import org.apache.commons.lang3.text.WordUtils;
-
 public class Vehicle
 {
     private String number;
@@ -154,6 +151,6 @@ public class Vehicle
 
     public String cleanString(String attr)
     {
-        return WordUtils.capitalizeFully(attr.replaceAll("[\\s],|,$|^,", ""));
+        return attr.toUpperCase().replaceAll("[\\s],|,$|^,", "");
     }
 }

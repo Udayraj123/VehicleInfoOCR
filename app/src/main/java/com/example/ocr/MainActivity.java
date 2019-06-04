@@ -26,12 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ocr.Jsoup.GetCaptcha;
-import com.example.ocr.Jsoup.Vehicle;
-
 import java.io.IOException;
 import java.util.List;
 
+import com.example.ocr.Jsoup.Vehicle;
 import com.example.ocr.text_detection.*;
 import com.example.ocr.camera.*;
 import com.example.ocr.graphics.*;

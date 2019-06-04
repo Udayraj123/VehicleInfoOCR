@@ -46,4 +46,4 @@ FOUND THIS :
 //recycle the source bitmap, this will be no longer used.
 bitmap.recycle();
 
-
+Load vehicle image from Vehicle model
