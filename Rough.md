@@ -32,6 +32,7 @@ POST ISSUES ONLINE-
  	^^> This is actually better for demo - should look like google assistant
 
 Fix some bugs
+	**No need to reload captcha on pause preview now. (THINK! : the website does it!)**
 	> Should read captcha again on fail
 		>THEN reread only on captcha-fail!
 	> Proper threaded listeners for captcha handling
@@ -42,16 +43,14 @@ TRY THE THROTTLING BEFORE UPDATES
 	> Thread.sleep() / handler.postDelayed()
 	> OCR - frame throttle with a probability
 	> In app size : put some jars and resources
-
-
+	^^ Find a guide online?!
+	> Bubble pop focus
+	>Zooming
 
 In fruit ninja menu :
 	Swipe to select area
 	Use long press/double tap to copy block
 	search button hides the swiping gui
-
-**No need to reload captcha on pause preview now.**
-	> Also update captcha image on form submit too (call startCap..).
 
 Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
 	> Min Area constraint, more constraints?!
@@ -77,6 +76,7 @@ Optimizations
 
 Excess:
 	Load vehicle image from Vehicle model
+	Show <3 pop up on successful detection and result retrieval
 
 Later:
 	Run Apk analyzer on OMR apk

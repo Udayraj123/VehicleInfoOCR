@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
+    android:id="@+id/super_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- content -->
@@ -40,7 +41,7 @@
         >
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.6"
+            android:layout_weight="0.8"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -66,11 +67,9 @@
                 android:id="@+id/cam_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="90dp"
-                android:background="@drawable/bubble3"
-                android:layout_marginLeft="50dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginEnd="50dp"
+                android:background="@drawable/bubble2"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="25dp"
                 />
@@ -85,9 +84,21 @@
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:layout_weight="0.6"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical" >
+            <Button
+                android:id="@+id/drawer_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:background="@drawable/search"
+                android:onClick="onDrawerButtonClicked"
+                android:layout_marginStart="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="25dp"
+                />
         </LinearLayout>
     </LinearLayout>
 
@@ -100,23 +111,40 @@
         >
 
         <!--<LinearLayout-->
-            <!--android:layout_weight="4"-->
+            <!--android:layout_weight="0.04"-->
             <!--android:id="@+id/dummy"-->
             <!--android:layout_height="0dp"-->
+            <!--android:orientation="vertical"-->
             <!--android:layout_width="match_parent">-->
         <!--</LinearLayout>-->
         <LinearLayout
-            android:layout_weight="2"
+            android:layout_weight="2.5"
             android:layout_height="0dp"
+            android:id="@+id/drawer"
+            android:orientation="vertical"
+            android:visibility="invisible"
+
+            android:background="@drawable/drawer"
             android:layout_width="match_parent">
             <!-- bottom sheet -->
-            <br.vince.owlbottomsheet.OwlBottomSheet
-                android:id="@+id/owl_bottom_sheet"
-                android:layout_width="match_parent"
+            <include layout="@layout/main_content"
                 android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 />
         </LinearLayout>
 
+        <!--<LinearLayout-->
+            <!--android:layout_weight="0.08"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="match_parent">-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

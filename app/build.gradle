@@ -52,6 +52,8 @@ dependencies {
     // implementation 'com.github.AliAzaz:Edittext-Library:1.0.2'
 //    implementation 'com.jackandphantom.android:androidlikebutton:1.2.0'
 //    implementation 'com.daandtu:android-web-scraper:1.0.1'
-    implementation 'com.github.Guilherme-HRamos:OwlBottomSheet:1.01'
-    implementation "com.orange.dgil.trail:trail-core-lib:1.2.3"
+//    implementation 'com.github.Guilherme-HRamos:OwlBottomSheet:1.01'
+//    implementation "com.orange.dgil.trail:trail-core-lib:1.2.3"
+    //
+
 }

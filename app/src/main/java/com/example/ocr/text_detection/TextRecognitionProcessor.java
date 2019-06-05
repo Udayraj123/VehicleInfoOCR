@@ -11,6 +11,9 @@ import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -28,7 +31,7 @@ public class TextRecognitionProcessor {
     private static final String TAG = "TextRecProc";
     public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]+";
     public final String NUMPLATE_PATTERN_TIGHT = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{4}";
-
+    private int MAX_BOXES = 5;
     private final FirebaseVisionTextRecognizer detector;
     public String allText="";
     public String majorText="";
@@ -52,32 +55,8 @@ public class TextRecognitionProcessor {
         }
     }
 
-    private final AtomicBoolean isProcessing = new AtomicBoolean(false);
-    public String processBitmap(final Bitmap bitmap, int rotation, int facing, GraphicOverlay graphicOverlay){
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        // int size = bitmap.getRowBytes() * bitmap.getHeight();
-        // ByteBuffer byteBuffer = ByteBuffer.allocate(size);
-        // bitmap.copyPixelsToBuffer(byteBuffer);
-
-        isProcessing.set(true);
-        Log.d(TAG,"sending image to mlkit process");
-
-        if (shouldThrottle.get()) { // nice atomic approach to skip frames!
-            isProcessing.set(false);
-        }
-        else{
-            detectInVisionImage(FirebaseVisionImage.fromBitmap(bitmap), graphicOverlay);
-        }
-        Log.d(TAG,"Waiting for mlkit read to finish");
-        while(isProcessing.get()){}
-        Log.d(TAG,"Finished waiting, read: "+allText);
-        return allText;
-    }
-
     public void process(ByteBuffer data, FrameMetadata frameMetadata, GraphicOverlay graphicOverlay){
         if (shouldThrottle.get()) { // nice atomic approach to skip frames!
-            isProcessing.set(false);
             return;
         }
 
@@ -105,20 +84,27 @@ public class TextRecognitionProcessor {
     private void autoUpdateMajorText(String line){
         line = numPlateFilter(line);
         if( majorText.matches(NUMPLATE_PATTERN_TIGHT) && line.matches(NUMPLATE_PATTERN_TIGHT)
-        || !majorText.matches(NUMPLATE_PATTERN_TIGHT) && line.matches(NUMPLATE_PATTERN)){
+                || !majorText.matches(NUMPLATE_PATTERN_TIGHT) && line.matches(NUMPLATE_PATTERN)){
             majorText = line;
             Log.d(TAG,"Updated majorText: "+line);
         }
     }
-
     private void onSuccess( @NonNull FirebaseVisionText results, @NonNull GraphicOverlay graphicOverlay) {
 
         //Done: set a public variable from here containing the "main" text. ( for captcha)
         graphicOverlay.clear();
         allText = "";
         textBlocks = results.getTextBlocks();
+        // textBlocks = new ArrayList<>(results.getTextBlocks());
+        // Collections.sort(textBlocks, new Comparator<FirebaseVisionText.TextBlock>(){
+        //     @Override
+        //     public int compare(FirebaseVisionText.TextBlock t1, FirebaseVisionText.TextBlock t2) {
+        //         return t2.getBoundingBox().width() * t2.getBoundingBox().height()
+        //         - t1.getBoundingBox().width() * t1.getBoundingBox().height();
+        //     }
+        // });
 
-        for (int i = 0; i < textBlocks.size(); i++) {
+        for (int i = 0; i < Math.min(textBlocks.size(), MAX_BOXES); i++) {
             List<FirebaseVisionText.Line> lines = textBlocks.get(i).getLines();
             for (int j = 0; j < lines.size(); j++) {
                 List<FirebaseVisionText.Element> elements = lines.get(j).getElements();
@@ -136,12 +122,10 @@ public class TextRecognitionProcessor {
             Log.d(TAG,"Success read: "+allText);
         allText = numPlateFilter(allText);
         autoUpdateMajorText(allText);
-        isProcessing.set(false);
     }
 
     private void onFailure(@NonNull Exception e) {
         Log.w(TAG, "Text detection failed." + e);
-        isProcessing.set(false);
     }
 
     private void detectInVisionImage( FirebaseVisionImage image, final GraphicOverlay graphicOverlay) {

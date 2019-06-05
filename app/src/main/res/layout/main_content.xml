@@ -1,12 +1,6 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginBottom="15dp"
     android:orientation="vertical"
     android:layout_gravity="bottom|center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,13 +11,8 @@
         android:layout_height="0dp"
         android:layout_weight="0.7"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         >
-        <include layout="@layout/vehicle_details"
-            android:id="@+id/vehicle_details"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/webview"
@@ -163,7 +152,8 @@
                 android:text="@string/search"
                 />
     <Button
-        android:id="@+id/vehicle_details_close_button"
+        android:id="@+id/close_button"
+        android:onClick="onDrawerButtonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Close"
