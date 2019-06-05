@@ -24,8 +24,26 @@ POST ISSUES ONLINE-
 // EVEN BETTER IP -
 	//> use only thresholding and a kernel to patch gray or white acc to surrounding
 
-> Add some js to crop view instead of scraping vehicle details?! <- more versatile
+// Fix some crashes
+	//> On clicking flash on pause
+	//Yeah, On internet unavailable, fixed. > Sometimes hangs on start?! : 
+		^Listener needed to be reset
+// > Add some js to crop view instead of scraping vehicle details?! <- more versatile
  	^^> This is actually better for demo - should look like google assistant
+
+Fix some bugs
+	> Should read captcha again on fail
+		>THEN reread only on captcha-fail!
+	> Proper threaded listeners for captcha handling
+		^Is buggy at times to fill
+
+
+TRY THE THROTTLING BEFORE UPDATES
+	> Thread.sleep() / handler.postDelayed()
+	> OCR - frame throttle with a probability
+	> In app size : put some jars and resources
+
+
 
 In fruit ninja menu :
 	Swipe to select area
@@ -42,9 +60,16 @@ Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
 	> Open confirmation drawer immediately if details found.
 	> otherwise wait for better input
 
+Guided Interface:
+	> Camera focus area
+	> Feedback on obtaining valid numplate
+	> Tell thru design to open drawer AFTER capture
+	> Tell to verify captcha
+
+**Improve OCR on two rows numplates**
+
 Optimizations
 	> Modularize the MainActivity
-	> Proper threaded listeners for captcha handling
 	> Disable drawableCache in the webscraper.
 	FOUND THIS (Add'em): 
 	//recycle the source bitmap, this will be no longer used.
@@ -55,3 +80,12 @@ Excess:
 
 Later:
 	Run Apk analyzer on OMR apk
+
+
+Note numplate pattern:
+https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_India#Current_format
+    The first two letters indicate the state or Union Territory to which the vehicle is registered.
+    The next two digit numbers are the sequential number of a district. Due to heavy volume of vehicle registration, the numbers were given to the RTO offices of registration as well.
+    The third part consists of one ,two or three letters. This shows the ongoing series of an RTO (Also as a counter of the number of vehicles registered) and/or vehicle classification
+    The fourth part is a 4 digit number unique to each plate. A letter is prefixed when the 4 digit number runs out and then two letters and so on.
+    The fifth part is an international oval "IND" and the above it a hologram having a Chakra. However, not all plates have these features.

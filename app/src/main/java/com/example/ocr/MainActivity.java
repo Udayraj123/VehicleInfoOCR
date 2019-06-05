@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -31,7 +32,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
 
-import com.example.ocr.Jsoup.Vehicle;
 import com.example.ocr.text_detection.*;
 import com.example.ocr.camera.*;
 import com.example.ocr.graphics.*;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private final int SOCKET_TIMEOUT = 408;
     private final int CAPTCHA_LOAD_FAILED = 999;
     private final int TECHNICAL_DIFFICULTY = 888;
-    public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+";
+    public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]+";
 
     //  ----- Instance Variables -----
     // private EditTextPicker vehicleNumber;
@@ -125,29 +125,9 @@ public class MainActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/34342816/android-6-0-multiple-PermissionsList
         if (permHandler.hasAllPermissions()) {
             Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
-
-            camBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(cameraSource==null) {
-                        startLoadingCaptcha();
-                        createCameraSource();
-                        startCameraSource();
-                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble2));
-                        drawingArea.setVisibility(View.GONE);
-                    }
-                    else {
-                        confirmVehicleNumber();
-                        stopCameraSource();
-                        camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop2));
-                        drawingArea.setVisibility(View.VISIBLE);
-                    }
-                    // camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
-                }
-            });
-
+            setCamButtonListeners();
             setFlashListeners();
-            // default is start the camera
+            // start the camera
             camBtn.performClick();
         }
         else {
@@ -180,11 +160,11 @@ public class MainActivity extends AppCompatActivity {
                     }});
         mBottomSheet.performClick();
     }
-    private String numPlateFilter(String s){
-        return s.toUpperCase().replaceAll("[^A-Z0-9]","");
-    }
+    // private String numPlateFilter(String s){
+    //     return s.toUpperCase().replaceAll("[^A-Z0-9]","");
+    // }
     private String captchaFilter(String s){
-        return s.replaceAll("[^a-zA-Z0-9]","");
+        return s.replaceAll("[^a-zA-Z0-9]","").replace('j','J');
     }
 
     private void bottomSheetOn() {
@@ -196,10 +176,11 @@ public class MainActivity extends AppCompatActivity {
     private void confirmVehicleNumber() {
         bottomSheetOn();
         if (cameraSource != null && cameraSource.frameProcessor.textBlocks != null) {
-            vehicleNumber.setText(numPlateFilter(cameraSource.frameProcessor.majorText));
+            vehicleNumber.setText(cameraSource.frameProcessor.majorText);
+            // show vehicleNum draw interface here
             List<FirebaseVisionText.TextBlock> textBlocks = cameraSource.frameProcessor.textBlocks;
             for (int i = 0; i < textBlocks.size(); i++) {
-                // set vehicleNum here
+                // find and club nearby boxes?!
             }
         }
     }
@@ -295,40 +276,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void startLoadingCaptcha() {
-        bottomSheetOn();
 
-        captchaInput.setText("");
-        vehicleDetails.setVisibility(View.GONE);
+    public boolean checkInternetConnection() {
 
-        Log.d(TAG,"Started Loading Captcha");
-        webScraper.loadURL(FULL_URL);
-        webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener() {
-            @Override
-            public void loaded(String URL) {
-                Log.d(TAG,"Loading page: "+URL);
-                // GetCaptcha.bigLog( TAG, webScraper.getHtml());
-                eltCaptchaImage = webScraper.findElementByClassName("captcha-image",0);
-                eltVehicleNumber = webScraper.findElementById("regn_no1_exact");
-                eltCaptchaInput = webScraper.findElementById("txt_ALPHA_NUMERIC");
-                eltSubmitBtn = webScraper.findElementByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only",0);
-                Log.d(TAG,"Loaded image from: "+eltCaptchaImage.getAttribute("src"));
-                logToast("Captcha loaded");
-                // webScraper.web.evaluateJavascript();
-                eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);
-            }
-        });
+        ConnectivityManager con_manager = (ConnectivityManager)
+                MainActivity.this.getSystemService(MainActivity.CONNECTIVITY_SERVICE);
+
+        if(con_manager.getActiveNetworkInfo() != null
+                && con_manager.getActiveNetworkInfo().isAvailable()
+                && con_manager.getActiveNetworkInfo().isConnected()){
+            return true;
+        }
+        else{
+            logToast("No internet available!");
+            return false;
+        }
     }
-    private void showVehicleDetails(Vehicle vehicle) {
 
-        ((TextView)findViewById(R.id.vehicle_name)).setText(vehicle.getName());
-        ((TextView)findViewById(R.id.vehicle_fuel)).setText(vehicle.getFuel());
-        ((TextView)findViewById(R.id.vehicle_cc)).setText(vehicle.getCc());
-        ((TextView)findViewById(R.id.vehicle_engine)).setText(vehicle.getEngine());
-        ((TextView)findViewById(R.id.vehicle_chasis)).setText(vehicle.getChassis());
-        ((TextView)findViewById(R.id.vehicle_owner)).setText(vehicle.getOwner());
-        ((TextView)findViewById(R.id.vehicle_location)).setText(vehicle.getLocation());
-        ((TextView)findViewById(R.id.vehicle_expiry)).setText(vehicle.getExpiry());
+    private void startLoadingCaptcha() {
+        if(checkInternetConnection()) {
+            bottomSheetOn();
+
+            captchaInput.setText("");
+            // vehicleDetails.setVisibility(View.INVISIBLE);
+            vehicleDetails.setVisibility(View.GONE);
+
+            Log.d(TAG, "Started Loading Captcha");
+            webScraper.loadURL(FULL_URL);
+            webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener(){
+                @Override
+                public void loaded(String URL) {
+                    eltCaptchaImage = webScraper.findElementByClassName("captcha-image", 0);
+                    eltVehicleNumber = webScraper.findElementById("regn_no1_exact");
+                    eltCaptchaInput = webScraper.findElementById("txt_ALPHA_NUMERIC");
+                    eltSubmitBtn = webScraper.findElementByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only", 0);
+                    Log.d(TAG, "Loaded image from: " + eltCaptchaImage.getAttribute("src"));
+                    logToast("Captcha loaded");
+                    eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);
+                    webScraper.setOnPageLoadedListener(null);
+                    String focusScript=
+                    "var children = document.getElementById('wrapper').children; "+
+                    "for (var i=0; i<children.length; i++) {children[i].style.display='none';} "+
+                    "document.getElementById('page-wrapper').style.display='block'; "+
+                    "var children = document.getElementsByClassName('container')[2].children; "+
+                    "for (var i=0; i<children.length; i++) {children[i].style.display='none';}"+
+                    "document.getElementsByClassName('row bottom-space')[0].style.display='block';"+
+                    "document.getElementsByClassName('container')[0].style.display='block';";
+                    webScraper.loadURL("javascript:{" + focusScript + "}void(0);");
+                }
+            });
+        }
     }
     private void createCameraSource() {
         if (cameraSource == null) {
@@ -370,25 +367,46 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    private void setCamButtonListeners(){
+        camBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cameraSource==null) {
+                    startLoadingCaptcha();
+                    createCameraSource();
+                    startCameraSource();
+                    camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble2));
+                    // drawingArea.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    confirmVehicleNumber();
+                    stopCameraSource();
+                    camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop2));
+                    // drawingArea.setVisibility(View.VISIBLE);
+                }
+                // camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
+            }
+        });
+    }
     private boolean flashOn=false;
-    private void setFlashListeners(
-
-    ) {
+    private void setFlashListeners() {
         Button flashBtn = findViewById(R.id.flash_btn);
         flashBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flashOn) {
-                    flashBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
-                    cameraSource.turnOffTheFlash();
-                    flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_off));
+                if(cameraSource!=null){
+                    if(flashOn) {
+                        flashBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
+                        cameraSource.turnOffTheFlash();
+                        flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_off));
+                    }
+                    else {
+                        flashBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
+                        cameraSource.turnOnTheFlash();
+                        flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_on));
+                    }
+                    flashOn = !flashOn;
                 }
-                else {
-                    flashBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
-                    cameraSource.turnOnTheFlash();
-                    flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_on));
-                }
-                flashOn = !flashOn;
             }
         });
     }
@@ -416,18 +434,36 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
                 String result = vehicleNumber.getText().toString();
                 eltVehicleNumber.setText(vehicleNumber.getText().toString());
+                eltVehicleNumber.setAttribute("style","background-color:lightgreen !important");
                 eltCaptchaInput.setText(captchaInput.getText().toString());
-                // executes some js : and submits form
-                eltSubmitBtn.click();
-                // this listener is called on onPageFinished listener
-                webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener() {
-                    @Override
-                    public void loaded(String URL) {
-                        Log.d(TAG,"Done loading2 : \n\n\t"+URL);
-                        //vehicleDetails
-                        Toast.makeText(MainActivity.this, "Search completed...", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                eltCaptchaInput.setAttribute("style","background-color:lightgreen !important");
+                if(checkInternetConnection()) {
+                    // executes some js : and submits form
+                    eltSubmitBtn.click();
+                    // this listener is called on onPageFinished listener
+                    webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener() {
+                        @Override
+                        public void loaded(String URL) {
+                            // search for captcha error
+
+                            // search for table
+
+                            // handle table
+                            String tableScript = "var table = document.getElementsByClassName(\"table\")[0];" +
+                                    " for (var i = 0, row; row = table.rows[i]; i++) {" +
+                                    " row.style = \"display: table;  width:100%; word-break:break-all;\";" +
+                                    " for (var j = 0, col; col = row.cells[j]; j++) {" +
+                                    " col.style=\"display: table-row;\"" +
+                                    " }" +
+                                    " }";
+                            //vehicleDetails
+                            logToast("Search completed...");
+                            //reset the listener
+                            webScraper.setOnPageLoadedListener(null);
+                            webScraper.loadURL("javascript:{" + tableScript + "}void(0)");
+                        }
+                    });
+                }
             }
         });
     }
@@ -444,17 +480,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
+        // on custom typing
+        //TODO debug this
         vehicleNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
-                    vehicleNumber.setText(numPlateFilter(vehicleNumber.getText().toString()));
+                    vehicleNumber.setText(vehicleNumber.getText().toString());
             }
         });
     }
 
     public void copyNumber(View view) {
-        String vehicleNum = numPlateFilter(vehicleNumber.getText().toString());
+        String vehicleNum = vehicleNumber.getText().toString();
         Log.d(TAG,"Copying : "+vehicleNum);
         if(!vehicleNum.equals("")) {
             ClipData clip = ClipData.newPlainText("Vehicle Number", vehicleNum);
@@ -514,17 +552,17 @@ public class MainActivity extends AppCompatActivity {
     private DrawingArea drawingArea;
 
     private void initDrawingArea() {
-        if (drawingArea == null) {
-            drawingArea = (DrawingArea) findViewById(R.id.drawing_area);
-            drawingArea.initTrailDrawer();
-        }
+        // if (drawingArea == null) {
+        //     drawingArea = (DrawingArea) findViewById(R.id.drawing_area);
+        //     drawingArea.initTrailDrawer();
+        // }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        initDrawingArea();
+        // initDrawingArea();
         startCameraSource();
     }
 
@@ -532,7 +570,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        drawingArea.trimMemory();
+        // drawingArea.trimMemory();
         cameraPreview.stop();
     }
 

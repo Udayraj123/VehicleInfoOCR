@@ -1,6 +1,6 @@
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginLeft="10dp"
     android:layout_marginStart="10dp"
     android:layout_marginRight="10dp"
@@ -11,29 +11,42 @@
     android:layout_gravity="bottom|center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/spacer"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:layout_width="match_parent"
+        >
+        <include layout="@layout/vehicle_details"
+            android:id="@+id/vehicle_details"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            />
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/webview"
-        android:layout_above="@+id/vehicle_details"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.3"
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:orientation="vertical"
         >
     </LinearLayout>
-    <include layout="@layout/vehicle_details"
-        android:id="@+id/vehicle_details"
-        android:layout_above="@+id/layout_vehicle_plate"
-        android:layout_height="wrap_content"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:visibility="gone"
-        />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
     <LinearLayout
         android:id="@+id/layout_vehicle_plate"
-        android:layout_above="@+id/layout_captcha"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:gravity="center_vertical"
@@ -69,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_content_copy_black_24dp"
-                android:layout_alignRight="@id/vehicle_plate"
+                android:layout_alignEnd="@id/vehicle_plate"
                 android:onClick="copyNumber"
                 android:layout_marginTop="2dp"
                 />
@@ -83,7 +96,6 @@
 
     <LinearLayout
         android:id="@+id/layout_captcha"
-        android:layout_above="@+id/layout_close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
@@ -135,8 +147,6 @@
 
     <LinearLayout
         android:id="@+id/layout_close"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginTop="15dp"
@@ -150,7 +160,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/circle"
                 android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
                 android:text="@string/search"
                 />
     <Button
@@ -161,4 +170,6 @@
         android:background="@drawable/circle"
         />
     </LinearLayout>
-</RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

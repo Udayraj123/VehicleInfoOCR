@@ -92,6 +92,7 @@ public interface Img2Bitmap
                     "document.body.appendChild(canvas);"+
                     "canvas.width = img.width;"+
                     "canvas.height = img.height;"+
+                    "canvas.style='display:none';"+
                     "var ctx = canvas.getContext(\"2d\");"+
                     "ctx.drawImage(img,0,0,img.clientWidth,img.clientHeight);";
 

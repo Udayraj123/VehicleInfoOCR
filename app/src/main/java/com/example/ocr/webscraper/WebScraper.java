@@ -3,7 +3,6 @@ package com.example.ocr.webscraper;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
@@ -171,7 +170,6 @@ public class WebScraper {
         web.getSettings().setBlockNetworkImage(!enabled);
         web.getSettings().setLoadsImagesAutomatically(enabled);
     }
-
     public void loadURL(String URL) {
         this.URL = URL;
         web.loadUrl(URL);
@@ -239,9 +237,9 @@ public class WebScraper {
     public void callImageBitmapGetter(String elementLocator, Img2Bitmap handler){
         addImg2Bitmap(handler);
         String script1 = "javascript:{ var img = "+elementLocator+"; img.width = img.width * 1.2;}";
-        String script2 = "javascript:{"+ Img2Bitmap.buildScript1 +"}";
-        String script3 = "javascript:{"+ Img2Bitmap.buildScript2 +"}";
-        String script4 = "javascript:{"+ Img2Bitmap.buildScript3 +"}";
+        String script2 = "javascript:{"+ Img2Bitmap.buildScript1 +"}void(0);";
+        String script3 = "javascript:{"+ Img2Bitmap.buildScript2 +"}void(0);";
+        String script4 = "javascript:{"+ Img2Bitmap.buildScript3 +"}void(0);";
         // Log.d("webscraper: ","Running Script: \n" + script1);
         run(script1);
         // Log.d("webscraper: ","Running Script: \n" + script2);
@@ -263,13 +261,13 @@ public class WebScraper {
     }
 
 
-    public void submitForm(){
-        submitForm(0);
-    }
-    public void submitForm(int id){
-        Log.d("webscraper:","Submitting form "+id);
-        run("javascript:{document.forms["+id+"].submit();}");
-    }
+    // public void submitForm(){
+    //     submitForm(0);
+    // }
+    // public void submitForm(int id){
+    //     Log.d("webscraper:","Submitting form "+id);
+    //     run("javascript:{document.forms["+id+"].submit();}");
+    // }
     //FindWebViewElement
     public Element findElementByClassName(String classname, int id){
         return new Element(this, "document.getElementsByClassName('" + classname + "')[" + String.valueOf(id) + "]");

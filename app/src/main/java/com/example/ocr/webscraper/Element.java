@@ -19,6 +19,11 @@ public class Element {
         Log.i("Logmsg",t);
         web.run(t);
     }
+    public void setAttribute(String attribute,String text){
+        String t = "javascript:" + elementLocator + "."+attribute+"='" + text + "';void(0);";
+        Log.i("Logmsg",t);
+        web.run(t);
+    }
 
     public void click(){
         web.run("javascript:" + elementLocator + ".click();void(0);");

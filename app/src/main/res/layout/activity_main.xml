@@ -22,12 +22,12 @@
             android:layout_height="match_parent"
             />
 
-        <com.example.ocr.graphics.DrawingArea
-            android:id="@+id/drawing_area"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            />
+        <!--<com.example.ocr.graphics.DrawingArea-->
+            <!--android:id="@+id/drawing_area"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:visibility="invisible"-->
+            <!--/>-->
 
     </com.example.ocr.camera.CameraSourcePreview>
 
