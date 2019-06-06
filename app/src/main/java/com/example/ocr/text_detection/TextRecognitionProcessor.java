@@ -11,22 +11,15 @@ import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.example.ocr.graphics.*;
 
-import android.widget.EditText;
 
-
-public class TextRecognitionProcessor {
+public class TextRecognitionProcessor{
 
     private static final String TAG = "TextRecProc";
     public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]+";
@@ -39,11 +32,12 @@ public class TextRecognitionProcessor {
     // Whether we should ignore process(). This is usually caused by feeding input data faster than
     // the model can handle.
     private final AtomicBoolean shouldThrottle = new AtomicBoolean(false);
+    private AppEvents listener;
 
-    public TextRecognitionProcessor() {
+    public TextRecognitionProcessor(AppEvents listener) {
         detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+        this.listener = listener;
     }
-
     //region ----- Exposed Methods -----
 
 
@@ -86,7 +80,7 @@ public class TextRecognitionProcessor {
         if( majorText.matches(NUMPLATE_PATTERN_TIGHT) && line.matches(NUMPLATE_PATTERN_TIGHT)
                 || !majorText.matches(NUMPLATE_PATTERN_TIGHT) && line.matches(NUMPLATE_PATTERN)){
             majorText = line;
-            Log.d(TAG,"Updated majorText: "+line);
+            listener.onMajorTextUpdate(line);
         }
     }
     private void onSuccess( @NonNull FirebaseVisionText results, @NonNull GraphicOverlay graphicOverlay) {

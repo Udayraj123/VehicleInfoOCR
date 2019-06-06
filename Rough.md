@@ -31,26 +31,28 @@ POST ISSUES ONLINE-
 // > Add some js to crop view instead of scraping vehicle details?! <- more versatile
  	^^> This is actually better for demo - should look like google assistant
 
+//**No need to reload captcha on pause preview now. (THINK! : the website does it!)**
+
+//Blurkit/Blurry- Nope, Renderscript adds 2MB and isn't that good
+
+
 Fix some bugs
-	**No need to reload captcha on pause preview now. (THINK! : the website does it!)**
-	> Should read captcha again on fail
-		>THEN reread only on captcha-fail!
-	> Proper threaded listeners for captcha handling
+	//> Proper threaded listeners for majorText update
+	//> Proper threaded listeners for captcha handling
 		^Is buggy at times to fill
+	// > ^THREAD IT! : Convert those listeners into async tasks (As app hangs on slow internet; But webview loadUrl is already async ?!) 
+	> A listener for page update?!
+	> Should read captcha again on fail
 
-
-TRY THE THROTTLING BEFORE UPDATES
-	> Thread.sleep() / handler.postDelayed()
-	> OCR - frame throttle with a probability
-	> In app size : put some jars and resources
-	^^ Find a guide online?!
-	> Bubble pop focus
-	>Zooming
-
-In fruit ninja menu :
+// Nope, Bubble overlay is better : In fruit ninja menu :
 	Swipe to select area
-	Use long press/double tap to copy block
 	search button hides the swiping gui
+
+Bubble overlay: Use long press/double tap to copy block
+
+private final Object processorLock = new Object();
+// @GuardedBy("processorLock")
+public TextRecognitionProcessor frameProcessor;
 
 Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
 	> Min Area constraint, more constraints?!
@@ -61,22 +63,33 @@ Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
 
 Guided Interface:
 	> Camera focus area
+	> A photo showing approx optimal distance of plate
 	> Feedback on obtaining valid numplate
 	> Tell thru design to open drawer AFTER capture
 	> Tell to verify captcha
+	Show <3 pop up on successful detection and result retrieval
 
 **Improve OCR on two rows numplates**
 
 Optimizations
+	// > Lower camera preview/frame size!! 
 	> Modularize the MainActivity
 	> Disable drawableCache in the webscraper.
-	FOUND THIS (Add'em): 
-	//recycle the source bitmap, this will be no longer used.
-	bitmap.recycle();
+	// > FOUND THIS (Add'em): bitmap.recycle();//recycle the source bitmap, this will be no longer used.
+
+TRY THE THROTTLING BEFORE UPDATES
+	^^ FIND A GUIDE ONLINE?!
+	> No threading?!
+	> Thread.sleep() / handler.postDelayed()
+	> OCR - frame throttle with a probability
+	> In app size : put some jars and resources
+	> Bubble pop focus
+	> Zooming
 
 Excess:
-	Load vehicle image from Vehicle model
-	Show <3 pop up on successful detection and result retrieval
+	Load vehicle image from Vehicle model (google images)
+	Low res support?!
+	Timeout on numplate detected bubble
 
 Later:
 	Run Apk analyzer on OMR apk

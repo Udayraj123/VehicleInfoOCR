@@ -12,7 +12,8 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.ocr"
-        minSdkVersion 19
+        // 19 for transition animations
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

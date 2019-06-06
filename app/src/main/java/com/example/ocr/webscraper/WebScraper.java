@@ -56,7 +56,7 @@ public class WebScraper {
                 }
 
                 web.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
                 web.layout(0, 0, web.getMeasuredWidth(), web.getMeasuredHeight());
                 web.setDrawingCacheEnabled(true);
             }
@@ -79,7 +79,7 @@ public class WebScraper {
     public Bitmap takeScreenshot(int width, int height) {
         if (width < 0 || height < 0) {
             web.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         }
         if (width < 0) {
             width = web.getMeasuredWidth();
@@ -102,13 +102,13 @@ public class WebScraper {
 
     public int getMaxHeight() {
         web.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         return web.getMeasuredHeight();
     }
 
     public int getMaxWidth() {
         web.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
         return web.getMeasuredWidth();
     }
 
@@ -137,7 +137,7 @@ public class WebScraper {
             }
         },15);
         while (htmlBool) {}
-        return Html;
+            return Html;
     }
 
     public void clearHistory() {
@@ -222,7 +222,9 @@ public class WebScraper {
     }
     protected String run2(String task){
         //can use synchronized block here-
-        while (!gotElementText){}
+        while (!gotElementText){
+            
+        }
         elementText = null;
         gotElementText = false;
         web.evaluateJavascript(task, new ValueCallback<String>() {
@@ -231,7 +233,9 @@ public class WebScraper {
                 gotElementText = true;
             }
         });
-        while(!gotElementText){}
+        while(!gotElementText){
+
+        }
         return elementText;
     }
     public void callImageBitmapGetter(String elementLocator, Img2Bitmap handler){

@@ -1,5 +1,7 @@
 package com.example.ocr.webscraper;
 
+import android.graphics.Bitmap;
+
 public interface Img2Bitmap
 {
     void onConvertComplete(byte[] imageData);

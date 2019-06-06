@@ -1,8 +1,6 @@
 package com.example.ocr.text_detection;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
@@ -10,7 +8,6 @@ import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
@@ -24,45 +21,34 @@ public class BitmapTextRecognizer {
     private final FirebaseVisionTextRecognizer detector;
     private List<FirebaseVisionText.TextBlock> textBlocks;
     public String allText="";
-    public BitmapTextRecognizer() {
+
+    private AppEvents listener;
+
+    public BitmapTextRecognizer(AppEvents listener) {
         detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+        this.listener = listener;
     }
     private String filterCaptcha(String s){
         return s.replaceAll("[^a-zA-Z0-9]","");
     }
     public void processBitmap(final Bitmap bitmap){
         Log.d(TAG,"sent image to mlkit process");
-
-        Task<FirebaseVisionText> result =detectInVisionImage(FirebaseVisionImage.fromBitmap(bitmap));
-
-        try{
-            Tasks.await(result);
-        }
-        catch (ExecutionException e){
-            Log.d(TAG,"Error during recognition task?!");
-            e.printStackTrace();
-        }
-        catch (InterruptedException e){
-            Log.d(TAG,"Error during recognition task?!");
-            e.printStackTrace();
-        }
-        Log.d(TAG,"Finished waiting, read: "+allText);
-
+        detectInVisionImage(FirebaseVisionImage.fromBitmap(bitmap));
     }
-    private Task<FirebaseVisionText> detectInVisionImage( FirebaseVisionImage image) {
-        return
+    private void detectInVisionImage( FirebaseVisionImage image) {
         detector.processImage(image)
         .addOnSuccessListener(
             new OnSuccessListener<FirebaseVisionText>() {
                 @Override
                 public void onSuccess(FirebaseVisionText results) {
-                 allText = "";
-                 textBlocks = results.getTextBlocks();
-                 for (int i = 0; i < textBlocks.size(); i++) {
+                   allText = "";
+                   textBlocks = results.getTextBlocks();
+                   for (int i = 0; i < textBlocks.size(); i++) {
                     allText += textBlocks.get(i).getText();
                 }
                 Log.d(TAG,"Bitmap Success read: "+allText);
                 allText = filterCaptcha(allText);
+                listener.onCaptchaUpdate(allText);
             }
         })
         .addOnFailureListener(

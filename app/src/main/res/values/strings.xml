@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Vehicle Info Camera</string>
+    <string name="can_do_transitions">false</string>
+    <string name="app_name">Vehicle Info Camera Live</string>
     <string name="ok">OK</string>
     <string name="search">Search</string>
     <string name="close">Close</string>

@@ -1,10 +1,12 @@
 package com.example.ocr;
 
+import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Handler;
@@ -15,14 +17,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.transition.ArcMotion;
-import android.transition.ChangeBounds;
+import android.transition.Fade;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +33,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
 import com.example.ocr.text_detection.*;
 import com.example.ocr.camera.*;
@@ -42,8 +47,11 @@ import com.example.ocr.utils.*;
 import com.example.ocr.webscraper.*;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements AppEvents {
     // private DrawingArea drawingArea;
     private final int OK = 200;
     private final int SOCKET_TIMEOUT = 408;
@@ -64,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private Button searchBtn;
     private View bottomSheetView;
     private View fruitNinja;
+    private ViewGroup platesView;
     private View drawerView;
     private CameraSource cameraSource = null;
     private CameraSourcePreview cameraPreview;
@@ -79,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private Button flashBtn;
     private Button drawerBtn;
 
+    private boolean canDoTransitions;
     private Element eltCaptchaImage;
     private Element eltVehicleNumber;
     private Element eltCaptchaInput;
@@ -87,17 +97,25 @@ public class MainActivity extends AppCompatActivity {
     private final String BASE_URL = "https://vahan.nic.in";
     private final String VEHICLE_URL="/nrservices/faces/user/searchstatus.xhtml";
     private final String FULL_URL=BASE_URL+VEHICLE_URL;
+
+    private Set<String> platesHash = new HashSet<>();
+    private Queue<String> platesQueue = new LinkedList<>();
+    private List<Button> buttons = new ArrayList<>();
+    private int NUM_PLATES;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bitmapProcessor = new BitmapTextRecognizer();
+        canDoTransitions = getResources().getString(R.string.can_do_transitions).equals("true");
+        bitmapProcessor = new BitmapTextRecognizer(MainActivity.this);
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         superContainer = findViewById(R.id.super_container);
         cameraPreview = findViewById(R.id.camera_source_preview);
+
         graphicOverlay = findViewById(R.id.graphics_overlay);
         captchaImageView = findViewById(R.id.captcha_img);
         drawerView = findViewById(R.id.drawer);
+        platesView = findViewById(R.id.detected_plates);
         searchBtn = findViewById(R.id.search_btn);
         flashBtn = findViewById(R.id.flash_btn);
         drawerBtn = findViewById(R.id.drawer_btn);
@@ -108,13 +126,26 @@ public class MainActivity extends AppCompatActivity {
         setVehicleNumListeners();
 
         webScraper = new WebScraper(this);
-        captchaBitmapGetter = new ImageBitmapGetter();
+        captchaBitmapGetter = new ImageBitmapGetter(MainActivity.this);
         webScraper.setUserAgentToDesktop(true); //default: false
         webScraper.setLoadImages(true); //default: false
 
         LinearLayout layout = (LinearLayout)findViewById(R.id.webview);
         layout.addView(webScraper.getView());
-
+        int[] plateids = {R.id.plate1,R.id.plate2,R.id.plate3,R.id.plate4,R.id.plate5};
+        NUM_PLATES = plateids.length;
+        for(int i=0;i<NUM_PLATES;i++){
+            Button btn = findViewById(plateids[i]);
+            buttons.add(btn);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    vehicleNumber.setText(btn.getText());
+                    drawerBtn.performClick();
+                }
+            });
+        }
+        // platesView.addView(searchBtn);
         // should usually be the last line in init
         getPermissionsAfterInit();
     }
@@ -146,11 +177,16 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.finish();
         }
     }
-    // private String numPlateFilter(String s){
-    //     return s.toUpperCase().replaceAll("[^A-Z0-9]","");
-    // }
     private String captchaFilter(String s){
-        return s.replaceAll("[^a-zA-Z0-9]","").replace('j','J');
+        // NOTE: small j and small i replaced if at 3rd pos!
+        String filtered = s.replaceAll("[^a-zA-Z0-9]","");
+        if(filtered.length() > 2 && filtered.charAt(2)=='j'){
+            filtered = filtered.substring(0,2)+'J'+filtered.substring(3);
+        }
+        if(filtered.length() > 2 && filtered.charAt(2)=='i'){
+            filtered = filtered.substring(0,2)+'I'+filtered.substring(3);
+        }
+        return filtered;
     }
 
     private void confirmVehicleNumber() {
@@ -185,45 +221,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    public class ImageBitmapGetter implements Img2Bitmap
-    {
-        @Override
-        public void onConvertComplete(final byte[] mDecodedImage)
-        {
-            if (mDecodedImage == null || mDecodedImage.length == 0)
-                return;
-            final Bitmap bitmap = BitmapFactory.decodeByteArray(mDecodedImage, 0, mDecodedImage.length);
-            logToast(PROCESSING_EMOJI + "Processing Captcha");
-            // The image is about 120x40
-            Bitmap captchaImage  =  resizeBitmap(bitmap, 90, 30);
-            // Blur it out by resizing
-            captchaImage = resizeBitmap(captchaImage, 195, 65);
-            final Bitmap processedCaptchaImage = dilateBinaryBitmap(captchaImage,1,5); //ksize be odd
-            // make listener for this.
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    bitmapProcessor.processBitmap(processedCaptchaImage);
-                    Log.d(TAG,"Setting captcha text: "+bitmapProcessor.allText);
-                    String detectedCaptcha = captchaFilter(bitmapProcessor.allText);
-                    // if(captchaInput.getText().toString().equals(""))
-                    captchaInput.setText(detectedCaptcha);
-                }
-            }).start();
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    captchaImageView.setImageBitmap(processedCaptchaImage);
-                }
-            });
-            logToast(SMILE_EMOJI + " Captcha Handle completed...");
-        }
-    }
-
     private int colorVal(int pixel){
         return (int)Math.sqrt(Math.pow(Color.red(pixel),2) +Math.pow(Color.green(pixel),2) +Math.pow(Color.blue(pixel),2));
+    }
+    public Bitmap pad(Bitmap Src, int padding_x, int padding_y) {
+        Bitmap outputimage = Bitmap.createBitmap(Src.getWidth() + padding_x,Src.getHeight() + padding_y, Bitmap.Config.ARGB_8888);
+        Canvas can = new Canvas(outputimage);
+        can.drawARGB(0xFF,0xFF,0xFF,0xFF); //This represents White color
+        can.drawBitmap(Src, padding_x, padding_y, null);
+        return outputimage;
     }
     private Bitmap dilateBinaryBitmap(Bitmap binaryBitmap,int KX,int KY) {
         Bitmap copyBitmap = binaryBitmap.copy(Bitmap.Config.ARGB_8888,true);
@@ -259,13 +265,11 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager con_manager = (ConnectivityManager)
                 MainActivity.this.getSystemService(MainActivity.CONNECTIVITY_SERVICE);
 
-        if(con_manager.getActiveNetworkInfo() != null
-                && con_manager.getActiveNetworkInfo().isAvailable()
-                && con_manager.getActiveNetworkInfo().isConnected()){
+        if(con_manager.getActiveNetworkInfo() != null && con_manager.getActiveNetworkInfo().isAvailable() && con_manager.getActiveNetworkInfo().isConnected()){
             return true;
         }
         else{
-            logToast(CRYING_EMOJI+" No internet available!");
+            logToast(CRYING_EMOJI+"  No internet available!");
             return false;
         }
     }
@@ -285,12 +289,7 @@ public class MainActivity extends AppCompatActivity {
                     eltVehicleNumber = webScraper.findElementById("regn_no1_exact");
                     eltCaptchaInput = webScraper.findElementById("txt_ALPHA_NUMERIC");
                     eltSubmitBtn = webScraper.findElementByClassName("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only", 0);
-                    Log.d(TAG, "Loaded image from: " + eltCaptchaImage.getAttribute("src"));
-                    logToast(DONE_EMOJI + " Captcha loaded");
-                    eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);
-
                     webScraper.setOnPageLoadedListener(null);
-
                     String focusScript=
                             "var children = document.getElementById('wrapper').children; "+
                                     "for (var i=0; i<children.length; i++) {children[i].style.display='none';} "+
@@ -298,38 +297,127 @@ public class MainActivity extends AppCompatActivity {
                                     "var children = document.getElementsByClassName('container')[2].children; "+
                                     "for (var i=0; i<children.length; i++) {children[i].style.display='none';}"+
                                     "document.getElementsByClassName('row bottom-space')[0].style.display='block';"+
-                                    "document.getElementsByClassName('container')[0].style.display='block';";
+                                    "document.getElementsByClassName('logo-header-section display-print-none')[0].style.display='block';";
                     webScraper.loadURL("javascript:{" + focusScript + "}void(0);");
+                    Log.d(TAG, "Got image from: " + eltCaptchaImage.getAttribute("src"));
+                    eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);
                 }
             });
-            logToast("Started Loading Captcha");
+            logToast("Loading Captcha");
             webScraper.loadURL(FULL_URL);
         }
     }
+    public class ImageBitmapGetter implements Img2Bitmap
+    {
+        private AppEvents listener;
+        ImageBitmapGetter(AppEvents listener){
+            this.listener = listener;
+        }
+        public void processAndRead(Bitmap bitmap){
+            // The image is about 120x40
+            Bitmap resizedCaptcha  =  resizeBitmap(bitmap, 90, 30);
+            // Blur it out by resizing
+            Bitmap captchaImage = resizeBitmap(resizedCaptcha, 195, 65);
+            Bitmap dilated = dilateBinaryBitmap(captchaImage,1,5);
+            Bitmap padded = pad(dilated,30,30);
+            resizedCaptcha.recycle();
+            captchaImage.recycle();
+            dilated.recycle();
+            listener.onBitmapProcessed(padded);
+        }
+
+        @Override
+        public void onConvertComplete(final byte[] mDecodedImage)
+        {
+            if (mDecodedImage == null || mDecodedImage.length == 0) {
+                return;
+            }
+            final Bitmap bitmap = BitmapFactory.decodeByteArray(mDecodedImage, 0, mDecodedImage.length);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    captchaImageView.setImageBitmap(bitmap);
+                }
+
+            });
+            logToast(PROCESSING_EMOJI + " Processing Captcha");
+            new Thread(new Runnable() {
+                public void run() {
+                    processAndRead(bitmap);
+                }
+            }).start();
+        }
+    }
+
+    @Override
+    public void onBitmapProcessed(final Bitmap processedCaptchaImage){
+        bitmapProcessor.processBitmap(processedCaptchaImage);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                captchaImageView.setImageBitmap(processedCaptchaImage);
+            }
+
+        });
+        // processedCaptchaImage.recycle();
+    }
+
     private void createCameraSource() {
         if (cameraSource == null) {
             cameraSource = new CameraSource(this, graphicOverlay);
             cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
         }
 
+        cameraSource.setMachineLearningFrameProcessor(new TextRecognitionProcessor(MainActivity.this));
+    }
+    @Override
+    public void onCaptchaUpdate(String detectedCaptcha){
+        captchaInput.setText(captchaFilter(detectedCaptcha));
+        logToast(SMILE_EMOJI + " Captcha read successful!");
+    }
+    @Override
+    public void onMajorTextUpdate(String majorText){
+        if(platesHash.contains(majorText))
+            return;
+        platesHash.add(majorText);
+        platesQueue.add(majorText);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                platesHash.remove(platesQueue.remove());
+                updatePlates();
+            }
+        },10000);
+        if(platesQueue.size() > NUM_PLATES) {
+            platesHash.remove(platesQueue.remove());
+        }
+        updatePlates();
+        if(vehicleNumber.getText().equals(""))
+            vehicleNumber.setText(majorText);
+        Log.d(TAG,"Updated majorText: "+majorText);
+    }
 
-        cameraSource.setMachineLearningFrameProcessor(new TextRecognitionProcessor());
-        // THIS CAUSES INPUTS TO DESTROY AND CAUSE POSSIBLE CRASH
-        // final Handler handler = new Handler();
-        // Runnable runnable = new Runnable(){
-        //     @Override
-        //     public void run(){
-        //         if (cameraSource != null) {
-        //             vehicleNumber.setText(cameraSource.frameProcessor.majorText);
-        //             handler.postDelayed(this,1000);
-        // show fruitNinja edge-
-        // if(!captchaInput.getText().toString().equals(""))
-        // drawerEdge.setVisible(true)
+    private Fade mFade;
 
-        //         }
-        //     }
-        // };
-        // handler.post(runnable);
+    @TargetApi(19)
+    public void updatePlates(){
+        if(canDoTransitions) {
+            // Get the root view and create a transition
+            mFade = new Fade(Fade.IN);
+            mFade.setDuration(1000);
+            // Start recording changes to the view hierarchy
+            TransitionManager.beginDelayedTransition(superContainer, mFade);
+        }
+        int i = 0;
+        for(String plate : platesQueue){
+            buttons.get(i).setText(plate);
+            buttons.get(i).setVisibility(VISIBLE);
+            i++;
+        }
+        while(i<NUM_PLATES){
+            buttons.get(i).setVisibility(INVISIBLE);
+            i++;
+        }
     }
 
     private void startCameraSource() {
@@ -421,7 +509,7 @@ public class MainActivity extends AppCompatActivity {
                 eltCaptchaInput.setAttribute("style","background-color:lightgreen !important");
                 if(checkInternetConnection()) {
                     eltSubmitBtn.click();
-                    
+
                     String tableScript = "var table = document.getElementsByClassName(\"table\")[0];" +
                             " for (var i = 0, row; row = table.rows[i]; i++) {" +
                             " row.style = \"display: table;  width:100%; word-break:break-all;\";" +
@@ -434,20 +522,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    // connected via onclick in xml
+    //  drawerBtn connected via onclick in xml
     public void onDrawerButtonClicked(View v) {
-        if(drawerView.getVisibility()==View.VISIBLE) {
-            drawerView.setVisibility(View.INVISIBLE);
+        if(drawerView.getVisibility()== VISIBLE){
+            drawerView.setVisibility(INVISIBLE);
         }
         else{
-            drawerView.setVisibility(View.VISIBLE);
+            drawerView.setVisibility(VISIBLE);
         }
-        Log.d(TAG,"Clicked");
-        TransitionManager.beginDelayedTransition(superContainer);
+        // TransitionManager.beginDelayedTransition(superContainer);
         // camBtn.performClick();
     }
     private void setVehicleNumListeners() {
-
         vehicleNumber = findViewById(R.id.vehicle_plate);
         vehicleNumber.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         vehicleNumber.addTextChangedListener(new TextWatcher() {
@@ -455,19 +541,9 @@ public class MainActivity extends AppCompatActivity {
             @Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             @Override public void afterTextChanged(Editable et) {
                 searchBtn.setEnabled(et.toString().matches(NUMPLATE_PATTERN));
-
             }
         });
         searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
-        // on custom typing
-        //TODO debug this
-        vehicleNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                    vehicleNumber.setText(vehicleNumber.getText().toString());
-            }
-        });
     }
 
     public void copyNumber(View view) {
@@ -487,7 +563,7 @@ public class MainActivity extends AppCompatActivity {
     // collapse bottom sheet when back button pressed
     @Override
     public void onBackPressed() {
-        if (drawerView.getVisibility() != View.VISIBLE){
+        if (drawerView.getVisibility() != VISIBLE){
             if(cameraSource != null){
                 if(warningBack)
                     super.onBackPressed();
@@ -508,7 +584,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else
-            drawerView.setVisibility(View.INVISIBLE);
+            drawerView.setVisibility(INVISIBLE);
     }
 
     private void initDrawingArea() {
@@ -522,6 +598,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+
         initDrawingArea();
         startCameraSource();
     }
