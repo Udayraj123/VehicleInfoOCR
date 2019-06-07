@@ -26,8 +26,9 @@ POST ISSUES ONLINE-
 
 // Fix some crashes
 	//> On clicking flash on pause
-	//Yeah, On internet unavailable, fixed. > Sometimes hangs on start?! : 
-		^Listener needed to be reset
+	 > Sometimes hangs on start?! : 
+		//Yeah, On internet unavailable.
+		//Nope, it isn't fired for JS, Listener needed to be reset
 // > Add some js to crop view instead of scraping vehicle details?! <- more versatile
  	^^> This is actually better for demo - should look like google assistant
 
@@ -35,39 +36,50 @@ POST ISSUES ONLINE-
 
 //Blurkit/Blurry- Nope, Renderscript adds 2MB and isn't that good
 
+> INJECT ALL SINGLE JS AT START. MAKE USE OF THE JSInterface
+	//MutationObserver to reorder table.
 
 Fix some bugs
 	//> Proper threaded listeners for majorText update
 	//> Proper threaded listeners for captcha handling
 		^Is buggy at times to fill
 	// > ^THREAD IT! : Convert those listeners into async tasks (As app hangs on slow internet; But webview loadUrl is already async ?!) 
-	> A listener for page update?!
-	> Should read captcha again on fail
+	//>> FOUND IT!! // THIS WAS NOT IN A THREAD!!
+                  eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);		
+	// That Syntax error was here:
+		"a = (a+this[start+i])%65521; b = (b+a)%65521; "
+		^^ Modulo was giving issue. replaced with i - parseInt(i/65521);
 
-// Nope, Bubble overlay is better : In fruit ninja menu :
-	Swipe to select area
-	search button hides the swiping gui
+// No need now. > Update webscraper from their recent commits (and remove run2 dependency )
 
-Bubble overlay: Use long press/double tap to copy block
+Work on JS to improve interface.
 
-private final Object processorLock = new Object();
-// @GuardedBy("processorLock")
-public TextRecognitionProcessor frameProcessor;
 
-Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
-	> Min Area constraint, more constraints?!
-	> Keep or remove drawer?!
-	> Instant try to get vehicle info whenever valid number plate found
-	> Open confirmation drawer immediately if details found.
-	> otherwise wait for better input
-
-Guided Interface:
+Guided Interface (more into memo):
+	> Show numplate input all the time at bottom?!
 	> Camera focus area
 	> A photo showing approx optimal distance of plate
-	> Feedback on obtaining valid numplate
+	//> Feedback on obtaining valid numplate
 	> Tell thru design to open drawer AFTER capture
 	> Tell to verify captcha
 	Show <3 pop up on successful detection and result retrieval
+
+
+*** SEEMS CAPTCHA WASN'T NEEDED AFTERALL, FILL CAPTCHA ONCE, THEN IT DOESN'T RELOAD (Only in desktop browser rn)
+>>^Look into this for later version now
+
+
+//  In fruit ninja menu :- Nope, Bubble overlay is better
+	Swipe to select area
+	search button hides the swiping gui
+Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
+	> Bubble overlay: Use long press/double tap to copy block
+	> Min Area constraint, more constraints?!
+	> Keep or remove drawer?!
+	>> Captcha retryer
+	> Instant try to get vehicle info whenever valid number plate found
+	> Open confirmation drawer immediately if details found.
+	> otherwise wait for better input
 
 **Improve OCR on two rows numplates**
 
@@ -88,11 +100,11 @@ TRY THE THROTTLING BEFORE UPDATES
 
 Excess:
 	Load vehicle image from Vehicle model (google images)
-	Low res support?!
 	Timeout on numplate detected bubble
 
 Later:
 	Run Apk analyzer on OMR apk
+	Firebase usage analytics (Have to see how many ppl opened the app[Privacy Policy?!])
 
 
 Note numplate pattern:

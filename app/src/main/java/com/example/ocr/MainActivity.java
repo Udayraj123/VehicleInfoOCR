@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private final int TECHNICAL_DIFFICULTY = 888;
     private final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]{2}[A-Z]+[0-9]+";
     private final String PROCESSING_EMOJI = "\u23f3";
+    private final String NOPE_EMOJI = "\u26d4";
     private final String DONE_EMOJI = "\ud83d\udc4c";
     private final String SMILE_EMOJI = "\ud83d\ude00";
     private final String CRYING_EMOJI = "\ud83d\ude36⏳⏳⏳";
@@ -129,7 +131,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         captchaBitmapGetter = new ImageBitmapGetter(MainActivity.this);
         webScraper.setUserAgentToDesktop(true); //default: false
         webScraper.setLoadImages(true); //default: false
-
+        webScraper.setUserAgentToDesktop(true);
+        webScraper.clearAll();
         LinearLayout layout = (LinearLayout)findViewById(R.id.webview);
         layout.addView(webScraper.getView());
         int[] plateids = {R.id.plate1,R.id.plate2,R.id.plate3,R.id.plate4,R.id.plate5};
@@ -300,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                                     "document.getElementsByClassName('logo-header-section display-print-none')[0].style.display='block';";
                     webScraper.loadURL("javascript:{" + focusScript + "}void(0);");
                     Log.d(TAG, "Got image from: " + eltCaptchaImage.getAttribute("src"));
-                    eltCaptchaImage.callImageBitmapGetter(captchaBitmapGetter);
+                    webScraper.injectJSAndGetCaptcha(captchaBitmapGetter);
                 }
             });
             logToast("Loading Captcha");
@@ -329,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         @Override
         public void onConvertComplete(final byte[] mDecodedImage)
         {
+            Log.d(TAG,"Conversion complete.");
             if (mDecodedImage == null || mDecodedImage.length == 0) {
                 return;
             }
@@ -387,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 platesHash.remove(platesQueue.remove());
                 updatePlates();
             }
-        },10000);
+        },30*1000);
         if(platesQueue.size() > NUM_PLATES) {
             platesHash.remove(platesQueue.remove());
         }
@@ -401,7 +405,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
 
     @TargetApi(19)
     public void updatePlates(){
-        if(canDoTransitions) {
+        if(canDoTransitions && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // Get the root view and create a transition
             mFade = new Fade(Fade.IN);
             mFade.setDuration(1000);
@@ -539,8 +543,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         vehicleNumber.addTextChangedListener(new TextWatcher() {
             @Override public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             @Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-            @Override public void afterTextChanged(Editable et) {
-                searchBtn.setEnabled(et.toString().matches(NUMPLATE_PATTERN));
+            @Override public void afterTextChanged(Editable s) {
+
+                String result = s.toString().replaceAll(" ", "");
+                if (!s.toString().equals(result)) {
+                    // logToast(NOPE_EMOJI +" No spaces allowed");
+                    vehicleNumber.setText(result);
+                    //setSelection is there to set the cursor again
+                    vehicleNumber.setSelection(result.length());
+                }
+                searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
             }
         });
         searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));

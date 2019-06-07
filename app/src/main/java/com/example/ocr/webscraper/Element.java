@@ -47,12 +47,4 @@ public class Element {
     public String getTitle(){
         return web.run2("javascript:window.HtmlViewer.processContent(" + elementLocator + ".title);");
     }
-    public void callImageBitmapGetter(Img2Bitmap img2Bitmap) {
-        if(getAttribute("tagName").toLowerCase().equals("img")){
-            web.callImageBitmapGetter(elementLocator,img2Bitmap);
-        }
-        else{
-            Log.d("Element:","getImageBitmap: element is not img");
-        }
-    }
 }

@@ -31,7 +31,7 @@ public class WebScraper {
     private Handler handler;
 
     public static int MAX = -1;
-
+private String TAG = "webscraper:";
     private onPageLoadedListener onpageloadedlistener;
     private Img2Bitmap img2Bitmap;
 
@@ -43,8 +43,19 @@ public class WebScraper {
         }
         handler = new Handler();
         web.getSettings().setJavaScriptEnabled(true);
+        web.getSettings().setDomStorageEnabled(true);//added
         web.getSettings().setBlockNetworkImage(true);
         web.getSettings().setLoadsImagesAutomatically(false);
+        //
+        // web.getSettings().setLoadWithOverviewMode(true);
+        // web.getSettings().setUseWideViewPort(true);
+        //
+        // web.getSettings().setSupportZoom(true);
+        // web.getSettings().setBuiltInZoomControls(true);
+        // web.getSettings().setDisplayZoomControls(false);
+        //
+        // web.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        // web.setScrollbarFadingEnabled(false);
         JSInterface jInterface = new JSInterface(context);
         web.addJavascriptInterface(jInterface, "HtmlViewer");
         userAgent = web.getSettings().getUserAgentString();
@@ -206,15 +217,17 @@ public class WebScraper {
         @JavascriptInterface
         public void getBase64ImageString(String base64Image)
         {
+            Log.d(TAG, "Conversion started");
             byte[] mDecodedImage;
             // check for jpg
             String cleanBase64Image = base64Image.replace("data:image/png;base64,", "");
             try {
                 mDecodedImage = android.util.Base64.decode(cleanBase64Image, android.util.Base64.DEFAULT);
                 img2Bitmap.onConvertComplete(mDecodedImage);
+                Log.d(TAG, "Conversion finished");
             }
             catch (Exception e){
-                Log.d("webscraper:", "Byte Conversion Error ! \n"+e.getMessage());
+                Log.d(TAG, "Byte Conversion Error ! \n"+e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -238,22 +251,38 @@ public class WebScraper {
         }
         return elementText;
     }
-    public void callImageBitmapGetter(String elementLocator, Img2Bitmap handler){
+    public void injectJSAndGetCaptcha(Img2Bitmap handler){
         addImg2Bitmap(handler);
-        String script1 = "javascript:{ var img = "+elementLocator+"; img.width = img.width * 1.2;}";
-        String script2 = "javascript:{"+ Img2Bitmap.buildScript1 +"}void(0);";
-        String script3 = "javascript:{"+ Img2Bitmap.buildScript2 +"}void(0);";
-        String script4 = "javascript:{"+ Img2Bitmap.buildScript3 +"}void(0);";
-        // Log.d("webscraper: ","Running Script: \n" + script1);
-        run(script1);
-        // Log.d("webscraper: ","Running Script: \n" + script2);
-        run(script2);
-        // Log.d("webscraper: ","Running Script: \n" + script3);
-        run(script3);
-        // this one calls the interface
-        // Log.d("webscraper: ","Running Script: \n" + script4);
-        run(script4);
-        // run("javascript:{alert(1);}");
+
+        // THIS WAS NOT IN A THREAD!!
+        web.post(new Runnable() {
+            public void run() {
+                Log.d(TAG, "Thread started");
+                String script10 = "javascript:{"+ Img2Bitmap.buildScript10 +"}void(0);";
+                String script11 = "javascript:{"+ Img2Bitmap.buildScript11 +"}void(0);";
+                String script12 = "javascript:{"+ Img2Bitmap.buildScript12 +"}void(0);";
+                String script13 = "javascript:{"+ Img2Bitmap.buildScript13 +"}void(0);";
+                String script2 = "javascript:{"+ Img2Bitmap.buildScript2 +"}void(0);";
+                String script3 = "javascript:{"+ Img2Bitmap.buildScript3 +"}void(0);";
+
+                // Log.d("webscraper: ","Injecting and Running Script10: \n");
+                // run(script1);
+                Log.d("webscraper: ","Running Script10: \n");
+                web.loadUrl(script10);
+                Log.d("webscraper: ","Running Script11: \n");
+                web.loadUrl(script11);
+                Log.d("webscraper: ","Running Script12: \n");
+                web.loadUrl(script12);
+                Log.d("webscraper: ","Running Script13: \n");
+                web.loadUrl(script13);
+                Log.d("webscraper: ","Running Script2: \n");
+                web.loadUrl(script2);
+                // this one calls the interface
+                Log.d("webscraper: ","Running Script3: \n");
+                web.loadUrl(script3);
+                Log.d(TAG, "Thread finished");
+            }
+        });
     }
     public void addImg2Bitmap(Img2Bitmap handler)
     {
@@ -269,7 +298,7 @@ public class WebScraper {
     //     submitForm(0);
     // }
     // public void submitForm(int id){
-    //     Log.d("webscraper:","Submitting form "+id);
+    //     Log.d(TAG,"Submitting form "+id);
     //     run("javascript:{document.forms["+id+"].submit();}");
     // }
     //FindWebViewElement
