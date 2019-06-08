@@ -6,22 +6,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/spacer"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="0.71"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--&gt;-->
-    <!--</LinearLayout>-->
+    <LinearLayout
+        android:id="@+id/spacer"
+        android:layout_height="0dp"
+        android:layout_weight="0.11"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/browser"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_large"
+            android:gravity="center"
+            />
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/webview"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1.82"
         android:layout_width="match_parent"
         android:background="@drawable/drawer"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
         >
     </LinearLayout>
@@ -31,119 +40,131 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
         >
 
-    <LinearLayout
-        android:id="@+id/layout_vehicle_plate"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center_vertical"
-        >
-
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            >
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            >
-        <EditText
-            android:id="@+id/vehicle_plate"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/textbox_size"
-            android:background="@drawable/rounded_edittext"
-            android:hint="@string/plate_hint"
-            android:textAlignment="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:inputType="textCapCharacters"            
+            android:layout_height="wrap_content"
+            android:text="@string/confirm_details"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_large"
+            android:gravity="center"
             />
-            <!--android:text="MH12CD8039"-->
-            <ImageButton
-                android:id="@+id/vehicle_copy_number"
-                android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_vehicle_plate"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_margin="5dp"
+            >
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical|center_horizontal"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/textbox_size"
+                    android:text="@string/vehicle_no"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_large"
+                    android:gravity="center"
+                    />
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_content_copy_black_24dp"
-                android:layout_alignRight="@id/vehicle_plate"
-                android:layout_alignEnd="@id/vehicle_plate"
-                android:onClick="copyNumber"
-                android:layout_marginTop="2dp"
-                />
+                android:layout_weight="1"
+                >
+                <EditText
+                    android:id="@+id/vehicle_plate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/textbox_size"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="@string/plate_hint"
+                    android:textAlignment="center"
+                    android:inputType="textCapCharacters"
+                    />
+                <!--android:text="MH12CD8039"-->
+                <ImageButton
+                    android:id="@+id/vehicle_copy_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_content_copy_black_24dp"
+                    android:layout_alignRight="@id/vehicle_plate"
+                    android:layout_alignEnd="@id/vehicle_plate"
+                    android:onClick="copyNumber"
+                    android:layout_marginTop="15dp"
+                    />
             </RelativeLayout>
-        <!-- <com.edittextpicker.aliazaz.EditTextPicker -->
-        <!-- app:defaultValue="null"
-        app:pattern="[A-Z]{2}[0-9]{2}[A-Z]+[0-9]{3}[0-9]+"
-        app:required="true"
-        app:type="equal" > -->
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_captcha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        >
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical" >
-            <ImageView
-                android:id="@+id/captcha_img"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:contentDescription="@string/captcha_img"
-                android:src="@drawable/loading_captcha"
-                android:scaleType="fitXY"
-                />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_captcha"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:orientation="vertical" >
+            android:layout_margin="5dp"
+            android:gravity="center_vertical|center_horizontal"
+            >
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.15"
+                android:orientation="vertical" >
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+                <ImageView
+                    android:id="@+id/captcha_img"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/captcha_img"
+                    android:src="@drawable/loading_captcha"
+                    android:scaleType="fitXY"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.35"
+                android:orientation="vertical" >
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/captcha_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/textbox_size"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:imeOptions="actionDone"
+                    android:textAlignment="center"
+                    android:hint="@string/captcha_hint"
+                    android:maxLines="1"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/layout_close"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="2.5"
-            android:orientation="vertical" >
-
-            <EditText
-                android:id="@+id/captcha_input"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/textbox_size"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_edittext"
-                android:imeOptions="actionDone"
-                android:textAlignment="center"
-                android:hint="@string/captcha_hint"
-                android:maxLines="1"
-                android:textSize="20sp"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_close"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="end"
-        android:orientation="horizontal"
-        >
+            android:layout_width="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal"
+            >
             <Button
                 android:id="@+id/search_btn"
                 android:enabled="false"
@@ -154,15 +175,15 @@
                 android:layout_marginEnd="15dp"
                 android:text="@string/search"
                 />
-    <Button
-        android:id="@+id/close_button"
-        android:onClick="onDrawerButtonClicked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Close"
-        android:background="@drawable/circle"
-        />
-    </LinearLayout>
+            <Button
+                android:id="@+id/close_button"
+                android:onClick="onDrawerButtonClicked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Close"
+                android:background="@drawable/circle"
+                />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

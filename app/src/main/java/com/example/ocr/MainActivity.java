@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.transition.Fade;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -47,6 +48,9 @@ import com.example.ocr.graphics.*;
 import com.example.ocr.utils.*;
 import com.example.ocr.webscraper.*;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
+import com.rbddevs.splashy.Splashy;
+
+// import nl.dionsegijn.konfetti.KonfettiView;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -62,7 +66,11 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private final String PROCESSING_EMOJI = "\u23f3";
     private final String NOPE_EMOJI = "\u26d4";
     private final String DONE_EMOJI = "\ud83d\udc4c";
+    private final String POPPER_EMOJI = "\ud83c\udf89";
+    private final String SLEEP_EMOJI = "\ud83d\udca4";
     private final String SMILE_EMOJI = "\ud83d\ude00";
+    private final String HEART_EMOJI = "\ud83d\udc9b";
+    private final String LOVE_EMOJI = "\ud83d\udc96";
     private final String CRYING_EMOJI = "\ud83d\ude36⏳⏳⏳";
     private ViewGroup superContainer;
     //  ----- Instance Variables -----⏳
@@ -71,9 +79,10 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     // the bottom sheet
     private EditText vehicleNumber;
     private ImageView captchaImageView;
-    private Button searchBtn;
     private View bottomSheetView;
     private View fruitNinja;
+    private View supportView;
+    // private KonfettiView viewKonfetti;
     private ViewGroup platesView;
     private View drawerView;
     private CameraSource cameraSource = null;
@@ -86,9 +95,10 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private ImageBitmapGetter captchaBitmapGetter;
     public BitmapTextRecognizer bitmapProcessor;
     private SimplePermissions permHandler;
-    private Button camBtn;
-    private Button flashBtn;
-    private Button drawerBtn;
+    private ImageButton camBtn;
+    private ImageButton flashBtn;
+    private ImageButton drawerBtn;
+    private Button searchBtn;
 
     private boolean canDoTransitions;
     private Element eltCaptchaImage;
@@ -104,10 +114,26 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private Queue<String> platesQueue = new LinkedList<>();
     private List<Button> buttons = new ArrayList<>();
     private int NUM_PLATES;
-    @Override
+
+    private Fade mFade;
+
+    @Override @TargetApi(19)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new Splashy(this)
+                .setLogo(R.drawable.app_icon)
+                .setTitle(R.string.app_name)
+                // .setTitleColor("#FFFFFF")
+                .setSubTitle("Loading App...")
+                .setTitleSize(25f)
+                .setSubTitleSize(20f)
+                // .setProgressColor(R.color.black)
+                // .setFullScreen(true)
+                // .setTime(1000)
+                .show();
+        mFade = new Fade(Fade.IN);
+        mFade.setDuration(1000);
         canDoTransitions = getResources().getString(R.string.can_do_transitions).equals("true");
         bitmapProcessor = new BitmapTextRecognizer(MainActivity.this);
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -118,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         captchaImageView = findViewById(R.id.captcha_img);
         drawerView = findViewById(R.id.drawer);
         platesView = findViewById(R.id.detected_plates);
+        supportView = findViewById(R.id.support_view);
+        // viewKonfetti = findViewById(R.id.viewKonfetti);
         searchBtn = findViewById(R.id.search_btn);
         flashBtn = findViewById(R.id.flash_btn);
         drawerBtn = findViewById(R.id.drawer_btn);
@@ -126,7 +154,42 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         setCaptchaInputListeners();
         setSearchButtonListeners();
         setVehicleNumListeners();
+        int[] dialogids = {R.id.support_btn,R.id.dont_support_btn};
+        for(int i=0;i<dialogids.length;i++) {
+            Button btn = findViewById(dialogids[i]);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // viewKonfetti.setVisibility(INVISIBLE);
+                    supportView.setVisibility(INVISIBLE);
+                }
+            });
+        }
+        // show popup on start
+        supportView.setVisibility(VISIBLE);
+        //TODO move stuff into diff functions
 
+        int[] textids = {R.id.developer_line1,R.id.developer_line2,R.id.developer_line3};
+        for(int i=0;i<textids .length;i++) {
+            TextView t = findViewById(textids[i]);
+            t.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        // t.setOnClickListener(new View.OnClickListener() {
+        //     @Override
+        //     public void onClick(View v) {
+        //         String urlString = "https://github.com/Udayraj123/VehicleInfoOCR";
+        //         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+        //         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //         intent.setPackage("com.android.chrome");
+        //         try {
+        //             MainActivity.this.startActivity(intent);
+        //         } catch (ActivityNotFoundException ex) {
+        //             // Chrome browser presumably not installed so allow user to choose instead
+        //             intent.setPackage(null);
+        //             MainActivity.this.startActivity(intent);
+        //         }
+        //     }
+        // });
         webScraper = new WebScraper(this);
         captchaBitmapGetter = new ImageBitmapGetter(MainActivity.this);
         webScraper.setUserAgentToDesktop(true); //default: false
@@ -144,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 @Override
                 public void onClick(View v) {
                     vehicleNumber.setText(btn.getText());
+                    //TODO replace by openDrawer()
                     drawerBtn.performClick();
                 }
             });
@@ -302,11 +366,12 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                                     "document.getElementsByClassName('row bottom-space')[0].style.display='block';"+
                                     "document.getElementsByClassName('logo-header-section display-print-none')[0].style.display='block';";
                     webScraper.loadURL("javascript:{" + focusScript + "}void(0);");
+                    //TODO: fix- this currently needs api 19
                     Log.d(TAG, "Got image from: " + eltCaptchaImage.getAttribute("src"));
                     webScraper.injectJSAndGetCaptcha(captchaBitmapGetter);
                 }
             });
-            logToast("Loading Captcha");
+            // logToast("Loading Captcha");
             webScraper.loadURL(FULL_URL);
         }
     }
@@ -330,8 +395,25 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         }
 
         @Override
-        public void onConvertComplete(final byte[] mDecodedImage)
-        {
+        public void showMessage(String message){
+            logToast(message);
+            // if(canDoTransitions)
+            //     TransitionManager.beginDelayedTransition(superContainer,mFade);
+            // viewKonfetti.setVisibility(VISIBLE);
+            // supportView.setVisibility(VISIBLE);
+            // viewKonfetti.build()
+            //         .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+            //         .setDirection(0.0, 359.0)
+            //         .setSpeed(1f, 5f)
+            //         .setFadeOutEnabled(true)
+            //         .setTimeToLive(2000L)
+            //         .addShapes(Shape.RECT, Shape.CIRCLE)
+            //         .addSizes(new Size(12, 5))
+            //         .setPosition(-50f, viewKonfetti.getWidth() + 50f, -50f, -50f)
+            //         .streamFor(300, 5000L);
+        }
+        @Override
+        public void onConvertComplete(final byte[] mDecodedImage){
             Log.d(TAG,"Conversion complete.");
             if (mDecodedImage == null || mDecodedImage.length == 0) {
                 return;
@@ -344,7 +426,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 }
 
             });
-            logToast(PROCESSING_EMOJI + " Processing Captcha");
+            // logToast(PROCESSING_EMOJI + " Processing Captcha");
             new Thread(new Runnable() {
                 public void run() {
                     processAndRead(bitmap);
@@ -356,13 +438,13 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     @Override
     public void onBitmapProcessed(final Bitmap processedCaptchaImage){
         bitmapProcessor.processBitmap(processedCaptchaImage);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                captchaImageView.setImageBitmap(processedCaptchaImage);
-            }
-
-        });
+        // runOnUiThread(new Runnable() {
+        //     @Override
+        //     public void run() {
+        //         captchaImageView.setImageBitmap(processedCaptchaImage);
+        //     }
+        //
+        // });
         // processedCaptchaImage.recycle();
     }
 
@@ -378,11 +460,14 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     public void onCaptchaUpdate(String detectedCaptcha){
         captchaInput.setText(captchaFilter(detectedCaptcha));
         logToast(SMILE_EMOJI + " Captcha read successful!");
+        drawerBtn.animate().scaleX(1.3f).scaleY(1.3f).start();
     }
     @Override
     public void onMajorTextUpdate(String majorText){
         if(platesHash.contains(majorText))
             return;
+
+        // new entries
         platesHash.add(majorText);
         platesQueue.add(majorText);
         new Handler().postDelayed(new Runnable() {
@@ -395,20 +480,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         if(platesQueue.size() > NUM_PLATES) {
             platesHash.remove(platesQueue.remove());
         }
-        updatePlates();
-        if(vehicleNumber.getText().equals(""))
+        if(vehicleNumber.getText().equals("")) {
             vehicleNumber.setText(majorText);
+        }
+        updatePlates();
         Log.d(TAG,"Updated majorText: "+majorText);
     }
 
-    private Fade mFade;
-
-    @TargetApi(19)
     public void updatePlates(){
         if(canDoTransitions && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // Get the root view and create a transition
-            mFade = new Fade(Fade.IN);
-            mFade.setDuration(1000);
             // Start recording changes to the view hierarchy
             TransitionManager.beginDelayedTransition(superContainer, mFade);
         }
@@ -427,12 +508,6 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private void startCameraSource() {
         if (cameraSource != null) {
             try {
-                if (cameraPreview == null) {
-                    Log.d(TAG, "resume: Preview is null");
-                }
-                if (graphicOverlay == null) {
-                    Log.d(TAG, "resume: graphOverlay is null");
-                }
                 cameraPreview.start(cameraSource, graphicOverlay);
             } catch (IOException e) {
                 Log.e(TAG, "Unable to start camera source.", e);
@@ -447,6 +522,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 if(cameraSource==null) {
                     createCameraSource();
                     startCameraSource();
+                    camBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
                     camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble2));
                     // drawingArea.setVisibility(View.INVISIBLE);
                 }
@@ -455,6 +531,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_off));
                     confirmVehicleNumber();
                     stopCameraSource();
+                    camBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
                     camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop2));
                     // drawingArea.setVisibility(View.VISIBLE);
                     // camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
@@ -526,15 +603,22 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             }
         });
     }
+
     //  drawerBtn connected via onclick in xml
+    @TargetApi(19)
     public void onDrawerButtonClicked(View v) {
+        // drawer fade
+        if(canDoTransitions)
+            TransitionManager.beginDelayedTransition(superContainer,mFade);
         if(drawerView.getVisibility()== VISIBLE){
+            vehicleNumber.setText("");
             drawerView.setVisibility(INVISIBLE);
+            drawerBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
         }
         else{
             drawerView.setVisibility(VISIBLE);
+            drawerBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
         }
-        // TransitionManager.beginDelayedTransition(superContainer);
         // camBtn.performClick();
     }
     private void setVehicleNumListeners() {
@@ -595,8 +679,10 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 camBtn.performClick();
             }
         }
-        else
+        else {
+            vehicleNumber.setText("");
             drawerView.setVisibility(INVISIBLE);
+        }
     }
 
     private void initDrawingArea() {
@@ -634,6 +720,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
     private void stopCameraSource() {
         if (cameraSource != null) {
+            logToast(SLEEP_EMOJI + " Camera Paused");
             cameraSource.release();
             cameraSource = null;
         }

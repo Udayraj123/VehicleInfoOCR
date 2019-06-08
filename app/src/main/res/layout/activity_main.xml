@@ -12,18 +12,20 @@
     <!--app:layout_constraintEnd_toEndOf="parent"-->
     <!--app:layout_constraintStart_toStartOf="parent"-->
     <!--app:layout_constraintTop_toTopOf="parent"-->
+
     <com.example.ocr.camera.CameraSourcePreview
         android:id="@+id/camera_source_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
         <com.example.ocr.graphics.GraphicOverlay
             android:id="@+id/graphics_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
 
-        <!--<com.example.ocr.graphics.DrawingArea-->
+        <!--<com.vehicleinfo_usdicleinfo_usd.ocr.graphics.DrawingArea-->
         <!--android:id="@+id/drawing_area"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
@@ -60,6 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp"
                 android:gravity="bottom"
+                android:visibility="invisible"
                 android:orientation="vertical">
                 <Button
                     android:id="@+id/plate5"
@@ -108,6 +111,7 @@
                     />
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -115,23 +119,37 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             >
+
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <Button
+                <ImageButton
                     android:id="@+id/flash_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="90dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
                     android:background="@drawable/flash_off"
                     />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
             </LinearLayout>
             <LinearLayout
                 android:layout_height="match_parent"
@@ -139,17 +157,12 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical" >
-                <Button
+                <ImageButton
                     android:id="@+id/cam_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="90dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
                     android:background="@drawable/bubble2"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="25dp"
                     />
                 <!--app:like_icon="@drawable/bubble_pop3"-->
                 <!--app:unlike_icon="@drawable/bubble3"-->
@@ -158,27 +171,37 @@
                 <!--app:dot_color_1="@android:color/white"-->
                 <!--app:dot_color_2="@android:color/black"-->
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+            </LinearLayout>
             <LinearLayout
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:orientation="vertical" >
-                <Button
+                <ImageButton
                     android:id="@+id/drawer_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="90dp"
+                    android:scaleType="fitCenter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@android:drawable/ic_menu_search"
                     android:onClick="onDrawerButtonClicked"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="25dp"
                     />
                 <!--android:background="@drawable/search"-->
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
             </LinearLayout>
         </LinearLayout>
 
@@ -227,6 +250,7 @@
                 />
         </LinearLayout>
 
+
         <!--<LinearLayout-->
         <!--android:layout_weight="0.08"-->
         <!--android:layout_height="0dp"-->
@@ -235,4 +259,178 @@
         <!--</LinearLayout>-->
     </LinearLayout>
 
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/support_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/drawer"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:gravity="center_vertical|center_horizontal"
+        >
+
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="15dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_green_dark"
+                android:textStyle="bold"
+                android:text="@string/support_text"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/margin_large"
+            >
+            <TextView
+                android:id="@+id/developer_line3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textAlignment="center"
+                android:text="@string/developer_line3"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1.05"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                >
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:id="@+id/line3ImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/github" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/developer_line4"
+                    android:layout_margin="@dimen/margin_normal"
+                    android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/font_large"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:text="@string/developer_line4"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.68"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                >
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/developer_line1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:text="@string/developer_line1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/developer_line2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"
+                android:text="@string/developer_line2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/support_dialog"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_gravity="end"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/support_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:layout_marginRight="25dp"
+                android:layout_marginEnd="25dp"
+                android:text="@string/support"
+                android:visibility="invisible"
+                />
+
+            <Button
+                android:id="@+id/dont_support_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle"
+                android:text="@string/close"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--<nl.dionsegijn.konfetti.KonfettiView-->
+        <!--android:id="@+id/viewKonfetti"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:focusable="false"-->
+        <!--android:clickable="false"-->
+        <!--android:visibility="invisible"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
 </android.support.constraint.ConstraintLayout>

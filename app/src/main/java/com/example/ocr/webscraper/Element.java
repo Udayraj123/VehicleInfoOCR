@@ -1,6 +1,5 @@
 package com.example.ocr.webscraper;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 public class Element {

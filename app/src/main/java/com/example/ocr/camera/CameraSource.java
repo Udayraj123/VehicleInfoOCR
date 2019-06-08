@@ -66,8 +66,8 @@ public class CameraSource {
     // These values may be requested by the caller.  Due to hardware limitations, we may need to
     // select close, but not exactly the same values for these.
     private final float requestedFps = 30.0f;
-    private final int requestedPreviewWidth = 640;//1280;
-    private final int requestedPreviewHeight = 480;//960;
+    private final int requestedPreviewWidth = 1280;//640;
+    private final int requestedPreviewHeight = 960;//480
     private final boolean requestedAutoFocus = true;
 
     // These instances need to be held onto to avoid GC of their underlying resources.  Even though
@@ -457,7 +457,7 @@ public class CameraSource {
 
         // The method for selecting the best range is to minimize the sum of the differences between
         // the desired value and the upper and lower bounds of the range.  This may select a range
-        // that the desired value is outside of, but this is often preferred.  For example, if the
+        // that the desired value is outside of, but this is often preferred.  For com.vehicleinfo_usd, if the
         // desired frame rate is 29.97, the range (30, 30) is probably more desirable than the
         // range (15, 30).
         int[] selectedFpsRange = null;

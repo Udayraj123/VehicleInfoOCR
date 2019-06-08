@@ -3,7 +3,7 @@ An app made using Firebase MLKit Text Recognizer, JSoup and a little bit of open
 Useful for general purpose OCR as well.
 
 ## WIP
-#### TODO
+#### TODO (Details in Rough.md)
 	[X] Use Firebase OCR
 	[X] Add Permission handler
 	[X] Add OpenCv morph
@@ -13,21 +13,30 @@ Useful for general purpose OCR as well.
 	[X] Putting numberplate data into text on preview btn click
 	[X] Flash btn from OMR
 	[X] Add Bottom Drawer 
-	[ ] Debug jsoup for vehicle details retrieve 
-	[ ] Swipe GUI 
-	[ ] Turbo mode
+	[X] Floating number plates
+	[ ] Blurring effect
+	[ ] Focus guider
+	[ ] Improve Webview display using js
+	[ ] Instruction visuals
+	[ ] Celebrate on succesful result!
 
 #### Excess
 
- Textbox style just like numplate
+ 	Textbox style just like numplate
 
- Test Imgproc preprocess onto cameraSource bytebuffer frames
+ 	Test Imgproc preprocess onto cameraSource bytebuffer frames
 
 #### Much Excess
 
-Remove opencv, process only bitmap
+	[X] Remove opencv, process only bitmap
 
-Recent searches into cards! - make use of miniRTO here too
+	Recent searches into cards! - make use of miniRTO here too
+
+## Size Analysis(TODO : Add screenshot)
+jar libs : 7MB
+resources : 5MB
+android-web-scraper : 2 MB
+FirebaseMLKit : 2 MB
 
 ## Credits
 Vahan portals

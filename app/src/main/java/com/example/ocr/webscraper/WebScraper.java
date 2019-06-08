@@ -215,6 +215,11 @@ private String TAG = "webscraper:";
             gotElementText = true;
         }
         @JavascriptInterface
+        public void showMessage(String message){
+            //forward it to MainaActivity via handler
+            img2Bitmap.showMessage(message);
+        }
+        @JavascriptInterface
         public void getBase64ImageString(String base64Image)
         {
             Log.d(TAG, "Conversion started");

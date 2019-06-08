@@ -1,10 +1,9 @@
 package com.example.ocr.webscraper;
 
-import android.graphics.Bitmap;
-
 public interface Img2Bitmap
 {
     void onConvertComplete(byte[] imageData);
+    void showMessage(String message);
     String buildScript10=
             "Number.prototype.toUInt=function(){ return this<0?this+4294967296:this; }; "+
                     "Number.prototype.bytes32=function(){ return [(this>>>24)&0xff,(this>>>16)&0xff,(this>>>8)&0xff,this&0xff]; }; "+
@@ -153,6 +152,7 @@ public interface Img2Bitmap
                     "                else if(node.id=='userMessages'){"+
                     "                    /*error message : tell user of this message*/ "+
                     "                    console.log('Error message: '  + node.textContent);"+
+                    "                    HtmlViewer.showMessage('Note: '  + node.textContent);"+
                     "                } "+
                     "                else if(node.id=='resultPanel'){"+
                     "                    console.log('resultPanel changed');"+
@@ -167,7 +167,8 @@ public interface Img2Bitmap
                     "                            } "+
                     "                        }"+
                     "                    }else{"+
-                    "                        console.log('No regn found!');"+
+                    "                        console.log('No entry found in VAHAN database');"+
+                    "                        HtmlViewer.showMessage('No entry found in VAHAN database');"+
                     "                    }"+
                     "                    /* also move captcha to bottom */"+
                     ""+

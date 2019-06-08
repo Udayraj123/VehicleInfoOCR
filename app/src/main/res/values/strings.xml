@@ -1,8 +1,19 @@
 <resources>
     <string name="can_do_transitions">false</string>
-    <string name="app_name">Vehicle Info Camera Live</string>
+    <string name="app_name_orig">Awesome Vehicle Info Live Camera</string>
+    <string name="app_name">Vehicle Info Live Camera</string>
+    <string name="browser">RTO Website</string>
+    <string name="confirm_details">Confirm Details</string>
+    <string name="vehicle_no">Vehicle Number: </string>
     <string name="ok">OK</string>
     <string name="search">Search</string>
+    <string name="support_text">Support the App</string>
+    <string name="support">Okay</string>
+    <string name="dont_support">Close</string>
+    <string name="developer_line1">Made with &lt;3 by</string>
+    <string name="developer_line2"><a href="https://github.com/Udayraj123/">Udayraj</a>, <a href="https://github.com/sharmatanesh/">Tanesh</a> &amp; <a href="https://www.instagram.com/shashank529317/">Shashank</a>.</string>
+    <string name="developer_line3">If you liked it, Give a star on github!</string>
+    <string name="developer_line4"><a href="https://github.com/Udayraj123/VehicleInfoOCR">View on Github</a></string>
     <string name="close">Close</string>
     <string name="plate_hint">    AB01CD1234</string>
     <string name="captcha_hint">    Captcha code</string>

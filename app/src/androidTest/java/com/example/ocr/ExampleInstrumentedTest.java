@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.ocr", appContext.getPackageName());
+        assertEquals("com.com.vehicleinfo_usd.ocr", appContext.getPackageName());
     }
 }

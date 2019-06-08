@@ -49,63 +49,79 @@ Fix some bugs
 	// That Syntax error was here:
 		"a = (a+this[start+i])%65521; b = (b+a)%65521; "
 		^^ Modulo was giving issue. replaced with i - parseInt(i/65521);
+	// 8 June 3 AM : (major)Bug free app ready!
 
 // No need now. > Update webscraper from their recent commits (and remove run2 dependency )
 
-Work on JS to improve interface.
+MiniDOs 
+	// > Pause toast
+	// > Camera higher res
+	// > Remove plate number on back press/drawer hide
+	/Check:/ > Icons resizing bug fix
+	//> Splash screen
+		> Simple Button Guide on splashscreen
+		> A guiding photo showing how to hold at optimal distance of plate
+	// > Titles into drawer..: "Confirm Details", "RTO Website: ",
+	// Starting popup "Made with <3 by <link>Udayraj and <link>Tanesh "
+		"Feedback Credits <insta>Shashank, Tanvesh, VCD..."
+	Show <3 pop up on successful detection and result retrieval
+	"<git>See Source", "Share App"
+	> Credits popper on Success
+	> GPLv3, Developer signatures in code
+	> App Icon, Cam wheel icon
+	// > Install Name Different
+	> [On Throttle] Rebase and push to https://github.com/Udayraj123/VehicleInfoOCR
+		> Keep sharmatanesh to latest..
+
+> NOW THROTTLE THE APP TO MINIMAL. THEN ADD MASS
+	^^ FIND A GUIDE ONLINE?! IF NOT, MAKE ONE LATER?!
+	// Nope, that's crash-prone. > No threading?!
+	// > OCR - frame throttle with a probability
+	> In app size : put some jars and resources
+	> Thread.sleep() / handler.postDelayed()
 
 
 Guided Interface (more into memo):
 	> Show numplate input all the time at bottom?!
-	> Camera focus area
-	> A photo showing approx optimal distance of plate
+	> Camera focus area(same as QR)
 	//> Feedback on obtaining valid numplate
 	> Tell thru design to open drawer AFTER capture
 	> Tell to verify captcha
-	Show <3 pop up on successful detection and result retrieval
+
+Work on JS to improve interface.
 
 
 *** SEEMS CAPTCHA WASN'T NEEDED AFTERALL, FILL CAPTCHA ONCE, THEN IT DOESN'T RELOAD (Only in desktop browser rn)
 >>^Look into this for later version now
 
-
 //  In fruit ninja menu :- Nope, Bubble overlay is better
 	Swipe to select area
 	search button hides the swiping gui
-Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
-	> Bubble overlay: Use long press/double tap to copy block
-	> Min Area constraint, more constraints?!
-	> Keep or remove drawer?!
+
+// Turbo mode - like QR scanner (GET MORE CLARIFICATIONS)
+	// Found better one. > Bubble overlay: Use long press/double tap to copy block
+	// Nope, zoom levels! > Min Area constraint, more constraints?!
+	// Keep as overlay(no draw animation). > Keep or remove drawer?!
 	>> Captcha retryer
-	> Instant try to get vehicle info whenever valid number plate found
-	> Open confirmation drawer immediately if details found.
-	> otherwise wait for better input
+	//> Instant try to get vehicle info whenever valid number plate found
+	// Nope, pop a button rather> Open confirmation drawer immediately if details found. otherwise wait for better input
 
-**Improve OCR on two rows numplates**
-
+Further
+	< Bubble pop focus
+	< Zooming : https://github.com/googlesamples/android-vision/blob/master/visionSamples/ocr-reader/app/src/main/java/com/google/android/gms/samples/vision/ocrreader/ui/camera/CameraSource.java
+	< Static loading : https://stackoverflow.com/questions/11085271/loading-static-html-to-webview/11088345#11088345
+	<**Improve OCR on two rows numplates**
+	< Load vehicle image from Vehicle model (google images)
+	< Threaded loading on numplate detected bubble. Later put into AR
 Optimizations
-	// > Lower camera preview/frame size!! 
+	> Lower camera preview/frame size!! 
 	> Modularize the MainActivity
 	> Disable drawableCache in the webscraper.
 	// > FOUND THIS (Add'em): bitmap.recycle();//recycle the source bitmap, this will be no longer used.
 
-TRY THE THROTTLING BEFORE UPDATES
-	^^ FIND A GUIDE ONLINE?!
-	> No threading?!
-	> Thread.sleep() / handler.postDelayed()
-	> OCR - frame throttle with a probability
-	> In app size : put some jars and resources
-	> Bubble pop focus
-	> Zooming
-
-Excess:
-	Load vehicle image from Vehicle model (google images)
-	Timeout on numplate detected bubble
-
 Later:
 	Run Apk analyzer on OMR apk
 	Firebase usage analytics (Have to see how many ppl opened the app[Privacy Policy?!])
-
 
 Note numplate pattern:
 https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_India#Current_format
@@ -114,3 +130,5 @@ https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_India#Current_forma
     The third part consists of one ,two or three letters. This shows the ongoing series of an RTO (Also as a counter of the number of vehicles registered) and/or vehicle classification
     The fourth part is a 4 digit number unique to each plate. A letter is prefixed when the 4 digit number runs out and then two letters and so on.
     The fifth part is an international oval "IND" and the above it a hologram having a Chakra. However, not all plates have these features.
+
+    <!-- FOUND OUT : main thread, also known as the UI thread, -->

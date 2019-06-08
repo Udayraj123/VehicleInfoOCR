@@ -11,6 +11,8 @@ android {
 //    }
     compileSdkVersion 28
     defaultConfig {
+
+        resConfigs 'en' //reduces size
         applicationId "com.example.ocr"
         // 19 for transition animations
         minSdkVersion 16
@@ -25,6 +27,10 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc
+            ext.alwaysUpdateBuildId = false
         }
     }
         compileOptions {
@@ -47,7 +53,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation 'com.google.firebase:firebase-ml-vision:20.0.0'
-//    implementation files('libs/jsoup-1.12.1.jar')
+
+//    implementation 'nl.dionsegijn:konfetti:1.1.3'
+    implementation 'com.rbddevs.splashy:splashy:1.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.31"
+    //    implementation files('libs/jsoup-1.12.1.jar')
 //    implementation files('libs/commons-lang3-3.0.1.jar')
 //
     // implementation 'com.github.AliAzaz:Edittext-Library:1.0.2'
