@@ -75,6 +75,8 @@ MiniDOs
 		> Keep sharmatanesh to latest..
 	// Done, but would it lag? >Icon resizing: all converted to linearlayouts
 
+[ ] Load captcha when splash screen starts
+
 Fix: 
 2019-06-09 00:01:13.542 3728-3748/com.example.ocr I/Vision: Loading library libocr.so
 2019-06-09 00:01:13.543 3728-3748/com.example.ocr I/Vision: libocr.so library load status: false
@@ -122,6 +124,10 @@ Further
 	<**Improve OCR on two rows numplates**
 	< Load vehicle image from Vehicle model (google images)
 	< Threaded loading on numplate detected bubble. Later put into AR
+
+Making of your android starter template
+> incl Rotation handler : https://android.jlelse.eu/handling-orientation-changes-in-android-7072958c442a
+
 Optimizations
 	> Lower camera preview/frame size!! 
 	> Modularize the MainActivity
@@ -148,3 +154,4 @@ https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_India#Current_forma
     The fifth part is an international oval "IND" and the above it a hologram having a Chakra. However, not all plates have these features.
 
     <!-- FOUND OUT : main thread, also known as the UI thread, -->
+

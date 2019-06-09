@@ -152,7 +152,7 @@ public interface Img2Bitmap
                     "                else if(node.id=='userMessages'){"+
                     "                    /*error message : tell user of this message*/ "+
                     "                    console.log('Error message: '  + node.textContent);"+
-                    "                    HtmlViewer.showMessage('Note: '  + node.textContent);"+
+                    "                    HtmlViewer.showMessage(node.textContent);"+
                     "                } "+
                     "                else if(node.id=='resultPanel'){"+
                     "                    console.log('resultPanel changed');"+

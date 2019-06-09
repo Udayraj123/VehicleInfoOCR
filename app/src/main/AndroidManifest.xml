@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ocr">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.ocr"
+    tools:ignore="GoogleAppIndexingWarning"
+    >
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -19,10 +22,25 @@
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="ocr"/>
-        <activity android:name="com.example.ocr.MainActivity">
+        <activity
+            android:name="com.example.ocr.MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--&lt;!&ndash; Accepts URIs that begin with "http://www.example.com/gizmos” &ndash;&gt;-->
+                <!--<data android:scheme="http"-->
+                    <!--android:host="www.example.com"-->
+                    <!--android:pathPrefix="/gizmos" />-->
+                <!--&lt;!&ndash; note that the leading "/" is required for pathPrefix&ndash;&gt;-->
+                <!--&lt;!&ndash; Accepts URIs that begin with "example://gizmos” &ndash;&gt;-->
+                <!--<data android:scheme="example"-->
+                    <!--android:host="gizmos" />-->
+
+
             </intent-filter>
         </activity>
     </application>

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/browser"
             android:textColor="@color/black"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_normal"
             android:gravity="center"
             />
     </LinearLayout>
@@ -29,8 +29,8 @@
         android:layout_weight="1.82"
         android:layout_width="match_parent"
         android:background="@drawable/drawer"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
         >
     </LinearLayout>
@@ -49,7 +49,7 @@
             android:layout_weight="0.6"
             android:text="@string/confirm_details"
             android:textColor="@color/black"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_normal"
             android:gravity="center"
             />
         <LinearLayout
@@ -73,7 +73,7 @@
                     android:layout_height="@dimen/textbox_size"
                     android:text="@string/vehicle_no"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_large"
+                    android:textSize="@dimen/font_normal"
                     android:gravity="center"
                     />
             </LinearLayout>
@@ -82,7 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 >
-                <EditText
+
+                <com.edittextpicker.aliazaz.EditTextPicker
                     android:id="@+id/vehicle_plate"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textbox_size"
@@ -90,7 +91,11 @@
                     android:hint="@string/plate_hint"
                     android:textAlignment="center"
                     android:inputType="textCapCharacters"
-                    />
+                    app:defaultValue="null"
+                    app:pattern="[A-Z]{2}[0-9]+[A-Z]+[0-9]+"
+                    app:required="true"
+                    app:type="equal" />
+
                 <!--android:text="MH12CD8039"-->
                 <ImageButton
                     android:id="@+id/vehicle_copy_number"
@@ -101,6 +106,8 @@
                     android:layout_alignEnd="@id/vehicle_plate"
                     android:onClick="copyNumber"
                     android:layout_marginTop="15dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     />
             </RelativeLayout>
         </LinearLayout>
