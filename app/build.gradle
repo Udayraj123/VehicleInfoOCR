@@ -14,6 +14,7 @@ android {
 
         resConfigs 'en' //reduces size
         applicationId "com.example.ocr"
+//        applicationId "com.udayraj.vehicleinfo"
         // 19 for transition animations
         minSdkVersion 16
         targetSdkVersion 28
@@ -24,9 +25,10 @@ android {
 //    buildToolsVersion "28.0.3"
     buildTypes {
         release {
-            shrinkResources true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            shrinkResources true
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             //https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc

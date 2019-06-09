@@ -1,4 +1,4 @@
-// package com.com.vehicleinfo_usd.ocr.utils;
+// package com.com.vehicleinfo_usd.vehicleinfo.utils;
 // import android.graphics.Bitmap;
 // import android.graphics.BitmapFactory;
 // import android.util.Log;

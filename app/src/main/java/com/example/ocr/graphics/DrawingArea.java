@@ -1,4 +1,4 @@
-// package com.com.vehicleinfo_usd.ocr.graphics;
+// package com.com.vehicleinfo_usd.vehicleinfo.graphics;
 //
 // import android.content.Context;
 // import android.graphics.Canvas;

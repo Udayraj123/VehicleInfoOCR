@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="gray">#828282</color>
     <color name="action_bar">#2196F3</color>
     <color name="accent">#1976D2</color>
     <color name="expiry">#D32F2F</color>

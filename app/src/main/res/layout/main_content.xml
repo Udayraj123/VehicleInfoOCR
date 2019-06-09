@@ -45,7 +45,8 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
             android:text="@string/confirm_details"
             android:textColor="@color/black"
             android:textSize="@dimen/font_large"
@@ -53,7 +54,9 @@
             />
         <LinearLayout
             android:id="@+id/layout_vehicle_plate"
-            android:layout_height="wrap_content"
+
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:gravity="center_vertical"
             android:layout_margin="5dp"
@@ -105,7 +108,9 @@
         <LinearLayout
             android:id="@+id/layout_captcha"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_margin="5dp"
             android:gravity="center_vertical|center_horizontal"
             >
@@ -147,7 +152,6 @@
                     android:id="@+id/captcha_input"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textbox_size"
-                    android:layout_margin="10dp"
                     android:background="@drawable/rounded_edittext"
                     android:imeOptions="actionDone"
                     android:textAlignment="center"
@@ -160,7 +164,9 @@
 
         <LinearLayout
             android:id="@+id/layout_close"
-            android:layout_height="wrap_content"
+
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_gravity="end"
             android:orientation="horizontal"

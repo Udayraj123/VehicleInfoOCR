@@ -64,29 +64,38 @@ MiniDOs
 	// > Titles into drawer..: "Confirm Details", "RTO Website: ",
 	// Starting popup "Made with <3 by <link>Udayraj and <link>Tanesh "
 		"Feedback Credits <insta>Shashank, Tanvesh, VCD..."
-	Show <3 pop up on successful detection and result retrieval
-	"<git>See Source", "Share App"
-	> Credits popper on Success
+	Show Confetti <3 pop up on successful detection and result retrieval
+	//"<git>See Source", 
+	//	"Share App"
 	> GPLv3, Developer signatures in code
-	> App Icon, Cam wheel icon
+	//> App Icon, 
+	// Not that good -  Cam wheel icon
 	// > Install Name Different
 	> [On Throttle] Rebase and push to https://github.com/Udayraj123/VehicleInfoOCR
 		> Keep sharmatanesh to latest..
+	// Done, but would it lag? >Icon resizing: all converted to linearlayouts
+
+Fix: 
+2019-06-09 00:01:13.542 3728-3748/com.example.ocr I/Vision: Loading library libocr.so
+2019-06-09 00:01:13.543 3728-3748/com.example.ocr I/Vision: libocr.so library load status: false
+2019-06-09 00:01:13.625 3728-3747/com.example.ocr W/GooglePlayServicesUtil: Google Play services out of date.  Requires 11925000 but found 11743470
+app is not indexable error in manifest one Activity
+
 
 > NOW THROTTLE THE APP TO MINIMAL. THEN ADD MASS
 	^^ FIND A GUIDE ONLINE?! IF NOT, MAKE ONE LATER?!
 	// Nope, that's crash-prone. > No threading?!
 	// > OCR - frame throttle with a probability
-	> In app size : put some jars and resources
-	> Thread.sleep() / handler.postDelayed()
+	// > In app size : put some jars and resources : Gallery easter egg	
+	// In captcha solver: > Thread.sleep() / handler.postDelayed()
 
 
 Guided Interface (more into memo):
 	> Show numplate input all the time at bottom?!
 	> Camera focus area(same as QR)
 	//> Feedback on obtaining valid numplate
-	> Tell thru design to open drawer AFTER capture
-	> Tell to verify captcha
+	:Guide in splash > Tell thru design to open drawer AFTER capture
+	// textview > Tell to verify captcha
 
 Work on JS to improve interface.
 
@@ -116,8 +125,15 @@ Further
 Optimizations
 	> Lower camera preview/frame size!! 
 	> Modularize the MainActivity
+		> More app events
 	> Disable drawableCache in the webscraper.
 	// > FOUND THIS (Add'em): bitmap.recycle();//recycle the source bitmap, this will be no longer used.
+
+	Fix this for better startup time: 
+	starting instant run server: is main process
+	2019-06-09 11:53:29.333 11759-11759/com.example.ocr I/zygote: Rejecting re-init on previously-failed class java.lang.Class<android.support.v4.view.ViewCompat$OnUnhandledKeyEventListenerWrapper>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/view/View$OnUnhandledKeyEventListener;
+	2019-06-09 11:53:29.333 11759-11759/com.example.ocr I/zygote:     at void android.support.v4.view.ViewCompat.setOnApplyWindowInsetsListener(android.view.View, android.support.v4.view.OnApplyWindowInsetsListener) (ViewCompat.java:2203)
+	2019-06-09 11:53:29.333 11759-11759/com.example.ocr I/zygote:     
 
 Later:
 	Run Apk analyzer on OMR apk

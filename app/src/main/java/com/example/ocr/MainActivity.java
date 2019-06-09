@@ -25,6 +25,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,24 +119,35 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private int NUM_PLATES;
 
     private Fade mFade;
-
+    private Animation mRotation;
     @Override @TargetApi(19)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         new Splashy(this)
-                .setLogo(R.drawable.app_icon)
+                .setLogo(R.drawable.splashy)
                 .setTitle(R.string.app_name)
                 // .setTitleColor("#FFFFFF")
                 .setSubTitle("Loading App...")
                 .setTitleSize(25f)
                 .setSubTitleSize(20f)
                 // .setProgressColor(R.color.black)
-                // .setFullScreen(true)
+                .showProgress(true)
+                .setFullScreen(true)
                 // .setTime(1000)
                 .show();
         mFade = new Fade(Fade.IN);
         mFade.setDuration(1000);
+
+        // mRotation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate);
+        mRotation= new RotateAnimation(
+                0, 360,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        mRotation.setDuration(10000);
+        mRotation.setRepeatCount(Animation.INFINITE);
+
         canDoTransitions = getResources().getString(R.string.can_do_transitions).equals("true");
         bitmapProcessor = new BitmapTextRecognizer(MainActivity.this);
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -156,8 +170,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         setVehicleNumListeners();
         int[] dialogids = {R.id.support_btn,R.id.dont_support_btn};
         for(int i=0;i<dialogids.length;i++) {
-            Button btn = findViewById(dialogids[i]);
-            btn.setOnClickListener(new View.OnClickListener() {
+            findViewById(dialogids[i]).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // viewKonfetti.setVisibility(INVISIBLE);
@@ -166,10 +179,10 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             });
         }
         // show popup on start
-        supportView.setVisibility(VISIBLE);
         //TODO move stuff into diff functions
 
-        int[] textids = {R.id.developer_line1,R.id.developer_line2,R.id.developer_line3};
+        // Make the links clickable
+        int[] textids = {R.id.support_btn,R.id.developer_line1,R.id.developer_line2,R.id.developer_line3,R.id.developer_line4};//,R.id.developer_line5};
         for(int i=0;i<textids .length;i++) {
             TextView t = findViewById(textids[i]);
             t.setMovementMethod(LinkMovementMethod.getInstance());
@@ -196,6 +209,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         webScraper.setLoadImages(true); //default: false
         webScraper.setUserAgentToDesktop(true);
         webScraper.clearAll();
+        //easter egg
+        View spacer = findViewById(R.id.spacer);
+        spacer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                logToast("Easter egg!");
+                findViewById(R.id.easter).setVisibility(VISIBLE);
+                return false;
+            }
+        });
         LinearLayout layout = (LinearLayout)findViewById(R.id.webview);
         layout.addView(webScraper.getView());
         int[] plateids = {R.id.plate1,R.id.plate2,R.id.plate3,R.id.plate4,R.id.plate5};
@@ -351,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener(){
                 @Override
                 public void loaded(String URL) {
-                    Log.d(TAG, "Loaded !");
+                    Log.d(TAG, "Loaded!");
                     eltCaptchaImage = webScraper.findElementByClassName("captcha-image", 0);
                     eltVehicleNumber = webScraper.findElementById("regn_no1_exact");
                     eltCaptchaInput = webScraper.findElementById("txt_ALPHA_NUMERIC");
@@ -366,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                                     "document.getElementsByClassName('row bottom-space')[0].style.display='block';"+
                                     "document.getElementsByClassName('logo-header-section display-print-none')[0].style.display='block';";
                     webScraper.loadURL("javascript:{" + focusScript + "}void(0);");
-                    //TODO: fix- this currently needs api 19
+                    //TODO: fix- this run2 currently needs api 19
                     Log.d(TAG, "Got image from: " + eltCaptchaImage.getAttribute("src"));
                     webScraper.injectJSAndGetCaptcha(captchaBitmapGetter);
                 }
@@ -397,8 +420,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         @Override
         public void showMessage(String message){
             logToast(message);
-            // if(canDoTransitions)
-            //     TransitionManager.beginDelayedTransition(superContainer,mFade);
+            // doFade();
             // viewKonfetti.setVisibility(VISIBLE);
             // supportView.setVisibility(VISIBLE);
             // viewKonfetti.build()
@@ -459,6 +481,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     @Override
     public void onCaptchaUpdate(String detectedCaptcha){
         captchaInput.setText(captchaFilter(detectedCaptcha));
+        //THROTTLE FOR PERF
+        try{Thread.sleep(1000);}catch (Exception e){e.printStackTrace();}
         logToast(SMILE_EMOJI + " Captcha read successful!");
         drawerBtn.animate().scaleX(1.3f).scaleY(1.3f).start();
     }
@@ -488,11 +512,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
 
     public void updatePlates(){
-        if(canDoTransitions && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // Get the root view and create a transition
-            // Start recording changes to the view hierarchy
-            TransitionManager.beginDelayedTransition(superContainer, mFade);
-        }
+        doFade();
         int i = 0;
         for(String plate : platesQueue){
             buttons.get(i).setText(plate);
@@ -522,8 +542,10 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 if(cameraSource==null) {
                     createCameraSource();
                     startCameraSource();
-                    camBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
-                    camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble2));
+                    // camBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
+                    camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.wheel));
+                    camBtn.startAnimation(mRotation);
+                    // ^Better keep a gif
                     // drawingArea.setVisibility(View.INVISIBLE);
                 }
                 else {
@@ -531,8 +553,10 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_off));
                     confirmVehicleNumber();
                     stopCameraSource();
-                    camBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
-                    camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.bubble_pop2));
+                    // camBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
+                    camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.wheel_off));
+                    mRotation.cancel();
+                    camBtn.clearAnimation();
                     // drawingArea.setVisibility(View.VISIBLE);
                     // camBtn.animate().setDuration(600).rotation(camBtn.getRotation() + 360).start();
                 }
@@ -654,17 +678,28 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             logToast(CRYING_EMOJI+" Empty text");
         }
     }
-
+    @TargetApi(19)
+    public void doFade() {
+        if(canDoTransitions && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Get the root view and create a transition
+            // Start recording changes to the view hierarchy
+            TransitionManager.beginDelayedTransition(superContainer, mFade);
+        }
+    }
     private boolean warningBack = false;
     // collapse bottom sheet when back button pressed
     @Override
     public void onBackPressed() {
-        if (drawerView.getVisibility() != VISIBLE){
-            if(cameraSource != null){
-                if(warningBack)
+        if (findViewById(R.id.easter).getVisibility() != VISIBLE) {
+
+            if (drawerView.getVisibility() != VISIBLE) {
+                // if(cameraSource != null){
+                if (warningBack) {
                     super.onBackPressed();
-                else{
+                } else {
                     Toast.makeText(MainActivity.this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+                    doFade();
+                    supportView.setVisibility(VISIBLE);
                     warningBack = true;
                     // reset after delay
                     new Handler().postDelayed(new Runnable() {
@@ -672,16 +707,21 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                         public void run() {
                             warningBack = false;
                         }
-                    },2500);
+                    }, 2500);
                 }
+                // }
+                // else{
+                //     camBtn.performClick();
+                // }
             }
-            else{
-                camBtn.performClick();
+            else {
+                doFade();
+                vehicleNumber.setText("");
+                drawerView.setVisibility(INVISIBLE);
             }
         }
         else {
-            vehicleNumber.setText("");
-            drawerView.setVisibility(INVISIBLE);
+            findViewById(R.id.easter).setVisibility(INVISIBLE);
         }
     }
 

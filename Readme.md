@@ -14,11 +14,11 @@ Useful for general purpose OCR as well.
 	[X] Flash btn from OMR
 	[X] Add Bottom Drawer 
 	[X] Floating number plates
+	[ ] Instruction visuals
 	[ ] Blurring effect
 	[ ] Focus guider
 	[ ] Improve Webview display using js
-	[ ] Instruction visuals
-	[ ] Celebrate on succesful result!
+	[ ] Celebrate Konfetti popper on succesful result!
 
 #### Excess
 
