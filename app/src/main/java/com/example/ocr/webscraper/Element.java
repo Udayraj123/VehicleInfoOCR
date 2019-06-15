@@ -7,7 +7,7 @@ public class Element {
     private String elementLocator;
     private WebScraper web;
 
-    public Element (WebScraper web, String elementLocator){
+    Element (WebScraper web, String elementLocator){
         this.web = web;
         this.elementLocator = elementLocator;
 

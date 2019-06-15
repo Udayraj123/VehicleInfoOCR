@@ -30,7 +30,7 @@ public class WebScraper {
 
     private Handler handler;
 
-    public static int MAX = -1;
+    private static int MAX = -1;
 private String TAG = "webscraper:";
     private onPageLoadedListener onpageloadedlistener;
     private Img2Bitmap img2Bitmap;

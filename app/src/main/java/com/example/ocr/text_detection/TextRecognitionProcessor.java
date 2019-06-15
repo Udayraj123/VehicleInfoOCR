@@ -32,14 +32,14 @@ public class TextRecognitionProcessor{
         The fourth part is a 4 digit number unique to each plate. A letter is prefixed when the 4 digit number runs out and then two letters and so on.
     */
     // This pattern is for prompting user to correct
-    public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]+[A-Z]+[0-9]+";
+    private final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]+[A-Z]+[0-9]+";
     // This is the pattern accepted by the site
-    public final String NUMPLATE_PATTERN_STRICT = "[A-Z]{2}[0-9]{2}[A-Z]{1,3}[0-9]{4}";
+    private final String NUMPLATE_PATTERN_STRICT = "[A-Z]{2}[0-9]{2}[A-Z]{1,3}[0-9]{4}";
     private final Pattern NUMPLATE_GROUPS = Pattern.compile("([A-Z]{2})([0-9]+)([A-Z]+)([0-9]+)");
     // private final Pattern NUMPLATE_GROUPS_STRICT = Pattern.compile("([A-Z]{2})([0-9]{2})([A-Z]{1,3})([0-9]{4})");
     private int MAX_BOXES = 5;
     private final FirebaseVisionTextRecognizer detector;
-    public String allText="";
+    private String allText="";
     public String majorText="";
     public List<FirebaseVisionText.TextBlock> textBlocks;
     // Whether we should ignore process(). This is usually caused by feeding input data faster than
@@ -124,7 +124,7 @@ public class TextRecognitionProcessor{
 
         //Done: set a public variable from here containing the "main" text. ( for captcha)
         graphicOverlay.clear();
-        allText = "";
+        StringBuilder builder = new StringBuilder();
         textBlocks = results.getTextBlocks();
         // textBlocks = new ArrayList<>(results.getTextBlocks());
         // Collections.sort(textBlocks, new Comparator<FirebaseVisionText.TextBlock>(){
@@ -151,12 +151,13 @@ public class TextRecognitionProcessor{
 
             //FIXLATER - IND jugaad for now
             if(!addText.toUpperCase().equals("IND")){
-                allText += addText;
+                builder.append(addText);
             }
             else{
                 Log.d(TAG,"IND detected, not suffixing");
             }
         }
+        allText = builder.toString();
         if(!allText.equals(""))
             Log.d(TAG,"Success read: "+allText);
         allText = numPlateFilter(allText);
@@ -170,11 +171,7 @@ public class TextRecognitionProcessor{
     private int THROTTLE_SPEED = 2;// be integer > 1
     private boolean haveToThrottle(){
         // 1/THROTTLE_SPEED chance to drop frame
-        if(haveToObj.nextInt(1+THROTTLE_SPEED) == 0){
-            // Log.d(TAG,"Throttled frame!");
-            return true;
-        }
-        return false;
+        return haveToObj.nextInt(1+THROTTLE_SPEED) == 0;
     }
 
     private void detectInVisionImage( FirebaseVisionImage image, final GraphicOverlay graphicOverlay) {

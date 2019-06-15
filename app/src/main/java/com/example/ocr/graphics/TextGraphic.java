@@ -9,14 +9,14 @@ import com.google.firebase.ml.vision.text.FirebaseVisionText;
 
 public class TextGraphic extends GraphicOverlay.Graphic {
 
-    private static final int OFFSET = 20;
+//    private static final int OFFSET = 20;
     private static final float TEXT_SIZE = 34.0f;
     private static final float STROKE_WIDTH = 5.0f;
     private final FirebaseVisionText.Element text;
 
-    public final Paint rectPaint;
-    public final Paint textPaint;
-    public RectF rect;
+    private final Paint rectPaint;
+    private final Paint textPaint;
+    private RectF rect;
 
     public TextGraphic(GraphicOverlay overlay, FirebaseVisionText.Element text) {
         super(overlay);

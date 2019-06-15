@@ -20,7 +20,7 @@ public class BitmapTextRecognizer {
     private static final String TAG = "BitmapTextRec";
     private final FirebaseVisionTextRecognizer detector;
     private List<FirebaseVisionText.TextBlock> textBlocks;
-    public String allText="";
+    private String allText="";
 
     private AppEvents listener;
 
@@ -39,13 +39,15 @@ public class BitmapTextRecognizer {
         detector.processImage(image)
         .addOnSuccessListener(
             new OnSuccessListener<FirebaseVisionText>() {
+                // Note: StringBuilder is MUCH MUCH FASTER THAN Strings
                 @Override
                 public void onSuccess(FirebaseVisionText results) {
-                   allText = "";
                    textBlocks = results.getTextBlocks();
+                   StringBuilder builder = new StringBuilder();
                    for (int i = 0; i < textBlocks.size(); i++) {
-                    allText += textBlocks.get(i).getText();
-                }
+                       builder.append(textBlocks.get(i).getText());
+                    }
+                   allText = builder.toString();
                 Log.d(TAG,"Bitmap Success read: "+allText);
                 allText = filterCaptcha(allText);
                 listener.onCaptchaUpdate(allText);

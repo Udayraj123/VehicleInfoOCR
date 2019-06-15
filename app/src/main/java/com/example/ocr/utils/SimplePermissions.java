@@ -9,11 +9,8 @@ import android.util.Log;
 public class SimplePermissions {
     private static final String TAG = "SimplePermissions";
     private static final int MY_PERMISSIONS_REQUEST_TOKEN= 101;
-    public String[] PermissionsList = {};
+    private String[] PermissionsList;
     private AppCompatActivity activity;
-    public SimplePermissions(AppCompatActivity activity) {
-        this.activity = activity;
-    }
     public SimplePermissions(AppCompatActivity activity, String[] PermissionsList) {
         this.activity = activity;
         this.PermissionsList = PermissionsList;

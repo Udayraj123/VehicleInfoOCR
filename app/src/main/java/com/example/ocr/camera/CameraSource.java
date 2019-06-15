@@ -49,7 +49,7 @@ public class CameraSource {
      */
     private static final float ASPECT_RATIO_TOLERANCE = 0.01f;
 
-    protected Activity activity;
+    private Activity activity;
 
     private Camera camera;
 
@@ -57,9 +57,9 @@ public class CameraSource {
      * Rotation of the device, and thus the associated preview images captured from the device. See
      * Frame.Metadata#getRotation().
      */
-    public int rotation;
+    private int rotation;
 
-    public int facing = CAMERA_FACING_BACK;
+    private int facing = CAMERA_FACING_BACK;
 
     private Size previewSize;
 

@@ -22,31 +22,33 @@ public class GraphicOverlay extends View {
         private GraphicOverlay overlay;
         protected String type="";
 
-        public Graphic(GraphicOverlay overlay) {
+        //public - "access can be package-private"
+        Graphic(GraphicOverlay overlay) {
             this.overlay = overlay;
         }
         public abstract void draw(Canvas canvas);
-        public float scaleX(float horizontal) {
+        float scaleX(float horizontal) {
             return horizontal * overlay.widthScaleFactor;
         }
-        public float scaleY(float vertical) {
+        float scaleY(float vertical) {
             return vertical * overlay.heightScaleFactor;
         }
-        public Context getApplicationContext() {
-            return overlay.getContext().getApplicationContext();
-        }
-        public float translateX(float x) {
+//        public Context getApplicationContext() {
+//            return overlay.getContext().getApplicationContext();
+//        }
+        float translateX(float x) {
             if (overlay.facing == CameraSource.CAMERA_FACING_FRONT) {
                 return overlay.getWidth() - scaleX(x);
             } else {
                 return scaleX(x);
             }
         }
-        public float translateY(float y) {
+        float translateY(float y) {
             return scaleY(y);
         }
 
-        public void postInvalidate() {
+
+        void postInvalidate() {
             overlay.postInvalidate();
         }
     }
@@ -66,12 +68,12 @@ public class GraphicOverlay extends View {
         }
         postInvalidate();
     }
-    public void remove(Graphic graphic) {
-        synchronized (lock) {
-            graphics.remove(graphic);
-        }
-        postInvalidate();
-    }
+//    public void remove(Graphic graphic) {
+//        synchronized (lock) {
+//            graphics.remove(graphic);
+//        }
+//        postInvalidate();
+//    }
     public void setCameraInfo(int previewWidth, int previewHeight, int facing) {
         synchronized (lock) {
             this.previewWidth = previewWidth;
@@ -86,8 +88,11 @@ public class GraphicOverlay extends View {
 
         synchronized (lock) {
             if ((previewWidth != 0) && (previewHeight != 0)) {
-                widthScaleFactor = (float) canvas.getWidth() / (float) previewWidth;
-                heightScaleFactor = (float) canvas.getHeight() / (float) previewHeight;
+                // fixed as per IDE warning -
+//                widthScaleFactor = (float) canvas.getWidth() / (float) previewWidth;
+//                heightScaleFactor = (float) canvas.getHeight() / (float) previewHeight;
+                widthScaleFactor = (float) getWidth() / (float) previewWidth;
+                heightScaleFactor = (float) getHeight() / (float) previewHeight;
             }
 
             for (Graphic graphic : graphics) {
