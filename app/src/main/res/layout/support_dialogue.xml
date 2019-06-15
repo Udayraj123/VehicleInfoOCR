@@ -41,7 +41,8 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/font_large"
             android:textAlignment="center"
-            android:textStyle="italic"
+            android:textColor="@color/accent"
+            android:textStyle="bold|italic"
             android:text="@string/developer_line1"/>
     </LinearLayout>
     <LinearLayout

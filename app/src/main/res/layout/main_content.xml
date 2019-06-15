@@ -35,15 +35,6 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/loading_webview"
-            android:textColor="@color/black"
-            android:textStyle="italic"
-            android:textSize="@dimen/font_normal"
-            android:gravity="center"
-            />
     </LinearLayout>
 
     <LinearLayout
@@ -111,8 +102,8 @@
                     android:layout_height="@dimen/textbox_size"
                     android:background="@drawable/rounded_edittext"
                     android:hint="@string/plate_hint"
-                    android:textAlignment="center"
                     android:inputType="textCapCharacters"
+                    android:padding="10dp"
                     app:defaultValue="null"
                     app:pattern="[A-Z]{2}[0-9]+[A-Z]+[0-9]+"
                     app:required="true"

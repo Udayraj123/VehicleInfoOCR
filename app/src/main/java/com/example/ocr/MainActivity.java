@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
 
         new Splashy(this)
                 .setLogo(R.drawable.splash_guide)
+                .setLogoWHinDp(300,300) // default is 200x200
                 .setTitle(R.string.app_name)
                 // .setTitleColor("#FFFFFF")
                 .setSubTitle("Loading App...")
@@ -357,6 +358,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 @Override
                 public void loaded(String URL) {
                     Log.d(TAG, "Loaded!");
+//                    findViewById(R.id.loading_webview).setVisibility(INVISIBLE);
+
                     eltCaptchaImage = webScraper.findElementByClassName("captcha-image", 0);
                     eltVehicleNumber = webScraper.findElementById("regn_no1_exact");
                     eltCaptchaInput = webScraper.findElementById("txt_ALPHA_NUMERIC");
