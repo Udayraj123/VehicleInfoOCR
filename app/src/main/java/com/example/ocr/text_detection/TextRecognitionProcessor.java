@@ -145,9 +145,17 @@ public class TextRecognitionProcessor{
                 }
                 autoUpdateMajorText(lines.get(j).getText());
             }
-            //preference to block than line VERIFY?!
-            autoUpdateMajorText(textBlocks.get(i).getText());
-            allText += textBlocks.get(i).getText();
+            String addText = textBlocks.get(i).getText();
+            //VERIFY preference to block than line?!
+            autoUpdateMajorText(addText);
+
+            //FIXLATER - IND jugaad for now
+            if(!addText.toUpperCase().equals("IND")){
+                allText += addText;
+            }
+            else{
+                Log.d(TAG,"IND detected, not suffixing");
+            }
         }
         if(!allText.equals(""))
             Log.d(TAG,"Success read: "+allText);

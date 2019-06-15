@@ -1,17 +1,20 @@
 <resources>
     <string name="can_do_transitions">false</string>
     <string name="app_name_orig">Awesome Vehicle Info Camera</string>
-    <string name="app_name">Vehicle Info Live</string>
+    <!-- Add description string later to include India-->
+    <string name="app_name">Vehicle Info Live - India</string>
     <string name="browser">RTO Website</string>
+    <string name="loading_webview">Loading page...</string>
     <string name="confirm_details">Confirm Details</string>
+    <string name="explanation_detail">because no text detection is 100% accurate</string>
     <string name="vehicle_no">Vehicle Number: </string>
     <string name="ok">OK</string>
     <string name="search">Search</string>
     <string name="support_text">Support the App</string>
     <string name="support"> <a href="https://forms.gle/XCh1v6gyN4DpXfkn9"> GIVE FEEDBACK</a></string>
     <string name="dont_support">Close</string>
-    <string name="developer_line1">Made with♥\nby</string>
-    <string name="developer_line2"><a href="https://github.com/Udayraj123/">Udayraj</a>, <a href="https://github.com/sharmatanesh/">Tanesh</a> &amp; <a href="https://www.instagram.com/shashank529317/">Shashank</a>.</string>
+    <string name="developer_line1">Made with♥</string>
+    <string name="developer_line2">by <a href="https://github.com/Udayraj123/">Udayraj</a>, <a href="https://github.com/sharmatanesh/">Tanesh</a> &amp; <a href="https://www.instagram.com/shashank529317/">Shashank</a>.</string>
     <string name="developer_line3">If you liked it, Give a star on github!</string>
     <string name="developer_line4"><a href="https://github.com/Udayraj123/VehicleInfoOCR">View on Github</a></string>
     <string name="developer_line5"><a href="https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing">SHARE APP</a></string>

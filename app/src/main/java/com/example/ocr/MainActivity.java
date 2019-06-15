@@ -26,9 +26,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,9 +49,9 @@ import com.example.ocr.camera.*;
 import com.example.ocr.graphics.*;
 import com.example.ocr.utils.*;
 import com.example.ocr.webscraper.*;
-import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.rbddevs.splashy.Splashy;
-
+//import android.view.animation.Animation;
+//import com.google.firebase.ml.vision.text.FirebaseVisionText;
 // import nl.dionsegijn.konfetti.KonfettiView;
 
 import static android.view.View.INVISIBLE;
@@ -62,41 +59,30 @@ import static android.view.View.VISIBLE;
 
 
 public class MainActivity extends AppCompatActivity implements AppEvents {
-    // private DrawingArea drawingArea;
-    private final int OK = 200;
-    private final int SOCKET_TIMEOUT = 408;
-    private final int CAPTCHA_LOAD_FAILED = 999;
-    private final int TECHNICAL_DIFFICULTY = 888;
     public final String NUMPLATE_PATTERN = "[A-Z]{2}[0-9]+[A-Z]+[0-9]+";
-    private final String PROCESSING_EMOJI = "\u23f3";
-    private final String NOPE_EMOJI = "\u26d4";
-    private final String DONE_EMOJI = "\ud83d\udc4c";
-    private final String POPPER_EMOJI = "\ud83c\udf89";
+    private final String CRYING_EMOJI = "\ud83d\ude36";
     private final String SLEEP_EMOJI = "\ud83d\udca4";
     private final String SMILE_EMOJI = "\ud83d\ude00";
-    private final String HEART_EMOJI = "\ud83d\udc9b";
-    private final String LOVE_EMOJI = "\ud83d\udc96";
-    private final String CRYING_EMOJI = "\ud83d\ude36⏳⏳⏳";
-    private ViewGroup superContainer;
-    //  ----- Instance Variables -----⏳
-    // private EditTextPicker vehicleNumber;
+//    private final String PROCESSING_EMOJI = "⏳";
+//    private final String NOPE_EMOJI = "\u26d4";
+//    private final String DONE_EMOJI = "\ud83d\udc4c";
+//    private final String POPPER_EMOJI = "\ud83c\udf89";
+//    private final String HEART_EMOJI = "\ud83d\udc9b";
+//    private final String LOVE_EMOJI = "\ud83d\udc96";
 
-    // the bottom sheet
-    // private EditText vehicleNumber;
+    // private DrawingArea drawingArea;
+    private ViewGroup superContainer;
     private EditTextPicker vehicleNumber;
     private ImageView captchaImageView;
-    private View bottomSheetView;
-    private View fruitNinja;
     private View supportView;
     // private KonfettiView viewKonfetti;
-    private ViewGroup platesView;
+//    private View fruitNinja;
     private View drawerView;
     private CameraSource cameraSource = null;
     private CameraSourcePreview cameraPreview;
     private GraphicOverlay graphicOverlay;
     private EditText captchaInput;
     private ClipboardManager clipboard;
-    private ImageButton imgbt;
     private WebScraper webScraper;
     private ImageBitmapGetter captchaBitmapGetter;
     public BitmapTextRecognizer bitmapProcessor;
@@ -122,53 +108,41 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private int NUM_PLATES;
 
     private Fade mFade;
-    private Animation mRotation;
+
     @Override @TargetApi(19)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
-        mFade = new Fade(Fade.IN);
-        mFade.setDuration(1000);
-
-        // mRotation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate);
-        mRotation= new RotateAnimation(
-                0, 360,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f
-        );
-        mRotation.setDuration(10000);
-        mRotation.setRepeatCount(Animation.INFINITE);
-
         canDoTransitions = getResources().getString(R.string.can_do_transitions).equals("true");
-        bitmapProcessor = new BitmapTextRecognizer(MainActivity.this);
+        if(canDoTransitions){
+            mFade = new Fade(Fade.IN);
+            mFade.setDuration(1000);
+        }
+
+        // heavy?!
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         superContainer = findViewById(R.id.super_container);
-        cameraPreview = findViewById(R.id.camera_source_preview);
 
+        cameraPreview = findViewById(R.id.camera_source_preview);
+        graphicOverlay = findViewById(R.id.graphics_overlay);
+        // viewKonfetti = findViewById(R.id.viewKonfetti);
+        supportView = findViewById(R.id.support_view);
+        drawerView = findViewById(R.id.drawer);
+        captchaImageView = findViewById(R.id.captcha_img);
         captchaInput = findViewById(R.id.captcha_input);
         vehicleNumber = findViewById(R.id.vehicle_plate);
-        graphicOverlay = findViewById(R.id.graphics_overlay);
-        captchaImageView = findViewById(R.id.captcha_img);
-        drawerView = findViewById(R.id.drawer);
-        platesView = findViewById(R.id.detected_plates);
-        supportView = findViewById(R.id.support_view);
-        // viewKonfetti = findViewById(R.id.viewKonfetti);
+        // drawerView.getBackground().setAlpha(242);
         searchBtn = findViewById(R.id.search_btn);
         flashBtn = findViewById(R.id.flash_btn);
         drawerBtn = findViewById(R.id.drawer_btn);
         camBtn = findViewById(R.id.cam_btn);
-        // drawerView.getBackground().setAlpha(242);
 
-        webScraper = new WebScraper(this);
-        captchaBitmapGetter = new ImageBitmapGetter(MainActivity.this);
-        webScraper.setUserAgentToDesktop(true); //default: false
-        webScraper.setLoadImages(true); //default: false
-        // webScraper.clearAll();
+        //TODO move stuff into diff functions
 
         new Splashy(this)
-                .setLogo(R.drawable.splashy)
+                .setLogo(R.drawable.splash_guide)
                 .setTitle(R.string.app_name)
                 // .setTitleColor("#FFFFFF")
                 .setSubTitle("Loading App...")
@@ -177,15 +151,15 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 // .setProgressColor(R.color.black)
                 .showProgress(true)
                 .setFullScreen(true)
-                // .setTime(1000)
+                 .setTime(5000)
                 .show();
 
         setCaptchaInputListeners();
         setSearchButtonListeners();
         setVehicleNumListeners();
-        int[] dialogids = {R.id.support_btn,R.id.dont_support_btn};
-        for(int i=0;i<dialogids.length;i++) {
-            findViewById(dialogids[i]).setOnClickListener(new View.OnClickListener() {
+        int[] dialog_ids = {R.id.support_btn,R.id.dont_support_btn};
+        for(int id : dialog_ids) {
+            findViewById(id).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // viewKonfetti.setVisibility(INVISIBLE);
@@ -193,47 +167,10 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 }
             });
         }
-        // show popup on start
-        //TODO move stuff into diff functions
-
-        // Make the links clickable
-        int[] textids = {R.id.support_btn,R.id.developer_line1,R.id.developer_line2,R.id.developer_line3,R.id.developer_line4};//,R.id.developer_line5};
-        for(int i=0;i<textids .length;i++) {
-            TextView t = findViewById(textids[i]);
-            t.setMovementMethod(LinkMovementMethod.getInstance());
-        }
-        // t.setOnClickListener(new View.OnClickListener() {
-        //     @Override
-        //     public void onClick(View v) {
-        //         String urlString = "https://github.com/Udayraj123/VehicleInfoOCR";
-        //         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
-        //         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //         intent.setPackage("com.android.chrome");
-        //         try {
-        //             MainActivity.this.startActivity(intent);
-        //         } catch (ActivityNotFoundException ex) {
-        //             // Chrome browser presumably not installed so allow user to choose instead
-        //             intent.setPackage(null);
-        //             MainActivity.this.startActivity(intent);
-        //         }
-        //     }
-        // });
-        //easter egg
-        View spacer = findViewById(R.id.spacer);
-        spacer.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                logToast("Easter egg!");
-                findViewById(R.id.easter).setVisibility(VISIBLE);
-                return false;
-            }
-        });
-        LinearLayout layout = (LinearLayout)findViewById(R.id.webview);
-        layout.addView(webScraper.getView());
-        int[] plateids = {R.id.plate1,R.id.plate2,R.id.plate3,R.id.plate4,R.id.plate5};
-        NUM_PLATES = plateids.length;
-        for(int i=0;i<NUM_PLATES;i++){
-            Button btn = findViewById(plateids[i]);
+        int[] plate_ids = {R.id.plate1,R.id.plate2,R.id.plate3,R.id.plate4,R.id.plate5};
+        NUM_PLATES = plate_ids.length;
+        for(int id : plate_ids){
+            Button btn = findViewById(id);
             buttons.add(btn);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -244,13 +181,29 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 }
             });
         }
-        // platesView.addView(searchBtn);
+        // Make the href links clickable
+        int[] text_ids = {R.id.support_btn,R.id.developer_line1,R.id.developer_line2,R.id.developer_line3,R.id.developer_line4};//,R.id.developer_line5};
+        for(int id : text_ids) {
+            TextView t = findViewById(id);
+            t.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        //easter egg
+        View spacer = findViewById(R.id.spacer);
+        spacer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                logToast("Easter egg!");
+                findViewById(R.id.easter).setVisibility(VISIBLE);
+                return false;
+            }
+        });
+
         // should usually be the last line in init
         getPermissionsAfterInit();
     }
     private void getPermissionsAfterInit(){
         permHandler = new SimplePermissions(this, new String[]{
-                // android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                // android.Manifest.permission.WRITE_EXTERNAL_STORAGE, <- for error reporting
                 android.Manifest.permission.CAMERA,
                 android.Manifest.permission.INTERNET,
                 android.Manifest.permission.ACCESS_NETWORK_STATE
@@ -267,6 +220,15 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
             setCamButtonListeners();
             setFlashListeners();
+            // Attempt for faster start :
+
+            webScraper = new WebScraper(this);
+            captchaBitmapGetter = new ImageBitmapGetter(MainActivity.this);
+            webScraper.setUserAgentToDesktop(true); //default: false
+            webScraper.setLoadImages(true); //default: false
+            LinearLayout webview= findViewById(R.id.webview);
+            webview.addView(webScraper.getView());
+            bitmapProcessor = new BitmapTextRecognizer(MainActivity.this);
             startLoadingCaptcha();
             // start the camera
             camBtn.performClick();
@@ -290,14 +252,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
 
     private void confirmVehicleNumber() {
         if (cameraSource != null && cameraSource.frameProcessor.textBlocks != null) {
-            vehicleNumber.setText(cameraSource.frameProcessor.majorText);
+            if(!cameraSource.frameProcessor.majorText.equals(""))
+                vehicleNumber.setText(cameraSource.frameProcessor.majorText);
             // show vehicleNum draw interface here
-            List<FirebaseVisionText.TextBlock> textBlocks = cameraSource.frameProcessor.textBlocks;
-            for (int i = 0; i < textBlocks.size(); i++) {
-                // find and club nearby boxes?!
-            }
+//            List<FirebaseVisionText.TextBlock> textBlocks = cameraSource.frameProcessor.textBlocks;
+//            for (int i = 0; i < textBlocks.size(); i++) {
+//                // find and club nearby boxes?!
+//            }
         }
     }
+    //Todo: move these to IP class
     public static Bitmap resizeBitmap(Bitmap image, int maxWidth, int maxHeight) {
         if (maxHeight > 0 && maxWidth > 0) {
             int width = image.getWidth();
@@ -363,7 +327,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     public boolean checkInternetConnection() {
         ConnectivityManager con_manager = (ConnectivityManager)
                 MainActivity.this.getSystemService(MainActivity.CONNECTIVITY_SERVICE);
-
+/*
+* TODO
+ * @deprecated Apps should instead use the
+ *             {@link android.net.ConnectivityManager.NetworkCallback} API to
+ *             learn about connectivity changes.
+ *             {@link ConnectivityManager#registerDefaultNetworkCallback} and
+ *             {@link ConnectivityManager#registerNetworkCallback}. These will
+ *             give a more accurate picture of the connectivity state of
+ *             the device and let apps react more easily and quickly to changes.
+ *             */
         if(con_manager.getActiveNetworkInfo() != null && con_manager.getActiveNetworkInfo().isAvailable() && con_manager.getActiveNetworkInfo().isConnected()){
             return true;
         }
@@ -413,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         ImageBitmapGetter(AppEvents listener){
             this.listener = listener;
         }
-        public void processAndRead(Bitmap bitmap){
+        private void processAndRead(Bitmap bitmap){
             // The image is about 120x40
             Bitmap resizedCaptcha  =  resizeBitmap(bitmap, 90, 30);
             // Blur it out by resizing
@@ -514,7 +487,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         if(platesQueue.size() > NUM_PLATES) {
             platesHash.remove(platesQueue.remove());
         }
-        if(vehicleNumber.getText().equals("")) {
+        if(vehicleNumber.getText()!=null && vehicleNumber.getText().toString().equals("") && !majorText.equals("")) {
             vehicleNumber.setText(majorText);
         }
         updatePlates();
@@ -617,8 +590,12 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
-                String result = vehicleNumber.getText().toString();
-                eltVehicleNumber.setText(vehicleNumber.getText().toString());
+                //todo: make this run on api 16
+                if(vehicleNumber.getText()!=null)
+                    eltVehicleNumber.setText(vehicleNumber.getText().toString());
+                else{
+                    Log.e(TAG,"UNEXPECTED!! VehicleNumber Text is NULL!");
+                }
                 eltVehicleNumber.setAttribute("style","background-color:lightgreen !important");
                 eltCaptchaInput.setText(captchaInput.getText().toString());
                 eltCaptchaInput.setAttribute("style","background-color:lightgreen !important");
@@ -669,22 +646,25 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     vehicleNumber.setSelection(result.length());
                 }
                 vehicleNumber.isTextEqualToPattern();
-                searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
+                if(vehicleNumber.getText() != null)
+                    searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
             }
         });
-        searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
+
+        if(vehicleNumber.getText() != null)
+            searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
     }
 
     public void copyNumber(View view) {
-        String vehicleNum = vehicleNumber.getText().toString();
+        String vehicleNum = (vehicleNumber.getText() != null) ? vehicleNumber.getText().toString() : "";
         Log.d(TAG,"Copying : "+vehicleNum);
         if(!vehicleNum.equals("")) {
             ClipData clip = ClipData.newPlainText("Vehicle Number", vehicleNum);
             clipboard.setPrimaryClip(clip);
-            logToast(SMILE_EMOJI+" Text Copied:  "+vehicleNum);
+            logToast(SMILE_EMOJI + " Text Copied:  "+vehicleNum);
         }
         else{
-            logToast(CRYING_EMOJI+" Empty text");
+            logToast(CRYING_EMOJI + " Empty text");
         }
     }
     @TargetApi(19)
@@ -842,5 +822,15 @@ public void copyDetails(View view) {
         clipboard.setPrimaryClip(clip);
         logToast("Text Copied! "+SMILE_EMOJI);
     }
+        private Animation mRotation;
+
+        // mRotation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate);
+//        mRotation= new RotateAnimation(
+//                0, 360,
+//                Animation.RELATIVE_TO_SELF, 0.5f,
+//                Animation.RELATIVE_TO_SELF, 0.5f
+//        );
+//        mRotation.setDuration(10000);
+//        mRotation.setRepeatCount(Animation.INFINITE);
 
     */

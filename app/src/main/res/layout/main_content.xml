@@ -17,6 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text="@string/browser"
             android:textColor="@color/black"
             android:textSize="@dimen/font_normal"
@@ -33,6 +34,16 @@
         android:layout_marginBottom="5dp"
         android:orientation="vertical"
         >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/loading_webview"
+            android:textColor="@color/black"
+            android:textStyle="italic"
+            android:textSize="@dimen/font_normal"
+            android:gravity="center"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -46,10 +57,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.6"
+            android:layout_weight="0.4"
             android:text="@string/confirm_details"
             android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="@dimen/font_normal"
+            android:gravity="center"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:text="@string/explanation_detail"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/font_small"
             android:gravity="center"
             />
         <LinearLayout
@@ -72,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/textbox_size"
                     android:text="@string/vehicle_no"
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_normal"
                     android:gravity="center"
