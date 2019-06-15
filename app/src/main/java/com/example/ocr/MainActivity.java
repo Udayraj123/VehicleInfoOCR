@@ -32,10 +32,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -190,10 +193,34 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         }
         //easter egg
         View spacer = findViewById(R.id.spacer);
+        TableLayout easterTable = findViewById(R.id.easter_table);
+
+        final R.drawable drawableResources = new R.drawable();
+        Field[] allDrawables = R.drawable.class.getFields();
+        for (Field f : allDrawables){
+            try {
+                if(f.getName().contains("easter")){
+//                    easter.add
+                    TableRow row = new TableRow(MainActivity.this);
+                    row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT));
+                    ImageView meme = new ImageView(MainActivity.this);
+                    meme.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,180));
+                    meme.setImageResource(f.getInt(drawableResources ));
+                    row.addView(meme);
+                    easterTable.addView(row);
+
+                    Log.d(TAG,"Added drawable "+f.getName()+" with id : "+f.getInt(drawableResources ));
+                }
+                System.out.println("R.drawable." + f.getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         spacer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 logToast("Easter egg!");
+
                 findViewById(R.id.easter).setVisibility(VISIBLE);
                 return false;
             }

@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
->
-    <!--<LinearLayout-->
+        >
+        <!--<LinearLayout-->
         <!--android:layout_height="match_parent"-->
         <!--android:layout_width="match_parent"-->
         <!--android:gravity="center_horizontal|center_vertical"-->
@@ -20,97 +20,88 @@
         <!--&gt;-->
 
         <!--<LinearLayout-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1.05"-->
-            <!--android:gravity="center_horizontal|center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1.05"-->
+        <!--android:gravity="center_horizontal|center_vertical"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
         <!--</LinearLayout>-->
         <!--<LinearLayout-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="0.45"-->
-            <!--android:gravity="center_horizontal|center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
-            <!--<ImageView-->
-                <!--android:id="@+id/line3ImageView"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:src="@drawable/github" />-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="0.45"-->
+        <!--android:gravity="center_horizontal|center_vertical"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
+        <!--<ImageView-->
+        <!--android:id="@+id/line3ImageView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/github" />-->
         <!--</LinearLayout>-->
- <!---->
+        <!---->
         <!--<LinearLayout-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="0.68"-->
-            <!--android:gravity="center_horizontal|center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="0.68"-->
+        <!--android:gravity="center_horizontal|center_vertical"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
         <!--</LinearLayout>-->
 
-    <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <TableLayout
+            android:id="@+id/easter_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:src="@drawable/screenshot10" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:src="@drawable/screenshot14" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:src="@drawable/screenshot8" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:src="@drawable/mem3" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:src="@drawable/mem2" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="180dp"
-                android:src="@drawable/mem4" />
-        </TableRow>
-
-    </TableLayout>
-</LinearLayout>
-    </ScrollView>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:src="@drawable/easter1" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:src="@drawable/easter2" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:src="@drawable/easter3" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:src="@drawable/easter4" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:src="@drawable/easter5" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</ScrollView>
