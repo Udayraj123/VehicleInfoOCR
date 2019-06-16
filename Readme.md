@@ -3,7 +3,7 @@ An app made using Firebase MLKit Text Recognizer, JSoup and a little bit of open
 Useful for general purpose OCR as well.
 
 ## First Release
-Get the apk from release: 
+Get the latest apk from github releases: https://github.com/Udayraj123/VehicleInfoOCR/releases
 
 Drive link for the same: https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing
 
