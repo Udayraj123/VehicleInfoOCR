@@ -1,11 +1,11 @@
 ## Vehicle Info Camera 
-An app made using Firebase MLKit Text Recognizer, JSoup and a little bit of opencv.
-Useful for general purpose OCR as well.
+An app made using Firebase MLKit Text Recognizer, Android Web Scraper and a little image processing.
+Will be useful for general purpose OCR as well.
 
-## First Release
+## App Release
 Get the latest apk from github releases: https://github.com/Udayraj123/VehicleInfoOCR/releases
 
-Drive link for the same: https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing
+Drive link for stable apk: https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing
 
 #### TODO (Details in Rough.md)
 	[X] Use Firebase OCR
