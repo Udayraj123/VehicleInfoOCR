@@ -202,20 +202,20 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 if(f.getName().contains("easter")){
 //                    easter.add
                     TableRow row = new TableRow(MainActivity.this);
-                    row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT));
-                    ImageView meme = new ImageView(MainActivity.this);
-                    meme.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,180));
-                    meme.setImageResource(f.getInt(drawableResources ));
-                    row.addView(meme);
+//                    row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT));
+                    row.setBackgroundResource(f.getInt(drawableResources));
                     easterTable.addView(row);
-
+//                    ImageView meme = new ImageView(MainActivity.this);
+//                    meme.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,180));
+//                    meme.setImageResource(f.getInt(drawableResources));//null also works
+//                    row.addView(meme);
                     Log.d(TAG,"Added drawable "+f.getName()+" with id : "+f.getInt(drawableResources ));
                 }
-                System.out.println("R.drawable." + f.getName());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
         spacer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -245,7 +245,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     public void onRequestPermissionsResult(int requestCode, @NonNull String PermissionsList[], @NonNull int[] grantResults) {
         // https://stackoverflow.com/questions/34342816/android-6-0-multiple-PermissionsList
         if (permHandler.hasAllPermissions()) {
-            Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
+            logToast("Press the Camera Button when the number plate is detected correctly");
             setCamButtonListeners();
             setFlashListeners();
             // Attempt for faster start :
@@ -496,7 +497,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         captchaInput.setText(captchaFilter(detectedCaptcha));
         //THROTTLE FOR PERF
         try{Thread.sleep(1000);}catch (Exception e){e.printStackTrace();}
-        logToast(SMILE_EMOJI + " Captcha read successful!");
+        logToast(SMILE_EMOJI + " Captcha read finished!");
         drawerBtn.animate().scaleX(1.3f).scaleY(1.3f).start();
     }
     @Override

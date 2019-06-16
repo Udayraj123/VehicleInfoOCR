@@ -18,18 +18,18 @@ Drive link for the same: https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVE
 	[X] Flash btn from OMR
 	[X] Add Bottom Drawer 
 	[X] Floating number plates
+	[X] Instruction visuals
 	[ ] Load captcha right when splash screen shown
-	[ ] Instruction visuals
-	[ ] Focus guider
-	[ ] Improve Webview display using js
+	[ ] Focus guider/live cropper
 	[ ] Image picker form gallery 
+	[ ] Improve Webview display using js
 	[ ] Celebrate Konfetti popper on succesful result!
-	[ ] Blurring effect on drawer
 
 #### Excess
  	[ ] Preprocess the cameraSource bytebuffer frames
 	[X] Remove opencv, process only bitmap
 	[ ] Recent searches into cards! - make use of miniRTO here too
+	[ ] Other side-interest features
 
 <!-- ## Size Analysis(TODO : Add screenshot)
 jar libs : 7MB
@@ -38,11 +38,6 @@ android-web-scraper : 2 MB
 FirebaseMLKit : 2 MB
  -->
 ## Credits
-Vahan portals:
-
-	https://parivahan.gov.in/rcdlstatus/
-
-	https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml
 
 App workflow inspired from miniRTO app: 
 https://github.com/chandruscm/miniRTO 
@@ -50,11 +45,21 @@ https://github.com/chandruscm/miniRTO
 Firebase MLKit, and This blog : https://medium.com/digital-curry/
 firebase-mlkit-textdetection-in-android-using-firebase-ml-vision-apis-with-live-camera-72ef47ad4ebd
 
-Android web scraping wrapper: 
+Android Web Scraper: 
 https://github.com/daandtu/android-web-scraper
 
 Splashy: 
 https://github.com/rahuldange09/Splashy
+
+EditTextPicker: 
+https://github.com/AliAzaz/Edittext-Library
 <!-- Trail : https://github.com/Orange-OpenSource/android-trail-drawing -->
 <!-- Owl sheet : link?! -->
 <!-- More blogs: https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc -->
+
+
+Vahan portals:
+
+	https://parivahan.gov.in/rcdlstatus/
+
+	https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml
