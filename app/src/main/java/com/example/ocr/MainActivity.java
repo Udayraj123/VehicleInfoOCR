@@ -356,17 +356,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     public boolean checkInternetConnection() {
         ConnectivityManager con_manager = (ConnectivityManager)
                 MainActivity.this.getSystemService(MainActivity.CONNECTIVITY_SERVICE);
-        /*
-         * TODO
-         * @deprecated Apps should instead use the
-         *             {@link android.net.ConnectivityManager.NetworkCallback} API to
-         *             learn about connectivity changes.
-         *             {@link ConnectivityManager#registerDefaultNetworkCallback} and
-         *             {@link ConnectivityManager#registerNetworkCallback}. These will
-         *             give a more accurate picture of the connectivity state of
-         *             the device and let apps react more easily and quickly to changes.
-         *             */
-        if(con_manager.getActiveNetworkInfo() != null && con_manager.getActiveNetworkInfo().isAvailable() && con_manager.getActiveNetworkInfo().isConnected()){
+        if(con_manager.getActiveNetworkInfo() != null && con_manager.getActiveNetworkInfo().isConnected()){
             return true;
         }
         else{

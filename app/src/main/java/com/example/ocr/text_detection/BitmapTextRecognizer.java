@@ -47,7 +47,8 @@ public class BitmapTextRecognizer {
                    for (int i = 0; i < textBlocks.size(); i++) {
                        builder.append(textBlocks.get(i).getText());
                     }
-                   allText = builder.toString();
+                   if(builder.length()>0)
+                     allText = builder.toString();
                 Log.d(TAG,"Bitmap Success read: "+allText);
                 allText = filterCaptcha(allText);
                 listener.onCaptchaUpdate(allText);

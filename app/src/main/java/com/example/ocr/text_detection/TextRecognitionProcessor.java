@@ -157,7 +157,8 @@ public class TextRecognitionProcessor{
                 Log.d(TAG,"IND detected, not suffixing");
             }
         }
-        allText = builder.toString();
+        if(builder.length()>0)
+            allText = builder.toString();
         if(!allText.equals(""))
             Log.d(TAG,"Success read: "+allText);
         allText = numPlateFilter(allText);
