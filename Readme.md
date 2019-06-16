@@ -28,8 +28,8 @@ Drive link for stable apk: https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4N
 
 Please give your [feedback here](https://docs.google.com/forms/d/1RCRRPdtpmr_lz_Xi81INVYpIJxBlkfqdAz6C0tY1RXE/).
 <!-- https://forms.gle/XCh1v6gyN4DpXfkn9 -->
-To maintain this ad-free app and to show support, you can give me a cup of coffee by donating here: 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5BNNK7AVFVH8&source=url)
+To maintain this ad-free app and to show support, you can give me a cup of coffee by donating here: [![paypal](https://www.paypal.me/udayraj123)
+<!-- (https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5BNNK7AVFVH8&source=url) -->
 <!-- Paypal.me is only for paypal accounts  https://www.paypal.me/udayraj123 -->
 ## Credits
 This app is made using Firebase MLKit Text Recognizer, Android Web Scraper and a little image processing. <!-- Will be useful for general purpose OCR as well. -->
