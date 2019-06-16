@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         canDoTransitions = getResources().getString(R.string.can_do_transitions).equals("true");
         if(canDoTransitions){
             mFade = new Fade(Fade.IN);
-            mFade.setDuration(1000);
+            mFade.setDuration(800);
         }
 
         // heavy?!
@@ -246,7 +246,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         // https://stackoverflow.com/questions/34342816/android-6-0-multiple-PermissionsList
         if (permHandler.hasAllPermissions()) {
 //            Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
-            logToast("Press the Camera Button when the number plate is detected correctly");
+            //todo: show this somewhere else
+//             logToast("Press the Camera Button when the number plate is detected correctly");
             setCamButtonListeners();
             setFlashListeners();
             // Attempt for faster start :
@@ -775,7 +776,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
     private void stopCameraSource() {
         if (cameraSource != null) {
-            logToast(SLEEP_EMOJI + " Camera Paused. On confirming, Press Search");
+            logToast("Camera Paused. Press Search When Confirm");
             cameraSource.release();
             cameraSource = null;
         }

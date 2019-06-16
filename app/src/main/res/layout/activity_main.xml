@@ -192,7 +192,7 @@
                     android:scaleType="fitCenter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_margin="8dp"
                     android:background="@android:drawable/ic_menu_search"
                     android:onClick="onDrawerButtonClicked"
                     />
