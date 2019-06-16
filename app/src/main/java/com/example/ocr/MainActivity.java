@@ -146,16 +146,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
 
         new Splashy(this)
                 .setLogo(R.drawable.splash_guide)
-                .setLogoWHinDp(300,300) // default is 200x200
+                .setLogoWHinDp(350,350) // default is 200x200
                 .setTitle(R.string.app_name)
                 // .setTitleColor("#FFFFFF")
-                .setSubTitle("Loading App...")
+                .setSubTitle("Simple. Fast. Ad-free.")
                 .setTitleSize(25f)
                 .setSubTitleSize(20f)
                 // .setProgressColor(R.color.black)
                 .showProgress(true)
                 .setFullScreen(true)
-                 .setTime(5000)
+                .setTime(3000)
                 .show();
 
         setCaptchaInputListeners();
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         });
         if(!permHandler.hasAllPermissions())
             Toast.makeText(MainActivity.this, "Checking permissions...", Toast.LENGTH_SHORT).show();
-        permHandler.grantPermissions();            
+        permHandler.grantPermissions();
     }
     //    callback from ActivityCompat.requestPermissions
     @Override
@@ -356,16 +356,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     public boolean checkInternetConnection() {
         ConnectivityManager con_manager = (ConnectivityManager)
                 MainActivity.this.getSystemService(MainActivity.CONNECTIVITY_SERVICE);
-/*
-* TODO
- * @deprecated Apps should instead use the
- *             {@link android.net.ConnectivityManager.NetworkCallback} API to
- *             learn about connectivity changes.
- *             {@link ConnectivityManager#registerDefaultNetworkCallback} and
- *             {@link ConnectivityManager#registerNetworkCallback}. These will
- *             give a more accurate picture of the connectivity state of
- *             the device and let apps react more easily and quickly to changes.
- *             */
+        /*
+         * TODO
+         * @deprecated Apps should instead use the
+         *             {@link android.net.ConnectivityManager.NetworkCallback} API to
+         *             learn about connectivity changes.
+         *             {@link ConnectivityManager#registerDefaultNetworkCallback} and
+         *             {@link ConnectivityManager#registerNetworkCallback}. These will
+         *             give a more accurate picture of the connectivity state of
+         *             the device and let apps react more easily and quickly to changes.
+         *             */
         if(con_manager.getActiveNetworkInfo() != null && con_manager.getActiveNetworkInfo().isAvailable() && con_manager.getActiveNetworkInfo().isConnected()){
             return true;
         }
@@ -658,6 +658,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             drawerBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
         }
         else{
+            checkInternetConnection();
             drawerView.setVisibility(VISIBLE);
             drawerBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
         }
@@ -669,19 +670,21 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             @Override public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             @Override public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
             @Override public void afterTextChanged(Editable s) {
+                //validate
+                vehicleNumber.isTextEqualToPattern();
+                // Remove spaces
                 String result = s.toString().replaceAll(" ", "");
                 if (!s.toString().equals(result)) {
                     // logToast(NOPE_EMOJI +" No spaces allowed");
                     vehicleNumber.setText(result);
-                    //setSelection is there to set the cursor again
+                    // setSelection will set the cursor at the end
                     vehicleNumber.setSelection(result.length());
                 }
-                vehicleNumber.isTextEqualToPattern();
+                // enable/disable search button
                 if(vehicleNumber.getText() != null)
                     searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
             }
         });
-
         if(vehicleNumber.getText() != null)
             searchBtn.setEnabled(vehicleNumber.getText().toString().matches(NUMPLATE_PATTERN));
     }
@@ -782,7 +785,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
     private void stopCameraSource() {
         if (cameraSource != null) {
-            logToast(SLEEP_EMOJI + " Camera Paused");
+            logToast(SLEEP_EMOJI + " Camera Paused. On confirming, Press Search");
             cameraSource.release();
             cameraSource = null;
         }

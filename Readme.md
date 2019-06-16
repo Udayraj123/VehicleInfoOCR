@@ -43,10 +43,15 @@ Vahan portals:
 	https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml
 
 ## Libraries
+
 ◉ App workflow inspired from [miniRTO app](https://github.com/chandruscm/miniRTO) 
+
 ◉ [Android Web Scraper](https://github.com/daandtu/android-web-scraper)
+
 ◉ [Splashy](https://github.com/rahuldange09/Splashy)
+
 ◉ [EditTextPicker](https://github.com/AliAzaz/Edittext-Library)
+
 <!-- Trail : https://github.com/Orange-OpenSource/android-trail-drawing -->
 <!-- Owl sheet : link?! -->
 <!-- More blogs: https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc -->
@@ -64,10 +69,10 @@ Vahan portals:
 	[X] Add Bottom Drawer 
 	[X] Floating number plates
 	[X] Instruction visuals
+	[ ] Improve Webview display using js
 	[ ] Load captcha right when splash screen shown
 	[ ] Focus guider/live cropper
 	[ ] Image picker form gallery 
-	[ ] Improve Webview display using js
 	[ ] Celebrate Konfetti popper on succesful result!
 
 #### Excess
@@ -84,9 +89,8 @@ FirebaseMLKit : 2 MB
  -->
 
 ## License
+This software is published under GNU GPLv3 license. Please disclose usage when using this source code in your software.
 	Copyright © 2019 Udayraj Deshmukh
 	Vehicle Info Live : Helps you find the details of an Indian vehicle by pointing your camera at its numberplate.
 	This is free software, and you are welcome to redistribute it under certain conditions;
 	For more details see LICENSE
-
-This software is published under GNU GPLv3 license. Please add disclosure when using this source code in your software.

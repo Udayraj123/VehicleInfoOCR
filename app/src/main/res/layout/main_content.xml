@@ -175,8 +175,9 @@
                     android:background="@drawable/rounded_edittext"
                     android:imeOptions="actionDone"
                     android:textAlignment="center"
-                    android:hint="@string/captcha_hint"
                     android:maxLines="1"
+                    android:inputType="text"
+                    android:hint="@string/captcha_hint"
                     android:textSize="20sp"/>
             </LinearLayout>
 

@@ -93,10 +93,10 @@ app is not indexable error in manifest one Activity
 
 
 Guided Interface (more into memo):
-	> Show numplate input all the time at bottom?!
+	> Show numplate input all the time at bottom (Like google lens!)
 	> Camera focus area(same as QR)
 	//> Feedback on obtaining valid numplate
-	:Guide in splash > Tell thru design to open drawer AFTER capture
+	//:Guide in splash > Tell thru design to open drawer AFTER capture
 	// textview > Tell to verify captcha
 
 Work on JS to improve interface.
