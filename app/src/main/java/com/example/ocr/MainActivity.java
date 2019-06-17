@@ -489,7 +489,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         //THROTTLE FOR PERF
         try{Thread.sleep(1000);}catch (Exception e){e.printStackTrace();}
         logToast(SMILE_EMOJI + " Captcha read finished!");
-        drawerBtn.animate().scaleX(1.3f).scaleY(1.3f).start();
+        drawerBtn.animate().scaleX(1.2f).scaleY(1.2f).start();
     }
     @Override
     public void onMajorTextUpdate(String majorText){
@@ -549,6 +549,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     startCameraSource();
                     // camBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
                     camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.wheel));
+                    drawerBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.search_off));
                     // Crash prone:
                     // camBtn.startAnimation(mRotation);
                     // ^Better keep a gif
@@ -561,6 +562,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     stopCameraSource();
                     // camBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
                     camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.wheel_off));
+                    drawerBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.search_on));
                     // mRotation.cancel();
                     // camBtn.clearAnimation();
                     // drawingArea.setVisibility(View.VISIBLE);
