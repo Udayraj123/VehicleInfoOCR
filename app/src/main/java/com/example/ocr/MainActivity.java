@@ -778,7 +778,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
     private void stopCameraSource() {
         if (cameraSource != null) {
-            logToast("Camera Paused. Press Search When Confirm");
+            Toast.makeText(MainActivity.this, "Camera Paused. Search when ready.", Toast.LENGTH_LONG).show();
             cameraSource.release();
             cameraSource = null;
         }
