@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import com.crashlytics.android.Crashlytics;
 import com.edittextpicker.aliazaz.EditTextPicker;
 import com.udayraj.vehicleinfolive.text_detection.*;
 import com.udayraj.vehicleinfolive.camera.*;
@@ -736,7 +737,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 drawerView.setVisibility(INVISIBLE);
             }
         }
-        else {
+        else {  
+            Crashlytics.getInstance().crash();
             findViewById(R.id.easter).setVisibility(INVISIBLE);
         }
     }
