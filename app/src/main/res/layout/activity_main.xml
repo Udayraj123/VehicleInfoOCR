@@ -13,13 +13,13 @@
     <!--app:layout_constraintStart_toStartOf="parent"-->
     <!--app:layout_constraintTop_toTopOf="parent"-->
 
-    <com.example.ocr.camera.CameraSourcePreview
+    <com.udayraj.vehicleinfolive.camera.CameraSourcePreview
         android:id="@+id/camera_source_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-        <com.example.ocr.graphics.GraphicOverlay
+        <com.udayraj.vehicleinfolive.graphics.GraphicOverlay
             android:id="@+id/graphics_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,7 +32,7 @@
         <!--android:visibility="invisible"-->
         <!--/>-->
 
-    </com.example.ocr.camera.CameraSourcePreview>
+    </com.udayraj.vehicleinfolive.camera.CameraSourcePreview>
 
     <LinearLayout
         app:layout_constraintBottom_toBottomOf="parent"

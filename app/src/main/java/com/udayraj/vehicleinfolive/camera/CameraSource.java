@@ -1,4 +1,4 @@
-package com.example.ocr.camera;
+package com.udayraj.vehicleinfolive.camera;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,9 +14,9 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 
-import com.example.ocr.graphics.FrameMetadata;
-import com.example.ocr.graphics.GraphicOverlay;
-import com.example.ocr.text_detection.*;
+import com.udayraj.vehicleinfolive.graphics.FrameMetadata;
+import com.udayraj.vehicleinfolive.graphics.GraphicOverlay;
+import com.udayraj.vehicleinfolive.text_detection.*;
 import com.google.android.gms.common.images.Size;
 
 import java.io.IOException;

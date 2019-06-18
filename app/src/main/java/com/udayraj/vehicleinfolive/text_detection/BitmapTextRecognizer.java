@@ -1,4 +1,4 @@
-package com.example.ocr.text_detection;
+package com.udayraj.vehicleinfolive.text_detection;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.vision.FirebaseVision;

@@ -1,4 +1,4 @@
-package com.example.ocr.text_detection;
+package com.udayraj.vehicleinfolive.text_detection;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.example.ocr.graphics.*;
+import com.udayraj.vehicleinfolive.graphics.*;
 
 
 public class TextRecognitionProcessor{

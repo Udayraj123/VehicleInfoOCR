@@ -1,4 +1,4 @@
-package com.example.ocr.webscraper;
+package com.udayraj.vehicleinfolive.webscraper;
 
 import android.util.Log;
 

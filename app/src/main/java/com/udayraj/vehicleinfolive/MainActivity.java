@@ -1,4 +1,4 @@
-package com.example.ocr;
+package com.udayraj.vehicleinfolive;
 
 import android.annotation.TargetApi;
 import android.content.ClipData;
@@ -47,11 +47,11 @@ import java.util.Queue;
 import java.util.Set;
 
 import com.edittextpicker.aliazaz.EditTextPicker;
-import com.example.ocr.text_detection.*;
-import com.example.ocr.camera.*;
-import com.example.ocr.graphics.*;
-import com.example.ocr.utils.*;
-import com.example.ocr.webscraper.*;
+import com.udayraj.vehicleinfolive.text_detection.*;
+import com.udayraj.vehicleinfolive.camera.*;
+import com.udayraj.vehicleinfolive.graphics.*;
+import com.udayraj.vehicleinfolive.utils.*;
+import com.udayraj.vehicleinfolive.webscraper.*;
 import com.rbddevs.splashy.Splashy;
 //import android.view.animation.Animation;
 //import com.google.firebase.ml.vision.text.FirebaseVisionText;
@@ -489,7 +489,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         //THROTTLE FOR PERF
         try{Thread.sleep(1000);}catch (Exception e){e.printStackTrace();}
         logToast(SMILE_EMOJI + " Captcha read finished!");
-        drawerBtn.animate().scaleX(1.2f).scaleY(1.2f).start();
+        drawerBtn.animate().scaleX(1.25f).scaleY(1.25f).start();
     }
     @Override
     public void onMajorTextUpdate(String majorText){
@@ -547,7 +547,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 if(cameraSource==null) {
                     createCameraSource();
                     startCameraSource();
-                    // camBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
+                    camBtn.animate().scaleX(1.1f).scaleY(1.1f).start();
                     camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.wheel));
                     drawerBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.search_off));
                     // Crash prone:
@@ -560,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     flashBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.flash_off));
                     confirmVehicleNumber();
                     stopCameraSource();
-                    // camBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
+                    camBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
                     camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.wheel_off));
                     drawerBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.search_on));
                     // mRotation.cancel();
@@ -778,7 +778,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
     private void stopCameraSource() {
         if (cameraSource != null) {
-            Toast.makeText(MainActivity.this, "Camera Paused. Search when ready.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Camera paused. Search when ready.", Toast.LENGTH_LONG).show();
             cameraSource.release();
             cameraSource = null;
         }

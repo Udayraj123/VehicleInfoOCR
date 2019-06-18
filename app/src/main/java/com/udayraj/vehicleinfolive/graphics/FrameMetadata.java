@@ -1,4 +1,4 @@
-package com.example.ocr.graphics;
+package com.udayraj.vehicleinfolive.graphics;
 
 public class FrameMetadata {
 

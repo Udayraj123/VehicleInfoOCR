@@ -1,4 +1,4 @@
-package com.example.ocr;
+package com.udayraj.vehicleinfolive;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "1072978657733",
-    "firebase_url": "https://ocrfirebaseproject-ef090.firebaseio.com",
-    "project_id": "ocrfirebaseproject-ef090",
-    "storage_bucket": "ocrfirebaseproject-ef090.appspot.com"
+    "project_number": "660321499545",
+    "firebase_url": "https://vehicle-info-camera-india.firebaseio.com",
+    "project_id": "vehicle-info-camera-india",
+    "storage_bucket": "vehicle-info-camera-india.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1072978657733:android:5be8af38ec96a0d4",
+        "mobilesdk_app_id": "1:660321499545:android:7ff50156cef4f347",
         "android_client_info": {
-          "package_name": "com.example.ocr"
+          "package_name": "com.udayraj.vehicleinfolive"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1072978657733-n5cthtpl5qrfjok84cal7h8gh9c3h4ts.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.ocr",
-            "certificate_hash": "8c5633619a6d1c62652d2146e40314af4b292343"
-          }
-        },
-        {
-          "client_id": "1072978657733-k3po0360gtbfoj359v4l8eqp1vfscg86.apps.googleusercontent.com",
+          "client_id": "660321499545-homs2ep7l35gb6p7eeh6ionleradbtsj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBFwTm8kmiXJLIScUOc1Jed7bPu99soUJk"
+          "current_key": "AIzaSyDo8vpWjyNP9xn9ehO_NBExW3XwtImZWvU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1072978657733-k3po0360gtbfoj359v4l8eqp1vfscg86.apps.googleusercontent.com",
+              "client_id": "660321499545-homs2ep7l35gb6p7eeh6ionleradbtsj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

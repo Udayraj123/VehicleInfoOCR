@@ -1,4 +1,4 @@
-package com.example.ocr.camera;
+package com.udayraj.vehicleinfolive.camera;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -9,7 +9,7 @@ import android.view.SurfaceView;
 import android.view.ViewGroup;
 import com.google.android.gms.common.images.Size;
 import java.io.IOException;
-import com.example.ocr.graphics.*;
+import com.udayraj.vehicleinfolive.graphics.*;
 public class CameraSourcePreview extends ViewGroup {
     private static final String TAG = "MIDemoApp:Preview";
 

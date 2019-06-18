@@ -1,4 +1,4 @@
-package com.example.ocr;
+package com.udayraj.vehicleinfolive;
 
 import org.junit.Test;
 

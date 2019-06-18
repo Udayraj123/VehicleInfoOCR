@@ -1,4 +1,4 @@
-package com.example.ocr.text_detection;
+package com.udayraj.vehicleinfolive.text_detection;
 
 import android.graphics.Bitmap;
 
