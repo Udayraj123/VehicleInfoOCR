@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     @Override @TargetApi(19)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"Begin Mainactivity User Init");
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
@@ -394,6 +395,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                                     "for (var i=0; i<children.length; i++) {children[i].style.display='none';}"+
                                     "document.getElementsByClassName('row bottom-space')[0].style.display='block';"+
                                     "document.getElementsByClassName('logo-header-section display-print-none')[0].style.display='block';";
+                    Log.d(TAG,"Running focusScript");
                     webScraper.loadURL("javascript:{" + focusScript + "}void(0);");
                     //TODO: fix- this run2 currently needs api 19
                     Log.d(TAG, "Got image from: " + eltCaptchaImage.getAttribute("src"));
@@ -565,6 +567,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     camBtn.animate().scaleX(1/1.1f).scaleY(1/1.1f).start();
                     camBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.wheel_off));
                     drawerBtn.setBackground(ContextCompat.getDrawable(MainActivity.this,R.drawable.search_on));
+                    // Based on user feedback-
+                    drawerBtn.performClick();
                     // mRotation.cancel();
                     // camBtn.clearAnimation();
                     // drawingArea.setVisibility(View.VISIBLE);

@@ -168,7 +168,7 @@ public interface Img2Bitmap
                     "                        }"+
                     "                    }else{"+
                     "                        console.log('No entry found in VAHAN database');"+
-                    "                        HtmlViewer.showMessage('No entry found in VAHAN database');"+
+                    "                        HtmlViewer.showMessage('Unable to find entry in VAHAN database');"+
                     "                    }"+
                     "                    /* also move captcha to bottom */"+
                     ""+

@@ -10,8 +10,8 @@ import com.google.firebase.ml.vision.text.FirebaseVisionText;
 public class TextGraphic extends GraphicOverlay.Graphic {
 
 //    private static final int OFFSET = 20;
-    private static final float TEXT_SIZE = 34.0f;
-    private static final float STROKE_WIDTH = 5.0f;
+    private static final float TEXT_SIZE = 44.0f;
+    private static final float STROKE_WIDTH = 6.0f;
     private final FirebaseVisionText.Element text;
 
     private final Paint rectPaint;
@@ -32,7 +32,7 @@ public class TextGraphic extends GraphicOverlay.Graphic {
         textPaint = new Paint();
         textPaint.setColor(Color.RED);
         textPaint.setTextSize(TEXT_SIZE);
-        textPaint.setStrokeWidth(9f);
+        textPaint.setStrokeWidth(13f);
         // Redraw the overlay, as this graphic has been added.
         postInvalidate();
     }
