@@ -203,7 +203,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 if(f.getName().contains("easter")){
 //                    easter.add
                     TableRow row = new TableRow(MainActivity.this);
-//                    row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT));
+                    row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.WRAP_CONTENT));
+
                     row.setBackgroundResource(f.getInt(drawableResources));
                     easterTable.addView(row);
 //                    ImageView meme = new ImageView(MainActivity.this);
@@ -616,12 +617,15 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
                 //todo: make this run on api 16
-                if(vehicleNumber.getText()!=null)
+                if(vehicleNumber.getText()!=null && eltVehicleNumber!=null)
                     eltVehicleNumber.setText(vehicleNumber.getText().toString());
                 else{
-                    Log.e(TAG,"UNEXPECTED!! VehicleNumber Text is NULL!");
+                    logToast("UNEXPECTED!! VehicleNumber Text is NULL!");
                 }
                 eltVehicleNumber.setAttribute("style","background-color:lightgreen !important");
+                if(eltCaptchaInput == null){
+                    logToast(CRYING_EMOJI + " Unexpected error, please report to my creator Udayraj");
+                }
                 eltCaptchaInput.setText(captchaInput.getText().toString());
                 eltCaptchaInput.setAttribute("style","background-color:lightgreen !important");
                 if(checkInternetConnection()) {
@@ -737,8 +741,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 drawerView.setVisibility(INVISIBLE);
             }
         }
-        else {  
-            Crashlytics.getInstance().crash();
+        else {
+            // Crashlytics.getInstance().crash();
             findViewById(R.id.easter).setVisibility(INVISIBLE);
         }
     }

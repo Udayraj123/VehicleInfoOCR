@@ -143,6 +143,8 @@ Optimizations
 
 Later:
 	Run Apk analyzer on OMR apk
+	Make Starter Android template.
+	Make minimal size android apk (note size and startup time, compare with studio's hello world size)
 	Firebase usage analytics (Have to see how many ppl opened the app[Privacy Policy?!])
 
 Note numplate pattern:

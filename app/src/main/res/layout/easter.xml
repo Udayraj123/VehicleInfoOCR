@@ -56,33 +56,15 @@
             android:id="@+id/easter_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="180dp"
-                    android:src="@drawable/wall1" />
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="180dp"
-                    android:src="@drawable/wall2" />
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="180dp"
-                    android:src="@drawable/wall3" />
+                    android:layout_height="450dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/splash_guide" />
             </TableRow>
         </TableLayout>
     </LinearLayout>

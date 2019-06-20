@@ -87,7 +87,12 @@ public class TextRecognitionProcessor{
         return detector.processImage(image);
     }
     private String numPlateFilter(String s){
-        return s.toUpperCase().replaceAll("[^A-Z0-9]","");
+        // starting o jugaad
+        if(s.length()>0 && s.charAt(0)=='o'){
+            s = s.substring(1);
+            Log.d(TAG,"Removed starting o");
+        }
+        return  s.toUpperCase().replaceAll("[^A-Z0-9]","");
     }
 
     private String convertToStrict(String line){
@@ -149,12 +154,13 @@ public class TextRecognitionProcessor{
             //VERIFY preference to block than line?!
             autoUpdateMajorText(addText);
 
-            //FIXLATER - IND jugaad for now
-            if(!addText.toUpperCase().equals("IND")){
+            //FIXLATER - IND and 'o' jugaad for now
+            if(!addText.toUpperCase().equals("IND") && !addText.equals("o")){
                 builder.append(addText);
             }
             else{
-                Log.d(TAG,"IND detected, not suffixing");
+                // doesn't get here
+                Log.d(TAG,addText.toUpperCase()+" detected, not suffixing");
             }
         }
         allText = builder.toString();

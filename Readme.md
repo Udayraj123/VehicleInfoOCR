@@ -3,23 +3,15 @@ Helps you find the details of an Indian vehicle by pointing your camera at its n
 
 Details of the vehicle are(obtained from the government's vahan portal):
 
-◈ Registered Date
-
-◈ Chassis No.
-
-◈ Engine No.
-
-◈ Owner Name
-
-◈ Vehicle Class
-
-◈ Fuel Type
-
-◈ Vehicle Maker/Model
-
-◈ Registration Upto
-
-◈ Insurance Upto
+◈ Registered Date <br>
+◈ Chassis No. <br>
+◈ Engine No. <br>
+◈ Owner Name <br>
+◈ Vehicle Class <br>
+◈ Fuel Type <br>
+◈ Vehicle Maker/Model <br>
+◈ Registration Upto <br>
+◈ Insurance Upto <br>
 
 ## App Release
 Get the latest apk from github releases: https://github.com/Udayraj123/VehicleInfoOCR/releases
@@ -44,13 +36,10 @@ Vahan portals:
 
 ## Libraries
 
-◉ App workflow inspired from [miniRTO app](https://github.com/chandruscm/miniRTO) 
-
-◉ [Android Web Scraper](https://github.com/daandtu/android-web-scraper)
-
-◉ [Splashy](https://github.com/rahuldange09/Splashy)
-
-◉ [EditTextPicker](https://github.com/AliAzaz/Edittext-Library)
+◉ App workflow inspired from [miniRTO app](https://github.com/chandruscm/miniRTO) <br>
+◉ [Android Web Scraper](https://github.com/daandtu/android-web-scraper) <br>
+◉ [Splashy](https://github.com/rahuldange09/Splashy) <br>
+◉ [EditTextPicker](https://github.com/AliAzaz/Edittext-Library) <br>
 
 <!-- Trail : https://github.com/Orange-OpenSource/android-trail-drawing -->
 <!-- Owl sheet : link?! -->
@@ -90,7 +79,9 @@ FirebaseMLKit : 2 MB
 
 ## License
 This software is published under GNU GPLv3 license. Please disclose usage when using this source code in your software.
+```
 	Copyright © 2019 Udayraj Deshmukh
 	Vehicle Info Live : Helps you find the details of an Indian vehicle by pointing your camera at its numberplate.
 	This is free software, and you are welcome to redistribute it under certain conditions;
 	For more details see LICENSE
+```
