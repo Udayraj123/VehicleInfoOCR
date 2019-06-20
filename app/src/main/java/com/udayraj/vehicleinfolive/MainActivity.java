@@ -621,10 +621,12 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     eltVehicleNumber.setText(vehicleNumber.getText().toString());
                 else{
                     logToast("UNEXPECTED!! VehicleNumber Text is NULL!");
+                    Crashlytics.log("UNEXPECTED!! VehicleNumber Text is NULL!");
                 }
                 eltVehicleNumber.setAttribute("style","background-color:lightgreen !important");
                 if(eltCaptchaInput == null){
                     logToast(CRYING_EMOJI + " Unexpected error, please report to my creator Udayraj");
+                    Crashlytics.log(" Unexpected error, please report to my creator Udayraj");
                 }
                 eltCaptchaInput.setText(captchaInput.getText().toString());
                 eltCaptchaInput.setAttribute("style","background-color:lightgreen !important");
