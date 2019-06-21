@@ -3,7 +3,7 @@ Helps you find the details of an Indian vehicle by pointing your camera at its n
 
 <p align="center">
   <a href="https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing">
-  	<img width="600" src="./vehicle_info.gif">
+  	<img height="400" src="./vehicle_info.gif">
   </a>
 </p>
 
@@ -13,8 +13,7 @@ Helps you find the details of an Indian vehicle by pointing your camera at its n
 2. In case of emergencies like accidents, know the name and city of the person involved.
 3. Also to raise awareness that this data linked to number plate is publicly available from a government website.
 
-Details of the vehicle are(obtained from the government's vahan portal):
-
+4. Details of the vehicle are(obtained from the government's vahan portal):
 ◈ Registered Date <br>
 ◈ Chassis No. <br>
 ◈ Engine No. <br>
@@ -27,15 +26,17 @@ Details of the vehicle are(obtained from the government's vahan portal):
 
 This app is made using Firebase MLKit Text Recognizer, Android Web Scraper and a little image processing. <!-- Will be useful for general purpose OCR as well. -->
 ## App Release
-Get the latest apk from [github releases](https://github.com/Udayraj123/VehicleInfoOCR/releases).
+[Github releases](https://github.com/Udayraj123/VehicleInfoOCR/releases).
 
-Drive link for [Stable apk](https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing)
+[Stable apk](https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing) Drive link
 
 Please give your [feedback here](https://docs.google.com/forms/d/1RCRRPdtpmr_lz_Xi81INVYpIJxBlkfqdAz6C0tY1RXE/).
 
 
 <!-- https://forms.gle/XCh1v6gyN4DpXfkn9 -->
-To maintain this ad-free app and to show support, you can give me a cup of coffee by donating here: [![paypal](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.me/udayraj123)
+To maintain this ad-free app and to show support, you can give me a cup of coffee by donating here: 
+
+[![paypal](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.me/udayraj123)
 <!-- Paypal.me is only for paypal accounts -->
 <!-- (https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5BNNK7AVFVH8&source=url) -->
 
@@ -65,7 +66,7 @@ To maintain this ad-free app and to show support, you can give me a cup of coffe
 This software is published under GNU GPLv3 license. Please disclose usage when using this source code in your software.
 ```
 Copyright © 2019 Udayraj Deshmukh
-Vehicle Info Live : Helps you find the details of an Indian vehicle by pointing your camera at its numberplate.
+Vehicle Info Live : Find details of an Indian vehicle by pointing your camera at its numberplate.
 This is free software, and you are welcome to redistribute it under certain conditions;
 ```
 For more details see <a href="./LICENSE">LICENSE</a>
