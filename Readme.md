@@ -46,37 +46,6 @@ Vahan portals:
 <!-- More blogs: https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc -->
 
 
-#### TODO (Details in Rough.md)
-	[X] Use Firebase OCR
-	[X] Add Permission handler
-	[X] Add OpenCv morph
-	[X] now fix jsoup to download captcha and show in image preview 
-	[X] Find CV parameters on sample from pc
-	[X] getting majorText from the bounding boxes
-	[X] Putting numberplate data into text on preview btn click
-	[X] Flash btn from OMR
-	[X] Add Bottom Drawer 
-	[X] Floating number plates
-	[X] Instruction visuals
-	[ ] Improve Webview display using js
-	[ ] Load captcha right when splash screen shown
-	[ ] Focus guider/live cropper
-	[ ] Image picker form gallery 
-	[ ] Celebrate Konfetti popper on succesful result!
-
-#### Excess
- 	[ ] Preprocess the cameraSource bytebuffer frames
-	[X] Remove opencv, process only bitmap
-	[ ] Recent searches into cards! - make use of miniRTO here too
-	[ ] Other side-interest features
-
-<!-- ## Size Analysis(TODO : Add screenshot)
-jar libs : 7MB
-resources : 5MB
-android-web-scraper : 2 MB
-FirebaseMLKit : 2 MB
- -->
-
 ## License
 This software is published under GNU GPLv3 license. Please disclose usage when using this source code in your software.
 ```
