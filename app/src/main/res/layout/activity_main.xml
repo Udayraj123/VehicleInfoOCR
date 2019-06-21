@@ -115,14 +115,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             >
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="0.35"
+                android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -148,7 +148,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.34"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -176,7 +176,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="0.42"
+                android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
@@ -184,7 +184,7 @@
             <LinearLayout
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
-                android:layout_weight="0.83"
+                android:layout_weight="0.85"
                 android:gravity="center_vertical"
                 android:orientation="vertical" >
                 <ImageButton
@@ -202,7 +202,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="0.35"
+                android:layout_weight="0.65"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
