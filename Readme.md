@@ -1,6 +1,6 @@
 ## Vehicle Info Live 
 Helps you find the details of an Indian vehicle by pointing your camera at its numberplate. 
-##### Join Discord channel for help regarding setup/contributions: https://discord.gg/vWCfg8
+##### Join Discord channel for help regarding setup/contributions: https://discord.gg/vHb8THa
 <p align="center">
   <a href="https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing">
   	<img height="400" src="./vehicle_info.gif">
