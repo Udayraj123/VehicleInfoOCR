@@ -1,20 +1,32 @@
 ## Vehicle Info Live 
 Helps you find the details of an Indian vehicle by pointing your camera at its numberplate. 
 
-[![Download Release](https://img.shields.io/badge/⬇-Download-blue.svg)](https://github.com/Udayraj123/VehicleInfoOCR/releases/download/0.1.3/AwesomeVehicleInfo.apk)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+![GitHub release](https://img.shields.io/github/release/udayraj123/VehicleInfoOCR.svg?style=flat-square)
+[![Download Release](https://img.shields.io/badge/⬇-Latest_APK-orange.svg)](https://github.com/Udayraj123/VehicleInfoOCR/releases/download/0.1.3/AwesomeVehicleInfo.apk)
+[![Download Stable](https://img.shields.io/badge/⬇-Stable_APK-blue.svg)](https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing)
 <!-- Api level button -->
 <!-- Android arsenal link -->
+[![Give Feedback](https://img.shields.io/badge/Give%20-feedback_here-7289da.svg)](https://docs.google.com/forms/d/1RCRRPdtpmr_lz_Xi81INVYpIJxBlkfqdAz6C0tY1RXE/)
 
-Join Discord channel for help regarding setup/contributions
-[![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/vHb8THa)
+## Activity
+
+[![GitHub stars](https://img.shields.io/github/stars/udayraj123/vehicleInfoOCR.svg?style=social&label=Stars✯)](https://GitHub.com/udayraj123/vehicleInfoOCR/stargazers/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://GitHub.com/udayraj123/VehicleInfoOCR/graphs/commit-activity)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![HitCount](http://hits.dwyl.io/udayraj123/vehicleInfoOCR.svg)](http://hits.dwyl.io/udayraj123/vehicleInfoOCR)
+[![GitHub contributors](https://img.shields.io/github/contributors/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/graphs/contributors/)
+[![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/pull/)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/issues?q=is%3Aissue+is%3Aclosed)
+
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/Udayraj123/VehicleInfoOCR/issues/1)
+[![Chat on Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/vHb8THa) for help regarding setup/contributions
+
 
 ### Features
 <p align="center">
-  <a href="https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing">
-  	<img height="400" src="./vehicle_info.gif">
-  </a>
+	<a href="https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing">
+		<img height="400" src="./vehicle_info.gif">
+	</a>
 </p>
 
 1. Verify official RTO information when purchasing used vehicles.
@@ -33,31 +45,26 @@ Join Discord channel for help regarding setup/contributions
 ◈ Insurance Upto <br>
 
 This app is made using Firebase MLKit Text Recognizer, Android Web Scraper and a little image processing. <!-- Will be useful for general purpose OCR as well. -->
-## App Release
-[![GitHub release](https://img.shields.io/github/release/udayraj123/VehicleInfoOCR.svg)](https://GitHub.com/udayraj123/VehicleInfoOCR/releases/)
-
-
-[Stable apk](https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing) Drive link
-
-Please give your [feedback here](https://docs.google.com/forms/d/1RCRRPdtpmr_lz_Xi81INVYpIJxBlkfqdAz6C0tY1RXE/).
-<!-- https://forms.gle/XCh1v6gyN4DpXfkn9 -->
 
 <!-- Begin donate section -->
 To keep my 💡 brain juices flowing and create more such projects, [Buy Me A Coffee ☕](https://www.buymeacoffee.com/udayraj123) 
-If this project saved you some money and want to give me some credit on those savings - Paypal.me: 
+
+If this project saved you some money and want to give me some credit on those savings: 
 [![paypal.me](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.me/udayraj123)
 
 <!-- https://www.amazon.in/hz/wishlist/ls/3V0TDQBI3T8IL -->
 
 <!-- End donate section -->
-## Activity
+Please give(if any) [feedback here](https://docs.google.com/forms/d/1RCRRPdtpmr_lz_Xi81INVYpIJxBlkfqdAz6C0tY1RXE/).
 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://GitHub.com/udayraj123/OMRChecker/graphs/commit-activity)
-[![GitHub stars](https://img.shields.io/github/stars/udayraj123/vehicleInfoOCR.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/udayraj123/vehicleInfoOCR/stargazers/)
-[![HitCount](http://hits.dwyl.io/udayraj123/vehicleInfoOCR.svg)](http://hits.dwyl.io/udayraj123/vehicleInfoOCR)
-[![GitHub contributors](https://img.shields.io/github/contributors/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/graphs/contributors/)
-[![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/pull/)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/issues?q=is%3Aissue+is%3Aclosed)
+# Credits
+
+[Firebase MLKit](https://firebase.google.com/docs/ml-kit/android/recognize-text), and [A blog](https://medium.com/digital-curry/firebase-mlkit-textdetection-in-android-using-firebase-ml-vision-apis-with-live-camera-72ef47ad4ebd) on the same.
+
+[https://parivahan.gov.in/rcdlstatus/](https://parivahan.gov.in/rcdlstatus/)
+
+[https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml](https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml)
+
 
 ## Libraries & Inspirations
 
@@ -70,25 +77,13 @@ If this project saved you some money and want to give me some credit on those sa
 <!-- Owl sheet : link?! -->
 <!-- More blogs: https://medium.com/linedevth/build-your-android-app-faster-and-smaller-than-ever-25f53fdd3cdc -->
 
-
-## Credits
-
-[Firebase MLKit](https://firebase.google.com/docs/ml-kit/android/recognize-text), and [A blog](https://medium.com/digital-curry/firebase-mlkit-textdetection-in-android-using-firebase-ml-vision-apis-with-live-camera-72ef47ad4ebd) on the same.
-
-[https://parivahan.gov.in/rcdlstatus/](https://parivahan.gov.in/rcdlstatus/)
-
-[https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml](https://vahan.nic.in/nrservices/faces/user/searchstatus.xhtml)
-
-
 ## License
 
-[![GitHub license](https://img.shields.io/github/license/udayraj123/OMRChecker.svg)](https://github.com/udayraj123/OMRChecker/blob/master/LICENSE)
-This software is published under GNU GPLv3 license. Please disclose usage when using this source code in your software.
+VehicleInfoOCR is completely [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) and published under **GPLv3** license which is just to give a heads up to disclose usage of this software in your code. **VehicleInfoOCR can be forked and modified. You are encouraged to play with it and we would love to see your own projects in action!**
+
 ```
 Copyright © 2019 Udayraj Deshmukh
 Vehicle Info Live : Find details of an Indian vehicle by pointing your camera at its numberplate.
 This is free software, and you are welcome to redistribute it under certain conditions;
 ```
-For more details see <a href="./LICENSE">LICENSE</a>
-
-VehicleInfoOCR is [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) - It can be forked and modified. We’d love to see your own projects in action!
+For more details see [![GitHub license](https://img.shields.io/github/license/udayraj123/VehicleInfoOCR.svg)](https://github.com/udayraj123/VehicleInfoOCR/blob/master/LICENSE)
