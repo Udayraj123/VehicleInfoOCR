@@ -15,8 +15,15 @@
     <string name="dont_support">Close</string>
     <string name="developer_line1">Made with♥</string>
     <string name="developer_line2">by <a href="https://github.com/Udayraj123/">Udayraj</a>, <a href="https://github.com/sharmatanesh/">Tanesh</a> &amp; <a href="https://www.instagram.com/shashank529317/">Shashank</a>.</string>
-    <string name="developer_line3">If you liked it, Give a star on github!</string>
-    <string name="developer_line4"><a href="https://github.com/Udayraj123/VehicleInfoOCR">View on Github</a></string>
+    <!--<string name="developer_line3">If you liked it, Give a star on github!</string>-->
+    <!--<string name="developer_line4"><a href="https://github.com/Udayraj123/VehicleInfoOCR">View on Github</a></string>-->
+    <string name="developer_line3">If you liked it, or have some suggestions</string>
+    <string name="developer_line4">
+        <a href="https://docs.google.com/forms/d/1RCRRPdtpmr_lz_Xi81INVYpIJxBlkfqdAz6C0tY1RXE/">Rate App</a>
+        <br></br>
+        <a href="https://udayraj123.github.io/VehicleInfoOCR/docs/privacy_policy">\nView privacy policy</a>
+
+    </string>
     <string name="developer_line5"><a href="https://drive.google.com/file/d/1-AmrFMz0lzGSRFyFWr4NVEHDmdONEyLj/view?usp=sharing">SHARE APP</a></string>
     <string name="close">Close</string>
     <string name="plate_hint">    AB01CD1234</string>

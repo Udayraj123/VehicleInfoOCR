@@ -93,19 +93,19 @@
             android:orientation="horizontal"
             >
         </LinearLayout>
-        <LinearLayout
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="0.45"
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:id="@+id/line3ImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/github" />
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="0.45"-->
+            <!--android:gravity="center_horizontal|center_vertical"-->
+            <!--android:orientation="horizontal"-->
+            <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:id="@+id/line3ImageView"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:src="@drawable/github" />-->
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:layout_height="wrap_content"

@@ -621,13 +621,14 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
                 //todo: make this run on api 16
-                if(vehicleNumber.getText()!=null && eltVehicleNumber!=null)
+                if(vehicleNumber.getText()!=null && eltVehicleNumber!=null){
                     eltVehicleNumber.setText(vehicleNumber.getText().toString());
+                    eltVehicleNumber.setAttribute("style","background-color:lightgreen !important");
+                }
                 else{
                     logToast("UNEXPECTED!! VehicleNumber Text is NULL!");
                     Crashlytics.log("UNEXPECTED!! VehicleNumber Text is NULL!");
                 }
-                eltVehicleNumber.setAttribute("style","background-color:lightgreen !important");
                 if(eltCaptchaInput == null){
                     logToast(CRYING_EMOJI + " Unexpected error, please report to my creator Udayraj");
                     Crashlytics.log(" Unexpected error, please report to my creator Udayraj");

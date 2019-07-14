@@ -1,14 +1,18 @@
+title: "Vehicle Info Camera"
+url: "https://udayraj123.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/vehicleInfoOCR/" # the subpath of your site, e.g. /blog
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-relative-links
 relative_links:
   enabled: true
   collections: true
+
 include:
-	- docs/doc1.md
-	- docs/privacy_policy.md
+  - ./docs/privacy_policy.md
+  # - Readme.md
+  # - doc1.md
   # - CONTRIBUTING.md
-  # - README.md
   # - LICENSE.md
   # - COPYING.md
   # - CODE_OF_CONDUCT.md
