@@ -2,7 +2,7 @@
     <string name="can_do_transitions">false</string>
     <string name="app_name_orig">Awesome Vehicle Info Camera</string>
     <!-- Add description string later to include India-->
-    <string name="app_name">Vehicle Info Live - India</string>
+    <string name="app_name">Vehicle Info Camera - India</string>
     <string name="browser">RTO Website</string>
     <string name="loading_webview">Loading page...</string>
     <string name="confirm_details">Confirm Details</string>

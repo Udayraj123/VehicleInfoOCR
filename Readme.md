@@ -1,11 +1,14 @@
 ## Vehicle Info Live 
 Helps you find the details of an Indian vehicle by pointing your camera at its numberplate. 
 
+[![Download Release](https://img.shields.io/badge/⬇-Download-blue.svg)](https://github.com/Udayraj123/VehicleInfoOCR/releases/download/0.1.3/AwesomeVehicleInfo.apk)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+<!-- Api level button -->
+<!-- Android arsenal link -->
 
 Join Discord channel for help regarding setup/contributions
 [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/vHb8THa)
-[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/Udayraj123/OMRChecker/issues/5)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/Udayraj123/VehicleInfoOCR/issues/1)
 
 ### Features
 <p align="center">
@@ -40,16 +43,21 @@ Please give your [feedback here](https://docs.google.com/forms/d/1RCRRPdtpmr_lz_
 <!-- https://forms.gle/XCh1v6gyN4DpXfkn9 -->
 
 <!-- Begin donate section -->
-To keep this project alive and well, my brain juices need to flow 💡. 
-Buy me a strong dose of coffee here: ☕ 
-<a href="https://www.buymeacoffee.com/udayraj123" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
-
-[![paypal](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.me/udayraj123)
-[![paypal.me](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5BNNK7AVFVH8&source=url)
+To keep my 💡 brain juices flowing and create more such projects, [Buy Me A Coffee ☕](https://www.buymeacoffee.com/udayraj123) 
+If this project saved you some money and want to give me some credit on those savings - Paypal.me: 
+[![paypal.me](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.me/udayraj123)
 
 <!-- https://www.amazon.in/hz/wishlist/ls/3V0TDQBI3T8IL -->
 
 <!-- End donate section -->
+## Activity
+
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://GitHub.com/udayraj123/OMRChecker/graphs/commit-activity)
+[![GitHub stars](https://img.shields.io/github/stars/udayraj123/vehicleInfoOCR.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/udayraj123/vehicleInfoOCR/stargazers/)
+[![HitCount](http://hits.dwyl.io/udayraj123/vehicleInfoOCR.svg)](http://hits.dwyl.io/udayraj123/vehicleInfoOCR)
+[![GitHub contributors](https://img.shields.io/github/contributors/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/graphs/contributors/)
+[![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/pull/)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/issues?q=is%3Aissue+is%3Aclosed)
 
 ## Libraries & Inspirations
 
@@ -83,12 +91,4 @@ This is free software, and you are welcome to redistribute it under certain cond
 ```
 For more details see <a href="./LICENSE">LICENSE</a>
 
-VehicleInfoOCR is [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/); it can be forked and modified. We’d love to see your own projects in action!
-## Activity
-
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/udayraj123/OMRChecker/graphs/commit-activity)
-[![GitHub stars](https://img.shields.io/github/stars/udayraj123/vehicleInfoOCR.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/udayraj123/vehicleInfoOCR/stargazers/)
-[![HitCount](http://hits.dwyl.io/udayraj123/vehicleInfoOCR.svg)](http://hits.dwyl.io/udayraj123/vehicleInfoOCR)
-[![GitHub contributors](https://img.shields.io/github/contributors/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/graphs/contributors/)
-[![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/pull/)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/issues?q=is%3Aissue+is%3Aclosed)
+VehicleInfoOCR is [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) - It can be forked and modified. We’d love to see your own projects in action!

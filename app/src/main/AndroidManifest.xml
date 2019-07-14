@@ -25,7 +25,7 @@
             android:value="ocr"/>
         <activity
             android:name="com.udayraj.vehicleinfolive.MainActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientatison="portrait"
             android:windowSoftInputMode="adjustPan"
             android:configChanges="orientation|screenSize|keyboardHidden"
             >
