@@ -5,8 +5,8 @@ relative_links:
   enabled: true
   collections: true
 include:
-	- doc1.md
-	- privacy_policy.md
+	- docs/doc1.md
+	- docs/privacy_policy.md
   # - CONTRIBUTING.md
   # - README.md
   # - LICENSE.md
