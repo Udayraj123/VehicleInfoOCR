@@ -12,7 +12,7 @@ Helps you find the details of an Indian vehicle by pointing your camera at its n
 
 [![GitHub stars](https://img.shields.io/github/stars/udayraj123/vehicleInfoOCR.svg?style=social&label=Stars✯)](https://GitHub.com/udayraj123/vehicleInfoOCR/stargazers/)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://GitHub.com/udayraj123/VehicleInfoOCR/graphs/commit-activity)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Udayraj123/VehicleInfoOCR/pull/new/master
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Udayraj123/VehicleInfoOCR/pull/new/master)
 [![HitCount](http://hits.dwyl.io/udayraj123/vehicleInfoOCR.svg)](http://hits.dwyl.io/udayraj123/vehicleInfoOCR)
 [![GitHub contributors](https://img.shields.io/github/contributors/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/graphs/contributors/)
 [![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/pull/)
@@ -45,11 +45,11 @@ Chat on Discord for help regarding setup/contributions: [![Chat on Discord](http
 
 This app is made using Firebase MLKit Text Recognizer, Android Web Scraper and a little image processing. <!-- Will be useful for general purpose OCR as well. -->
 
-<!-- Begin donate section -->
-To keep my 💡 brain juices flowing and create more such projects, [Buy Me A Coffee ☕](https://www.buymeacoffee.com/udayraj123) 
+<!-- Begin donate section 
+To keep my 💡 brain juices flowing and create more such projects, [Buy Me A Coffee ☕](https://www.buymeacoffee.com/udayraj123))-->
 
-If this project saved you some money and want to give me some credit on those savings: 
-[![paypal.me](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.me/udayraj123)
+<!-- If this project saved you some money and want to give me some credit on those savings: 
+[![paypal.me](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.me/udayraj123) -->
 
 <!-- https://www.amazon.in/hz/wishlist/ls/3V0TDQBI3T8IL -->
 
