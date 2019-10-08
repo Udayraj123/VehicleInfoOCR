@@ -1,15 +1,19 @@
 package com.udayraj.vehicleinfolive;
 
 import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -74,6 +78,24 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
 //    private final String HEART_EMOJI = "\ud83d\udc9b";
 //    private final String LOVE_EMOJI = "\ud83d\udc96";
 
+//    Set OMRChecker running.
+    // Upgrade to androidX
+
+    // Remove run2 and other messups from the crawler
+
+//    JS clean up on request done...
+// Remove concept of pausing camera. Pressing camera opens the box?
+
+// Automate publish and test
+
+// Keep next feature ready - open from gallery!
+    // Design to make it intuitive to use Text typing as well
+    //                <!--icon credits: flaticons -->
+    //    Toggle captcha letters on tap to switch in m-M, 0-o-O, etc. And separate edit button
+    // Webview loading bar
+// Manage Tags on console
+
+
     // private DrawingArea drawingArea;
     private ViewGroup superContainer;
     private EditTextPicker vehicleNumber;
@@ -112,15 +134,16 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     private int NUM_PLATES;
 
     private Fade mFade;
-
+    private String APP_LINK;
+    private Resources resources;
     @Override @TargetApi(19)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG,"Begin Mainactivity User Init");
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-
-        canDoTransitions = getResources().getString(R.string.can_do_transitions).equals("true");
+        resources = getResources();
+        canDoTransitions = resources.getString(R.string.can_do_transitions).equals("true");
         if(canDoTransitions){
             mFade = new Fade(Fade.IN);
             mFade.setDuration(800);
@@ -149,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         new Splashy(this)
                 .setLogo(R.drawable.splash_guide)
                 .setLogoWHinDp(350,350) // default is 200x200
-                .setTitle(R.string.app_name)
+                .setTitle(R.string.app_name_orig)
                 // .setTitleColor("#FFFFFF")
                 .setSubTitle("Simple. Fast. Ad-free.")
                 .setTitleSize(25f)
@@ -163,16 +186,46 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         setCaptchaInputListeners();
         setSearchButtonListeners();
         setVehicleNumListeners();
-        int[] dialog_ids = {R.id.support_btn,R.id.dont_support_btn};
+        APP_LINK = "http://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName();
+        int[] dialog_ids = {R.id.support_btn,R.id.dont_support_btn, R.id.share_btn};
         for(int id : dialog_ids) {
             findViewById(id).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // viewKonfetti.setVisibility(INVISIBLE);
+                    if(id == R.id.support_btn){
+                        // https://stackoverflow.com/questions/10816757/rate-this-app-link-in-google-play-store-app-on-the-phone
+                        Uri uri = Uri.parse("market://details?id=" + MainActivity.this.getPackageName());
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        // To count with Play market backstack, After pressing back button,
+                        // to taken back to our application, we need to add following flags to intent.
+                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+//                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+//                            Log.e(TAG, "ActivityNotFoundException",e);
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(APP_LINK)));
+                        }
+                    }else if(id == R.id.share_btn){
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        String shareBody = "Scan a number plate and get owner information in seconds - use "+resources.getString(R.string.app_name_orig)+": "+APP_LINK;
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, resources.getString(R.string.app_name_orig)+": A Camera Based Vehicle Info App");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                    }
+//                    else if (id == R.id.dont_support_btn){
+//                        MainActivity.this.finish();
+//                    }
                     supportView.setVisibility(INVISIBLE);
                 }
             });
         }
+
+
         int[] plate_ids = {R.id.plate1,R.id.plate2,R.id.plate3,R.id.plate4,R.id.plate5};
         NUM_PLATES = plate_ids.length;
         for(int id : plate_ids){
@@ -182,7 +235,6 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 @Override
                 public void onClick(View v) {
                     vehicleNumber.setText(btn.getText());
-                    //TODO replace by openDrawer()
                     drawerBtn.performClick();
                 }
             });
@@ -402,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                     webScraper.injectJSAndGetCaptcha(captchaBitmapGetter);
                 }
             });
-            // logToast("Loading Captcha");
+             logToast("Loading Website...");
             webScraper.loadURL(FULL_URL);
         }
     }
@@ -490,7 +542,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     @Override
     public void onCaptchaUpdate(String detectedCaptcha){
         captchaInput.setText(captchaFilter(detectedCaptcha));
-        //THROTTLE FOR PERF
+        //TODO: Fix THROTTLE FOR PERF
         try{Thread.sleep(1000);}catch (Exception e){e.printStackTrace();}
         logToast(SMILE_EMOJI + " Captcha read finished!");
         drawerBtn.animate().scaleX(1.25f).scaleY(1.25f).start();
@@ -637,15 +689,23 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 eltCaptchaInput.setAttribute("style","background-color:lightgreen !important");
                 if(checkInternetConnection()) {
                     eltSubmitBtn.click();
-
-                    String tableScript = "var table = document.getElementsByClassName(\"table\")[0];" +
-                            " for (var i = 0, row; row = table.rows[i]; i++) {" +
-                            " row.style = \"display: table;  width:100%; word-break:break-all;\";" +
-                            " for (var j = 0, col; col = row.cells[j]; j++) {" +
-                            " col.style=\"display: table-row;\"" +
-                            " }" +
-                            " }";
-                    webScraper.loadURL("javascript:{" + tableScript + "}void(0)");
+                    logToast("Submitting...");
+                    // wait for submit to finish
+                    webScraper.setOnPageLoadedListener(new WebScraper.onPageLoadedListener() {
+                        @Override
+                        public void loaded(String URL) {
+                            logToast("Form Submitted");
+                            String tableScript = "var table = document.getElementsByClassName('table')[0];" +
+                                    " for (var i = 0, row; typeof(table) != 'undefined' && row = table.rows[i]; i++) {" +
+                                    " row.style = 'display: table;  width:100%; word-break:break-all;';" +
+                                    " for (var j = 0, col; col = row.cells[j]; j++) {" +
+                                    " col.style='display: table-row;'" +
+                                    " }" +
+                                    " }";
+                            webScraper.setOnPageLoadedListener(null);
+                            webScraper.loadURL("javascript:{" + tableScript + "}void(0)");
+                        }
+                    });
                 }
             }
         });
@@ -791,7 +851,8 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
     private void stopCameraSource() {
         if (cameraSource != null) {
-            Toast.makeText(MainActivity.this, "Camera paused. Search when ready.", Toast.LENGTH_LONG).show();
+//            Toast.makeText(MainActivity.this, "Camera paused. Search when ready.", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Camera paused.", Toast.LENGTH_LONG).show();
             cameraSource.release();
             cameraSource = null;
         }

@@ -5,18 +5,18 @@ buildscript {
         google()
         jcenter() // this line need
         maven { url "https://jitpack.io" }
-        maven {
-            url 'https://maven.fabric.io/public'
-        }
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://plugins.gradle.org/m2/" }
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'com.google.gms:google-services:4.2.0'  // Google Services plugin
 
         // Add dependency
         classpath 'io.fabric.tools:gradle:1.29.0'  // Crashlytics plugin
 
+        classpath 'com.github.triplet.gradle:play-publisher:2.3.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

@@ -149,7 +149,7 @@ public interface Img2Bitmap
                     // "                        node.addEventListener('load',captcha2Bitmap);"+
                     // "                    }"+
                     "                } "+
-                    "                else if(node.id=='userMessages'){"+
+                    "                else if(node.id=='userMessages' && node.textContent!=''){"+
                     "                    /*error message : tell user of this message*/ "+
                     "                    console.log('Error message: '  + node.textContent);"+
                     "                    HtmlViewer.showMessage(node.textContent);"+
@@ -167,7 +167,7 @@ public interface Img2Bitmap
                     "                            } "+
                     "                        }"+
                     "                    }else{"+
-                    "                        console.log('No entry found in VAHAN database');"+
+                    "                        console.log('Note: No entry found in VAHAN database');"+
                     "                        HtmlViewer.showMessage('Unable to find entry in VAHAN database');"+
                     "                    }"+
                     "                    /* also move captcha to bottom */"+

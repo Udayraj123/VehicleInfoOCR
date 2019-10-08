@@ -11,9 +11,9 @@ Helps you find the details of an Indian vehicle by pointing your camera at its n
 ## Activity
 
 [![GitHub stars](https://img.shields.io/github/stars/udayraj123/vehicleInfoOCR.svg?style=social&label=Stars✯)](https://GitHub.com/udayraj123/vehicleInfoOCR/stargazers/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://GitHub.com/udayraj123/VehicleInfoOCR/graphs/commit-activity)
+<!-- [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://GitHub.com/udayraj123/VehicleInfoOCR/graphs/commit-activity) -->
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/Udayraj123/VehicleInfoOCR/pull/new/master)
-[![HitCount](http://hits.dwyl.io/udayraj123/vehicleInfoOCR.svg)](http://hits.dwyl.io/udayraj123/vehicleInfoOCR)
+<!-- [![HitCount](http://hits.dwyl.io/udayraj123/vehicleInfoOCR.svg)](http://hits.dwyl.io/udayraj123/vehicleInfoOCR) -->
 [![GitHub contributors](https://img.shields.io/github/contributors/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/graphs/contributors/)
 [![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/pull/)
 [![GitHub issues-closed](https://img.shields.io/github/issues-closed/udayraj123/vehicleInfoOCR.svg)](https://GitHub.com/udayraj123/vehicleInfoOCR/issues?q=is%3Aissue+is%3Aclosed)

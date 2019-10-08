@@ -34,12 +34,13 @@
         android:layout_width="match_parent"
         android:layout_gravity="center_horizontal|center_vertical"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/margin_large"
         >
         <TextView
             android:id="@+id/developer_line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_normal"
             android:textAlignment="center"
             android:textColor="@color/accent"
             android:textStyle="bold|italic"
@@ -55,7 +56,7 @@
             android:id="@+id/developer_line2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_normal"
             android:textAlignment="center"
             android:textColor="@color/accent"
             android:textStyle="bold|italic"
@@ -116,7 +117,6 @@
             >
             <TextView
                 android:id="@+id/developer_line4"
-                android:layout_margin="@dimen/margin_normal"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginLeft="@dimen/margin_normal"
                 android:layout_width="wrap_content"
@@ -136,6 +136,21 @@
             >
         </LinearLayout>
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/privacy_policy_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_normal"
+            android:textAlignment="center"
+            android:textStyle="bold|italic"
+            android:text="@string/privacy_policy_line"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/support_dialog"
@@ -161,25 +176,25 @@
             />
         </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center_horizontal"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
-        <!--<TextView-->
-            <!--android:id="@+id/developer_line5"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:text="@string/developer_line5"-->
-            <!--android:textSize="@dimen/font_normal"-->
-            <!--android:textStyle="bold"-->
-            <!--android:textAlignment="center"-->
-            <!--android:background="@drawable/circle"-->
-            <!--/>-->
-        <!--</LinearLayout>-->
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            >
+        <TextView
+            android:id="@+id/share_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/share_btn"
+            android:textSize="@dimen/font_normal"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:background="@drawable/circle"
+            />
+        </LinearLayout>
         <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="0dp"
