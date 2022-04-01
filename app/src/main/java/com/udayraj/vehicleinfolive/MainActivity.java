@@ -16,9 +16,10 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -78,23 +79,15 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
 //    private final String HEART_EMOJI = "\ud83d\udc9b";
 //    private final String LOVE_EMOJI = "\ud83d\udc96";
 
-//    Set OMRChecker running.
-    // Upgrade to androidX
-
-    // Remove run2 and other messups from the crawler
-
-//    JS clean up on request done...
-// Remove concept of pausing camera. Pressing camera opens the box?
-
+// TODO: Up next -
+// Change instruction image to standard one
+// Remove run2 and other messups from the crawler
+// JS clean up on request done...
 // Automate publish and test
-
 // Keep next feature ready - open from gallery!
-    // Design to make it intuitive to use Text typing as well
-    //                <!--icon credits: flaticons -->
-    //    Toggle captcha letters on tap to switch in m-M, 0-o-O, etc. And separate edit button
+    // Toggle captcha letters on tap to switch in m-M, 0-o-O, etc. And separate edit button
     // Webview loading bar
 // Manage Tags on console
-
 
     // private DrawingArea drawingArea;
     private ViewGroup superContainer;
@@ -174,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 .setLogoWHinDp(350,350) // default is 200x200
                 .setTitle(R.string.app_name_orig)
                 // .setTitleColor("#FFFFFF")
-                .setSubTitle("Simple. Fast. Ad-free.")
+                .setSubTitle(R.string.app_subtitle)
                 .setTitleSize(25f)
                 .setSubTitleSize(20f)
                 // .setProgressColor(R.color.black)
@@ -300,13 +293,13 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     public void onRequestPermissionsResult(int requestCode, @NonNull String PermissionsList[], @NonNull int[] grantResults) {
         // https://stackoverflow.com/questions/34342816/android-6-0-multiple-PermissionsList
         if (permHandler.hasAllPermissions()) {
-//            Toast.makeText(MainActivity.this, "Permissions granted", Toast.LENGTH_SHORT).show();
+//            logToast("Permissions granted")
             //todo: show this somewhere else
 //             logToast("Press the Camera Button when the number plate is detected correctly");
             setCamButtonListeners();
             setFlashListeners();
             // Attempt for faster start :
-
+            logToast("Got here");
             webScraper = new WebScraper(this);
             captchaBitmapGetter = new ImageBitmapGetter(MainActivity.this);
             webScraper.setUserAgentToDesktop(true); //default: false
@@ -319,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
             camBtn.performClick();
         }
         else {
-            Toast.makeText(MainActivity.this, "Please enable the permissions from settings. Exiting App!", Toast.LENGTH_LONG).show();
+            logToast("Please enable the permissions from settings. Exiting App!");
             MainActivity.this.finish();
         }
     }
@@ -671,7 +664,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
+                logToast(("Searching..."));
                 //todo: make this run on api 16
                 if(vehicleNumber.getText()!=null && eltVehicleNumber!=null){
                     eltVehicleNumber.setText(vehicleNumber.getText().toString());
@@ -784,7 +777,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
                 if (warningBack) {
                     super.onBackPressed();
                 } else {
-                    Toast.makeText(MainActivity.this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+                    logToast("Press back again to exit");
                     doFade();
                     supportView.setVisibility(VISIBLE);
                     warningBack = true;
@@ -851,8 +844,7 @@ public class MainActivity extends AppCompatActivity implements AppEvents {
     }
     private void stopCameraSource() {
         if (cameraSource != null) {
-//            Toast.makeText(MainActivity.this, "Camera paused. Search when ready.", Toast.LENGTH_LONG).show();
-            Toast.makeText(MainActivity.this, "Camera paused.", Toast.LENGTH_LONG).show();
+            logToast("Camera paused.");
             cameraSource.release();
             cameraSource = null;
         }

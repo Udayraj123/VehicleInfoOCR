@@ -10,9 +10,8 @@ import java.io.IOException;
 import java.util.List;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
-
 
 
 public class BitmapTextRecognizer {
